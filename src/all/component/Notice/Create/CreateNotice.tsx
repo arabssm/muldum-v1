@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as _ from './style';
-import NavBar from '../../../../all/component/sibebar/sidebar';
+import NavBar from '../../sibebar/sidebar';
 import EditSuccess from '@_modal/Notice/EditSuccess';
 import '@_styles';
 import useNoticeState from './useNoticeState';
@@ -62,7 +62,6 @@ export default function CreateNotice() {
     const insertTag = (tag: string) => {
         const openTag = `<${tag}>`;
         const closeTag = `</${tag}>`;
-
         const textarea = document.getElementById('notice-content') as HTMLTextAreaElement;
         if (!textarea) return;
 
@@ -141,7 +140,7 @@ export default function CreateNotice() {
 
             setShowModal(true);
         } catch (err) {
-            alert('공지 등록 실패');
+            alert('공지 등록 실패1');
         } finally {
             setIsSubmitting(false);
         }
