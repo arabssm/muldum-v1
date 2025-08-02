@@ -10,15 +10,18 @@ import { savefile, createnoticeallalert, createnoticeteamalert } from '../../../
 
 export default function CreateNotice() {
     const navigate = useNavigate();
-    const [notice, setNotice] = useNoticeState(); 
+    const [notice, setNotice] = useNoticeState();
     const [showModal, setShowModal] = useState(false);
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [previewUrls, setPreviewUrls] = useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const deadlineDate = getDeadlineDate(notice.startDate, notice.endDate);
+
+    const name="최병준"
     const Clubs = [
         { id: 1, name: "바로" },
         { id: 2, name: "솔빗" },
-        { id: 3, name: "아라" },
+        { id: 3, name: "아라" },    
         { id: 4, name: "안다미로" },
         { id: 5, name: "인서트" },
         { id: 6, name: "하로" },
@@ -74,7 +77,7 @@ export default function CreateNotice() {
             value.slice(start, end) + closeTag +
             value.slice(end);
 
-        setNotice(prev => ({ ...prev, content: newValue.split('\n') }));
+            setNotice(prev => ({ ...prev, content: newValue }));
 
         setTimeout(() => {
             textarea.focus();
@@ -110,8 +113,8 @@ export default function CreateNotice() {
             const uploadedUrls: string[] = [];
 
             for (const file of imageFiles) {
-                const res = await savefile(file);
-                uploadedUrls.push(res.fileUrl);
+                const url = await savefile(file);
+                uploadedUrls.push(url);
             }
 
             const filesPayload = uploadedUrls.map(url => ({ url }));
@@ -123,8 +126,9 @@ export default function CreateNotice() {
                     notice.title,
                     notice.content,
                     filesPayload,
+                    name,
                     "GENERAL",
-                    notice.teacher
+                    deadlineDate
                 );
             } else {
                 await createnoticeteamalert(
@@ -134,7 +138,8 @@ export default function CreateNotice() {
                     notice.teacher,
                     notice.teacherId,
                     "TEAM",
-                    notice.team_ids
+                    notice.team_ids,
+                    deadlineDate
                   );
             }
 
@@ -151,7 +156,15 @@ export default function CreateNotice() {
             .filter(u => u.startsWith('blob:'))
             .forEach(URL.revokeObjectURL);
     }, [previewUrls]);
-
+    function getDeadlineDate(start: string, end: string): string {
+        if (!start) return end;
+        if (!end) return start;
+      
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+      
+        return startDate < endDate ? start : end;
+      }
     return (
         <_.Container>
             <NavBar />
@@ -166,25 +179,36 @@ export default function CreateNotice() {
                         placeholder="공지사항의 제목을 등록하세요"
                     />
                     <_.CheckboxGroup>
-  {Clubs.map((club) => (
-    <label key={club.id} style={{ marginRight: '1rem' }}>
-      <input
-        type="radio"
-        name="club" 
-        value={club.id}
-        checked={notice.team_ids.includes(club.id)}
-        onChange={() => {
-          setNotice((prev) => ({
-            ...prev,
-            team_ids: [club.id], 
-          }));
-        }}
-      />
-      {club.name}
-    </label>
-  ))}
-</_.CheckboxGroup>
-
+                        {Clubs.map((club) => (
+                            <label key={club.id} style={{ marginRight: '1rem' }}>
+                            <input
+                                type="radio"
+                                name="club" 
+                                value={club.id}
+                                checked={notice.team_ids.includes(club.id)}
+                                onChange={() => {
+                                setNotice((prev) => ({
+                                    ...prev,
+                                    team_ids: [club.id], 
+                                }));
+                                }}
+                            />
+                            {club.name}
+                            </label>
+                        ))}
+                    </_.CheckboxGroup>
+                    <_.TextInput
+                        type="date"
+                        name="startDate"
+                        value={notice.startDate}
+                        onChange={handleChange}
+                    />
+                    <_.TextInput
+                        type="date"
+                        name="endDate"
+                        value={notice.endDate}
+                        onChange={handleChange}
+                    />
                     <_.TagBox>
                         <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
                         <_.TagButton onClick={() => insertTag('제목2')}>h2</_.TagButton>

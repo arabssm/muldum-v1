@@ -1,10 +1,9 @@
 export interface Notice {
-    idx: number;
-    title: string;
-    date: string;
-    formattedDate: string;
-    image: string;
-    imageCaption: string;
-    content: string[];
-    author: string;
+  title: string;
+  content: string;
+  teacher: string;
+  teacherId: number;
+  team_ids: number[];
+  startDate: string;         
+  endDate: string;           
 }

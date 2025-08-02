@@ -66,7 +66,6 @@ export async function getNotice(page) {
           'Content-Type': 'multipart/form-data'
         }
       });
-  
       if (res.status !== 200) {
         throw new Error(`업로드 실패 (status: ${res.status})`);
       }
@@ -77,16 +76,18 @@ export async function getNotice(page) {
       throw err;
     }
   }
-
-  export async function createnoticeteamalert(title:String,content:String,files: string[],teacher:String,teacherId:number,state:String,team_id:number): Promise<string> {
+  interface FilePayload {
+    url: string;
+  }
+  export async function createnoticeteamalert(title:String,content:String,files: FilePayload[],teacher:String,teacherId:number,state:String,team_id:number[],deadlineDate): Promise<string> {
     try {
       const res = await axiosInstance.post('/tch/notice',{
         "title":title,
         "content":content,
         "attachments":files,
-        "status":"TEAM",
+        "status":state,
         "teamId":team_id,
-        "teacher":"최병준"
+        "teacher":teacher
       });
       if (res.status !== 201) {
         throw new Error(`업로드 실패 (status: ${res.status})`);
@@ -97,14 +98,15 @@ export async function getNotice(page) {
       throw err;
     }
   }
-  export async function createnoticeallalert(title:String,content:String,files: string[],teacher:String,state:String): Promise<string> {
+
+  export async function createnoticeallalert(title:String,content:String,files: FilePayload[],teacher:String,type: "GENERAL" | "TEAM",deadlineDate): Promise<string> {
     try {
       const res = await axiosInstance.post('/tch/notice',{
         "title":title,
         "content":content,
         "attachments":files,
-        "status":"GENERAL",
-        "teacher":"최병준"
+        "status":type,
+        "teacher":teacher
       });
       if (res.status !== 201) {
         throw new Error(`업로드 실패 (status: ${res.status})`);
