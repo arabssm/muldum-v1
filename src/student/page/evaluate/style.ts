@@ -73,6 +73,10 @@ export const Input = styled.input`
     &:focus {
         outline: none;
     }
+
+    &::placeholder{
+        color: #CCCBCA;
+    }
 `;
 
 export const TextArea = styled.textarea`
