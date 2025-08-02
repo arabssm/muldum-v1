@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { Notice } from './type';
 
-export default function useNoticeState() {
-    const [notice, setNotice] = useState<Notice>({
-        idx: Date.now(),
-        title: '',
-        date: '',
-        formattedDate: '',
-        image: '',
-        imageCaption: '',
-        content: [],
-        author: '',
-        team_ids: [],
-    });
+const useNoticeState = (): [Notice, React.Dispatch<React.SetStateAction<Notice>>] => {
+  const [notice, setNotice] = useState<Notice>({
+    title: '',
+    content: '',
+    teacher: '',
+    teacherId: 0,
+    team_ids: [],
+    startDate: '',
+    endDate: '',
+  });
+  return [notice, setNotice];
+};
 
-    return [notice, setNotice] as const;
-}
+export default useNoticeState;
