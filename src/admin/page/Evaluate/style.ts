@@ -72,3 +72,33 @@ export const ClubButton = styled.button<{ active?: boolean }>`
     font-family: 'Paperlogy';
     cursor: pointer;
 `;
+
+const BaseButton = styled.button`
+    display: flex;
+    width: 85%;
+    border: none;
+    margin-top: 2rem;
+    padding: 2rem 2rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-family: 'Paperlogy';
+    cursor: pointer;
+`;
+
+export const ReportTextPrimary = styled(BaseButton)`
+    background-color: #FFF5EF;
+    color: #FF9B62;
+
+    &:hover {
+        background-color: #FFEDE2;
+    }
+`;
+
+export const ReportTextSecondary = styled(BaseButton)`
+    background-color: #FAFAFA;
+    color: #1E1E1E;
+
+    &:hover {
+        background-color: #EDEDED;
+    }
+`;

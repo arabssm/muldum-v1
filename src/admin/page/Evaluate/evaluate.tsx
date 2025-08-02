@@ -7,6 +7,9 @@ export default function ClubTabs() {
     const [activeTab, setActiveTab] = useState<"작성완료" | "미완료">("작성완료");
     const [activeClubId, setActiveClubId] = useState<number>(1);
 
+    const report = { month: 8 };
+    const reports = Array(3).fill(report);
+
     return (
         <_.Container>
         <NavBar />
@@ -37,6 +40,18 @@ export default function ClubTabs() {
             </_.ClubButton>
             ))}
         </_.ClubList>
+
+        {reports.map((rpt, idx) =>
+            idx === 0 ? (
+            <_.ReportTextPrimary key={idx}>
+                {`${rpt.month}월 월말평가 보고서 제출합니다`}
+            </_.ReportTextPrimary>
+            ) : (
+            <_.ReportTextSecondary key={idx}>
+                {`${rpt.month}월 월말평가 보고서 제출합니다`}
+            </_.ReportTextSecondary>
+            )
+        )}
         </_.Container>
     );
 }
