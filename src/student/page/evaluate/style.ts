@@ -72,7 +72,6 @@ export const Input = styled.input`
 
     &:focus {
         outline: none;
-        border-color: #FF9B62;
     }
 `;
 
@@ -84,11 +83,10 @@ export const TextArea = styled.textarea`
     border-radius: 0.5rem;
     font-size: 1rem;
     font-family: inherit;
-    resize: vertical;
+    resize: none;
 
     &:focus {
         outline: none;
-        border-color: #FF9B62;
     }
 `;
 
