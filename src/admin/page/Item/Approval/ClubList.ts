@@ -13,5 +13,4 @@ const Clubs = [
     { id: 12, name: "Tera" }
   ];
   
-  export default Clubs;
-  
+export default Clubs;

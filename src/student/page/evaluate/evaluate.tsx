@@ -11,7 +11,7 @@ const Section = ({ label, children }) => (
     </_.Section>
 );
 
-export default function Evaluate() {
+export default function SEvaluate() {
     const [modalType, setModalType] = useState<'save' | 'submit' | null>(null);
 
     const handleSave = () => {

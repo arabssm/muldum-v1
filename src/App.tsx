@@ -17,11 +17,12 @@ import PasswordModal from './all/component/modal/password/password';
 import { useRecoilValue } from 'recoil';
 import { loginModalState, whereismypasswordModalState } from "@_all/atom/Modal";
 import LoginModal from './all/component/modal/login/login';
-import Evaluate from '@_page/evaluate/evaluate';
+import SEvaluate from '@_page/evaluate/evaluate';
+import Evaluate from '@_pages/Evaluate/evaluate';
 
 export default function App() {
-  //const role = "TEACHER"; 
-  const role = "STUDENT";
+  const role = "TEACHER"; 
+  //const role = "STUDENT";
   const isOpen = useRecoilValue(loginModalState)
   const isOpen2=useRecoilValue(whereismypasswordModalState);  
   return (
@@ -39,7 +40,7 @@ export default function App() {
         <Route path="/object/detail/:id" element={<Resendpage />} />
         <Route path="/team-space" element={<Teamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
-        <Route path="/evaluate" element={<Evaluate />} />
+        <Route path="/evaluate" element={role === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {isOpen && <LoginModal />}
