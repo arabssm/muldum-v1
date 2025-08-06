@@ -1,29 +1,23 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { loginModalState, whereismypasswordModalState } from '../../../atom/Modal';
+import { loginModalState } from '../../../atom/Modal';
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import emailIcon from '../../../assets/login/email.svg';
-import passwordIcon from '../../../assets/login/password.svg';
 import {login} from '../../../../api/login/login'
 import { useNavigate } from 'react-router-dom';
 export default function LoginModal() {
   const navigate=useNavigate();
   const setModalOpen = useSetRecoilState(loginModalState);
-  const setModalOpen1 = useSetRecoilState(whereismypasswordModalState);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  function Cake() {
-    setModalOpen1(true);
-    setModalOpen(false);
-  }
-  async function Check() {
-    const result = await login(email, password);
-    if (result) {
-      alert("로그인 성공");
-    } else {
-      alert("로그인 실패");
-    }
+  const handleGoogleLogin = () => {
+    const clientId = '179606511270-u2gg8l9h1k261m3ienmgek6diogtflol.apps.googleusercontent.com'
+    const redirectUri = 'http://localhost:5173/kakao/login' 
+    const scope = 'openid email profile'
+    const responseType = 'code'
+    const state = crypto.randomUUID()
+  
+    const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}`
+  
+    window.location.href = oauthUrl
   }
   
   return (
@@ -31,37 +25,9 @@ export default function LoginModal() {
       <Overlay onClick={() => setModalOpen(false)} />
       <ModalContainer>
         <Title>로그인</Title>
-
-        <InputWrapper>
-          <IconImg src={emailIcon} alt="이메일 아이콘" />
-          <StyledInput
-            type="email"
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoFocus
-          />
-        </InputWrapper>
-
-        <InputWrapper>
-          <IconImg src={passwordIcon} alt="비밀번호 아이콘" />
-          <StyledInput
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </InputWrapper>
-
-        <LoginButton onClick={()=>Check()}>
-          로그인
+        <LoginButton onClick={()=>handleGoogleLogin()}>
+          구글로 로그인
         </LoginButton>
-
-        <GoPassword>
-          <PasswordLink onClick={Cake}>
-            비밀번호 변경하러 가기
-          </PasswordLink>
-        </GoPassword>
       </ModalContainer>
     </>
   );
