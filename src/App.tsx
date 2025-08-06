@@ -19,6 +19,7 @@ import { loginModalState, whereismypasswordModalState } from "@_all/atom/Modal";
 import LoginModal from './all/component/modal/login/login';
 import SEvaluate from '@_page/evaluate/evaluate';
 import Evaluate from '@_pages/Evaluate/evaluate';
+import Month from '@_page/month/month';
 
 export default function App() {
   const role = "TEACHER"; 
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/object/detail/:id" element={<Resendpage />} />
         <Route path="/team-space" element={<Teamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
+        <Route path="/shared-calendar" element={<Month />} />
         <Route path="/evaluate" element={role === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
