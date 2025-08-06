@@ -18,7 +18,9 @@
       "@_all/*": ["src/all/*"],
       "@_api/*": ["src/api/*"]
     },
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"], 
   "exclude": ["node_modules"]
