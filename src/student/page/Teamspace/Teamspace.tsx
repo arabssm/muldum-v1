@@ -10,7 +10,7 @@ export default function Teamspace() {
     const [emails, setEmails] = useState([
         "24.008@bssm.hs.kr",
         "24.008@bssm.hs.kr"
-    ]);
+    ]); 
     const [newEmail, setNewEmail] = useState("");
 
 const handleInvite = () => {

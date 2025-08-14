@@ -30,7 +30,7 @@ export default function Teamspace() {
                     <_.Img src={Plus} alt="링크추가" />
                     <_.Plus>링크추가</_.Plus>
                 </_.Group>
-            </_.Header>
+            </_.Header> 
             <Team />
             {isModalOpen && (
                 <_.ModalOverlay onClick={() => setIsModalOpen(false)}>
