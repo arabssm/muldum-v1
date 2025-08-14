@@ -6,7 +6,6 @@ import Notice from '@_component/onboarding/notice/notice';
 
 
 export default function Home(){
-
     return(
     <Container>
         <NavBar />
