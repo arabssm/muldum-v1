@@ -8,6 +8,7 @@ import NoticeEdit from '@_pages/Notice/Detail/Edit/NoticeEdit';
 import ProjectChoice from '@_pages/Item/Choice/ProjectChoice';
 import Approval from '@_pages/Item/Approval/Approval';
 import Teamspace from '@_pages/Teamspace/Teamspace';
+import STeamspace from '@_page/Teamspace/Teamspace'
 import ClubHistory from '@_pages/ClubHistory/ClubHistory';
 import Onboarding from '@_page/onboarding/index';
 import Object from '@_page/object/object';
@@ -19,7 +20,7 @@ import LoginModal from './all/component/modal/login/login';
 import SEvaluate from '@_page/evaluate/evaluate';
 import Evaluate from '@_pages/Evaluate/evaluate';
 import Month from '@_page/month/month';
-import GogleLogin from '@_all/pages/GogleLogin';
+
 export default function App() {
   //const role = "TEACHER"; 
   const role = "STUDENT";
@@ -38,7 +39,7 @@ export default function App() {
         <Route path="/object" element={<ProjectChoice />} />
         <Route path="/object/all" element={<All />} />
         <Route path="/object/detail/:id" element={<Resendpage />} />
-        <Route path="/team-space" element={<Teamspace />} />
+        <Route path="/team-space" element={role === "TEACHER" ? <Teamspace /> : <STeamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
         <Route path="/shared-calendar" element={<Month />} />
         <Route path="/evaluate" element={role === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
