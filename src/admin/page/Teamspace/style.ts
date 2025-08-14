@@ -43,12 +43,14 @@ export const Group = styled.button`
 export const Img = styled.img`
     width: 80%;
     margin-bottom: 0.4rem;
+    cursor: pointer;
 `;
 
 export const Plus = styled.span`
     font-size: 0.9rem;
     color: #909090;
     font-family: 'Paperlogy';
+    cursor: pointer;
 `;
 
 export const ModalOverlay = styled.div`
