@@ -20,7 +20,7 @@ import LoginModal from './all/component/modal/login/login';
 import SEvaluate from '@_page/evaluate/evaluate';
 import Evaluate from '@_pages/Evaluate/evaluate';
 import Month from '@_page/month/month';
-
+import GoogleLogin from '@_all/pages/GogleLogin';
 export default function App() {
   const role = "TEACHER"; 
   //const role = "STUDENT";
@@ -28,7 +28,7 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/kakao/login" element={<GogleLogin />} />
+        <Route path="/kakao/login" element={<GoogleLogin />} />
         <Route path="/" element={role === "STUDENT" ? <Onboarding /> : <Main />} />
         <Route path="/notice" element={ <Notice />} />
         <Route path="/project-approval" element={role === "STUDENT" ? <Object /> : <Approval />} />
