@@ -1,9 +1,10 @@
 import axiosInstance from "../../lib/axiosInatance";
 
-  export async function googleLogin(code: string): Promise<string | null> {
+  export default async function googleLogin(code: string): Promise<string | null> {
+    console.log(code)
     try {
       const res = await axiosInstance.post('/ara/auth/login/google', { 
-        'accessToken' : code 
+        'authorizationCode' : code 
        })
       return res.data.token 
     } catch (err) {

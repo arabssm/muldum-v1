@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Main from '@_main/Main';
 import Notice from '@_notice/Notice';
 import DetailNotice from '@_notice/Detail/DetailNotice';
-import CreateNotice from '@_notice/Create/CreateNotice';
+import CreateNotice from '@_pages/Notice/Create/CreateNotice';
 import NotFound from '@_components/NotFound/NotFound';
 import NoticeEdit from '@_pages/Notice/Detail/Edit/NoticeEdit';
 import ProjectChoice from '@_pages/Item/Choice/ProjectChoice';
@@ -22,8 +22,8 @@ import Evaluate from '@_pages/Evaluate/evaluate';
 import Month from '@_page/month/month';
 
 export default function App() {
-  //const role = "TEACHER"; 
-  const role = "STUDENT";
+  const role = "TEACHER"; 
+  //const role = "STUDENT";
   const isOpen = useRecoilValue(loginModalState)
   return (
     <>

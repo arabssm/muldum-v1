@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { loginModalState } from '../../../atom/Modal';
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import {login} from '../../../../api/login/login'
+
 import { useNavigate } from 'react-router-dom';
 export default function LoginModal() {
   const navigate=useNavigate();
