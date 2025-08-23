@@ -44,3 +44,27 @@ export const Text = styled.div<data>`
     color: ${({ isActive }) => (isActive ? '#FF9B62' : '#545454')};
     margin-left: 4%;
 `;
+
+export const ProfileArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+`;
+
+export const ProfileImg = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+export const ProfileInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const UserName = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+`;

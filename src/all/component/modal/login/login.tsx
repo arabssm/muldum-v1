@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { loginModalState } from '../../../atom/Modal';
+import { useLoginModalStore } from '../../../../atom/Modal';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 export default function LoginModal() {
   const navigate=useNavigate();
-  const setModalOpen = useSetRecoilState(loginModalState);
+  const { setIsOpen } = useLoginModalStore();
   const handleGoogleLogin = () => {
-    const clientId = '179606511270-u2gg8l9h1k261m3ienmgek6diogtflol.apps.googleusercontent.com'
-    const redirectUri = 'http://localhost:5173/kakao/login' 
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_REDIRECT_URI;
     const scope = 'openid email profile'
     const responseType = 'code'
     const state = crypto.randomUUID()
@@ -22,7 +22,7 @@ export default function LoginModal() {
   
   return (
     <>
-      <Overlay onClick={() => setModalOpen(false)} />
+      <Overlay onClick={() => setIsOpen(false)} />
       <ModalContainer>
         <Title>로그인</Title>
         <LoginButton onClick={()=>handleGoogleLogin()}>
