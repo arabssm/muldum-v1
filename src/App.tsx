@@ -14,24 +14,23 @@ import Onboarding from '@_page/onboarding/index';
 import Object from '@_page/object/object';
 import All from '@_page/object/all';
 import Resendpage from '@_page/object/resend';
-import { useRecoilValue } from 'recoil';
-import { loginModalState } from "@_all/atom/Modal";
+import {useLoginModalStore} from './atom/Modal';
+import {useUserStore} from './atom/User';
 import LoginModal from './all/component/modal/login/login';
 import SEvaluate from '@_page/evaluate/evaluate';
 import Evaluate from '@_pages/Evaluate/evaluate';
 import Month from '@_page/month/month';
 import GoogleLogin from '@_all/pages/GogleLogin';
 export default function App() {
-  const role = "TEACHER"; 
-  //const role = "STUDENT";
-  const isOpen = useRecoilValue(loginModalState)
+  const { isOpen } = useLoginModalStore();
+  const { user } = useUserStore();
   return (
     <>
       <Routes>
-        <Route path="/kakao/login" element={<GoogleLogin />} />
-        <Route path="/" element={role === "STUDENT" ? <Onboarding /> : <Main />} />
+        <Route path="/google/login" element={<GoogleLogin />} />
+        <Route path="/" element={user?.role === "STUDENT" ? <Onboarding /> : <Main />} />
         <Route path="/notice" element={ <Notice />} />
-        <Route path="/project-approval" element={role === "STUDENT" ? <Object /> : <Approval />} />
+        <Route path="/project-approval" element={user?.role === "STUDENT" ? <Object /> : <Approval />} />
         <Route path="/notice/:id" element={<DetailNotice />} />
         <Route path="/create-notice" element={<CreateNotice />} />
         <Route path="/notice/edit/:id" element={<NoticeEdit />} />
@@ -39,10 +38,10 @@ export default function App() {
         <Route path="/object" element={<ProjectChoice />} />
         <Route path="/object/all" element={<All />} />
         <Route path="/object/detail/:id" element={<Resendpage />} />
-        <Route path="/team-space" element={role === "TEACHER" ? <Teamspace /> : <STeamspace />} />
+        <Route path="/team-space" element={user?.role === "TEACHER" ? <Teamspace /> : <STeamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
         <Route path="/shared-calendar" element={<Month />} />
-        <Route path="/evaluate" element={role === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
+        <Route path="/evaluate" element={user?.role === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {isOpen && <LoginModal />}
