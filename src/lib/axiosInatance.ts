@@ -9,9 +9,9 @@ const axiosInstance = axios.create({
   withCredentials: true, 
 });
 axiosInstance.interceptors.request.use(async (config) => {
-  let token = localStorage.getItem('accessToken');
+  let token = localStorage.getItem('access_token');
   console.log('현재 토큰', token);
-  const refreshToken = localStorage.getItem('refreshToken');
+  const refreshToken = localStorage.getItem('refresh_token');
   if (!token && refreshToken) {
     console.log('토큰 없음 → refresh 실행 예정');
     token = await refreshAccessToken();
@@ -44,10 +44,10 @@ const processQueue = (token: string | null, error: any) => {
 };
 
 const refreshAccessToken = async (): Promise<string> => {
-  const { data } = await refreshClient.post('/ara/auth/refresh', null);
+  const { data } = await refreshClient.post('/ara/auth/refresh',{"refreshToken": localStorage.getItem('refresh_token')});
   const token: string = data.accessToken;
   if (!token) throw new Error('No accessToken in refresh response');
-  localStorage.setItem('accessToken', token);
+  localStorage.setItem('access_token', token);
   return token;
 };
 axiosInstance.interceptors.response.use(
@@ -79,7 +79,7 @@ axiosInstance.interceptors.response.use(
       } catch (e) {
         processQueue(null, e);
         isRefreshing = false;
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem('access_token');
         return Promise.reject(e);
       }
     }

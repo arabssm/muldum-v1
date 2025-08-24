@@ -5,12 +5,11 @@ import NavBar from '../../../../../all/component/sibebar/sidebar';
 import EditSuccess from '@_modal/Notice/EditSuccess';
 import {
   getNoticeDetail,
-  modifynotice,
-  modifynotice1,
-  savefile,
+  updateNotice,
+  saveFile,
+  NoticeStatus,
 } from '../../../../../api/notice/notice';
 import { Notice } from './type';
-
 
 export default function NoticeEdit() {
   const { id } = useParams<{ id: string }>();
@@ -20,9 +19,11 @@ export default function NoticeEdit() {
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [serverUrls, setServerUrls] = useState<string[]>([]); 
-  const [localFiles, setLocalFiles] = useState<File[]>([]);   
-  const [localBlobUrls, setLocalBlobUrls] = useState<string[]>([]); 
+  const [serverUrls, setServerUrls] = useState<string[]>([]);
+  const [localFiles, setLocalFiles] = useState<File[]>([]);
+  const [localBlobUrls, setLocalBlobUrls] = useState<string[]>([]);
+
+  // 공지 상세 조회
   useEffect(() => {
     if (!id) return;
     (async () => {
@@ -30,22 +31,24 @@ export default function NoticeEdit() {
         const data = await getNoticeDetail(Number(id));
         setNotice(data);
         if (data.files?.length) {
-          setServerUrls(data.files.map(f => f.filePath));
+          setServerUrls(data.files.map((f: { url: string }) => f.url));
         }
       } catch (err) {
         console.error('공지 불러오기 실패', err);
       }
     })();
   }, [id]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNotice(prev => prev && ({ ...prev, [name]: value }));
+    setNotice(prev => prev && { ...prev, [name]: value });
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNotice(prev => prev && ({ ...prev, content: e.target.value }));
+    setNotice(prev => prev && { ...prev, content: e.target.value });
   };
 
+  // 태그 삽입
   const insertTag = (tag: string) => {
     if (!notice) return;
     const textarea = document.getElementById('notice-content') as HTMLTextAreaElement;
@@ -62,12 +65,14 @@ export default function NoticeEdit() {
     }, 0);
   };
 
+  // 파일 선택
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
     setLocalFiles(prev => [...prev, ...files]);
     const blobs = files.map(f => URL.createObjectURL(f));
     setLocalBlobUrls(prev => [...prev, ...blobs]);
   };
+
   const removeServerImage = (idx: number) => setServerUrls(prev => prev.filter((_, i) => i !== idx));
   const removeLocalImage = (idx: number) => {
     setLocalFiles(prev => prev.filter((_, i) => i !== idx));
@@ -77,45 +82,39 @@ export default function NoticeEdit() {
     });
   };
 
-  useEffect(() => () => {
-    localBlobUrls.forEach(u => URL.revokeObjectURL(u));
+  useEffect(() => {
+    return () => localBlobUrls.forEach(u => URL.revokeObjectURL(u));
   }, [localBlobUrls]);
 
+  // 수정 요청
   const handleSubmit = async () => {
-    if (isSubmitting || !notice) return;
+    if (isSubmitting || !notice || !id) return;
     setIsSubmitting(true);
+
     try {
+      // 새 파일 업로드
       const uploadedUrls: string[] = [];
       for (const file of localFiles) {
-        const { fileUrl } = await savefile(file); 
-        uploadedUrls.push(fileUrl.replace(import.meta.env.VITE_API_URL as string, ''));
+        const { url } = await saveFile(file);
+        uploadedUrls.push(url.replace(import.meta.env.VITE_API_URL as string, ''));
       }
+
       const allUrls = [...serverUrls, ...uploadedUrls];
       const filesPayload = allUrls.map(url => ({ url }));
 
-      if (notice.teamId) {
-        await modifynotice(
-          id,
-          notice.title,
-          notice.content,
-          filesPayload,
-          notice.teacher,
-          notice.teacherId,
-          'TEAM',
-          notice.team_id,
-        );
-      } else {
-        await modifynotice1(
-          id,
-          notice.title,
-          notice.content,
-          filesPayload,
-          'GENERAL',
-          notice.teacher,
-        );
-      }
+      const patchData = {
+        title: notice.title,
+        content: notice.content,
+        files: filesPayload,
+        status: notice.teamId ? ("TEAM" as NoticeStatus) : ("GENERAL" as NoticeStatus),
+        ...(notice.teamId && { teamIds: [notice.teamId] }),
+        deadlineDate: notice.deadlineDate,
+      };
+
+      await updateNotice(Number(id), patchData);
       setShowModal(true);
     } catch (err) {
+      console.error('공지 수정 실패', err);
       alert('공지 수정 실패');
     } finally {
       setIsSubmitting(false);
@@ -123,6 +122,7 @@ export default function NoticeEdit() {
   };
 
   if (!notice) return null;
+
   return (
     <_.Container>
       <NavBar />
@@ -130,15 +130,16 @@ export default function NoticeEdit() {
         <_.PageTitle>공지사항 수정</_.PageTitle>
         <_.BoxGroup>
           <_.TextInput name="title" value={notice.title} onChange={handleChange} placeholder="공지 제목" />
-          <_.TextInput name="team_id" value={notice.teamId} onChange={handleChange} placeholder="팀 ID" />
+          <_.TextInput name="teamId" value={notice.teamId || ''} onChange={handleChange} placeholder="팀 ID" />
 
           <_.TagBox>
-                        <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
-                        <_.TagButton onClick={() => insertTag('제목2')}>h2</_.TagButton>
-                        <_.TagButton onClick={() => insertTag('제목3')}>h3</_.TagButton>
-                        <_.TagButton onClick={() => insertTag('제목4')}>h4</_.TagButton>
-                        <_.TagButton onClick={() => insertTag('강조')}>B</_.TagButton>
-                    </_.TagBox>
+            <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
+            <_.TagButton onClick={() => insertTag('제목2')}>h2</_.TagButton>
+            <_.TagButton onClick={() => insertTag('제목3')}>h3</_.TagButton>
+            <_.TagButton onClick={() => insertTag('제목4')}>h4</_.TagButton>
+            <_.TagButton onClick={() => insertTag('강조')}>B</_.TagButton>
+          </_.TagBox>
+
           <_.Textarea
             id="notice-content"
             value={notice.content}
@@ -150,6 +151,7 @@ export default function NoticeEdit() {
           <_.Picture onClick={() => document.getElementById('image-upload')?.click()}>
             이미지를 클릭하여 추가해주세요
           </_.Picture>
+
           {serverUrls.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
               {serverUrls.map((p, i) => (
@@ -162,6 +164,7 @@ export default function NoticeEdit() {
               ))}
             </div>
           )}
+
           {localBlobUrls.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
               {localBlobUrls.map((u, i) => (
@@ -192,5 +195,3 @@ export default function NoticeEdit() {
     </_.Container>
   );
 }
-
-
