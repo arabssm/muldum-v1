@@ -5,7 +5,7 @@ import NavBar from '../../../../all/component/sibebar/sidebar';
 import EditSuccess from '@_modal/Notice/EditSuccess';
 import '@_styles';
 import useNoticeState from './useNoticeState';
-import { saveFile, createNoticeGeneral, createNoticeTeam } from '../../../../api/notice/notice';
+import { saveFile, createNoticeGeneral,createNoticeGeneralno } from '../../../../api/notice/notice';
 
 export default function CreateNotice() {
   const navigate = useNavigate();
@@ -16,13 +16,6 @@ export default function CreateNotice() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const deadlineDate = getDeadlineDate(notice.startDate, notice.endDate);
-
-  const Clubs = [
-    { id: 1, name: '바로' }, { id: 2, name: '솔빗' }, { id: 3, name: '아라' },
-    { id: 4, name: '안다미로' }, { id: 5, name: '인서트' }, { id: 6, name: '하로' },
-    { id: 7, name: '팔레토' }, { id: 8, name: 'Echo' }, { id: 9, name: 'ODYSSEY' },
-    { id: 10, name: 'PARADOX' }, { id: 11, name: 'Pluto' }, { id: 12, name: 'Tera' },
-  ];
 
   useEffect(() => {
     const createPreviews = async () => {
@@ -77,14 +70,6 @@ export default function CreateNotice() {
     const urls = files.map((f) => URL.createObjectURL(f));
     setPreviewUrls((prev) => [...prev, ...urls]);
   };
-const toggleTeam = (id: number) => {
-  setNotice(prev => {
-    const exists = prev.team_ids.includes(id);
-    const next = exists ? prev.team_ids.filter(x => x !== id) : [...prev.team_ids, id];
-    return { ...prev, team_ids: next };
-  });
-};
-
   const handleRemoveImage = (index: number) => {
     setImageFiles((prev) => prev.filter((_, i) => i !== index));
     setPreviewUrls((prev) => {
@@ -106,26 +91,20 @@ const toggleTeam = (id: number) => {
         const url = await saveFile(file);
         uploadedUrls.push(url);
       }
-      const filesPayload = uploadedUrls.map((url) => ({ url }));
-      const isTeam = notice.team_ids.length > 0;
-
-      if (!isTeam) {
-        await createNoticeGeneral(
+      if(uploadedUrls.length === 0){
+        await createNoticeGeneralno(
           notice.title,
           notice.content,
-          filesPayload,
-          deadlineDate
-        );
-      } else {
-        await createNoticeTeam(
-          notice.title,
-          notice.content,
-          filesPayload,
-          notice.team_ids,
           deadlineDate
         );
       }
-
+      const filesPayload = uploadedUrls.map((url) => ({ url }));
+      await createNoticeGeneral(
+        notice.title,
+        notice.content,
+        filesPayload,
+        deadlineDate
+        );
       setShowModal(true);
     } catch (err) {
       console.error(err);
@@ -160,21 +139,6 @@ const toggleTeam = (id: number) => {
             onChange={handleChange}
             placeholder="공지사항의 제목을 등록하세요"
           />
-
-          <_.CheckboxGroup>
-            {Clubs.map((club) => (
-              <label key={club.id} style={{ marginRight: '1rem' }}>
-                <input
-                  type="checkbox"
-                  name="club"
-                  value={club.id}
-                  checked={notice.team_ids.includes(club.id)}
-                  onChange={() => toggleTeam(club.id)}
-                />
-                {club.name}
-              </label>
-            ))}
-          </_.CheckboxGroup>
 
           <_.TextInput type="date" name="startDate" value={notice.startDate} onChange={handleChange} />
 

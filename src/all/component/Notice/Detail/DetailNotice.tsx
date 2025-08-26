@@ -29,8 +29,8 @@ export default function Detail() {
   if (!doc1) return <Notfound />;
 
   let date = '';
-  if (doc1.createdAt) {
-    const d = new Date(doc1.createdAt);
+  if (doc1.updatedAt) {
+    const d = new Date(doc1.updatedAt);
     const Y = d.getFullYear();
     const M = String(d.getMonth() + 1).padStart(2, '0');
     const D = String(d.getDate()).padStart(2, '0');
@@ -64,9 +64,9 @@ export default function Detail() {
         <_.AdditionRow>
           <_.AdditionLeft>
             <_.Addition>{date}</_.Addition>
-            <_.Addition>작성자: 교사 {doc1.teacherName || '알 수 없음'}</_.Addition>
+            <_.Addition>작성자: 교사 {doc1.teacher || '알 수 없음'}</_.Addition>
           </_.AdditionLeft>
-          {user.role === "TEACHER" && (
+          {user.userType === "TEACHER" && (
             <_.ButtonGroup>
               <button onClick={() => setShowModal(true)}>삭제하기</button>
               <button onClick={() => navigate(`/notice/edit/${doc1.id}`)}>수정하기</button>

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as _ from './style';
-import NavBar from '../../../../../all/component/sibebar/sidebar';
+import NavBar from '../../../../all/component/sibebar/sidebar';
 import EditSuccess from '@_modal/Notice/EditSuccess';
 import {
   getNoticeDetail,
   updateNotice,
-  saveFile,
-  NoticeStatus,
-} from '../../../../../api/notice/notice';
+  saveFile
+} from '../../../../api/notice/notice';
 import { Notice } from './type';
 
 export default function NoticeEdit() {
@@ -23,7 +22,6 @@ export default function NoticeEdit() {
   const [localFiles, setLocalFiles] = useState<File[]>([]);
   const [localBlobUrls, setLocalBlobUrls] = useState<string[]>([]);
 
-  // 공지 상세 조회
   useEffect(() => {
     if (!id) return;
     (async () => {
@@ -48,7 +46,6 @@ export default function NoticeEdit() {
     setNotice(prev => prev && { ...prev, content: e.target.value });
   };
 
-  // 태그 삽입
   const insertTag = (tag: string) => {
     if (!notice) return;
     const textarea = document.getElementById('notice-content') as HTMLTextAreaElement;
@@ -65,7 +62,6 @@ export default function NoticeEdit() {
     }, 0);
   };
 
-  // 파일 선택
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
     setLocalFiles(prev => [...prev, ...files]);
@@ -86,40 +82,40 @@ export default function NoticeEdit() {
     return () => localBlobUrls.forEach(u => URL.revokeObjectURL(u));
   }, [localBlobUrls]);
 
-  // 수정 요청
-  const handleSubmit = async () => {
-    if (isSubmitting || !notice || !id) return;
-    setIsSubmitting(true);
+const handleSubmit = async () => {
+  if (isSubmitting || !notice || !id) return;
+  setIsSubmitting(true);
 
-    try {
-      // 새 파일 업로드
-      const uploadedUrls: string[] = [];
-      for (const file of localFiles) {
-        const { url } = await saveFile(file);
-        uploadedUrls.push(url.replace(import.meta.env.VITE_API_URL as string, ''));
-      }
-
-      const allUrls = [...serverUrls, ...uploadedUrls];
-      const filesPayload = allUrls.map(url => ({ url }));
-
-      const patchData = {
-        title: notice.title,
-        content: notice.content,
-        files: filesPayload,
-        status: notice.teamId ? ("TEAM" as NoticeStatus) : ("GENERAL" as NoticeStatus),
-        ...(notice.teamId && { teamIds: [notice.teamId] }),
-        deadlineDate: notice.deadlineDate,
-      };
-
-      await updateNotice(Number(id), patchData);
-      setShowModal(true);
-    } catch (err) {
-      console.error('공지 수정 실패', err);
-      alert('공지 수정 실패');
-    } finally {
-      setIsSubmitting(false);
+  try {
+    // 새 파일 업로드
+    const uploadedUrls: string[] = [];
+    for (const file of localFiles) {
+      const { url } = await saveFile(file);
+      uploadedUrls.push(url.replace(import.meta.env.VITE_API_URL as string, ''));
     }
-  };
+
+    // patchData 생성
+    const patchData: any = {
+      title: notice.title,
+      content: notice.content,
+      deadlineDate: notice.deadlineDate,
+    };
+
+    const allUrls = [...serverUrls, ...uploadedUrls];
+    if (allUrls.length > 0) {
+      patchData.files = allUrls.map(url => ({ url }));
+    }
+
+    await updateNotice(Number(id), patchData);
+    setShowModal(true);
+  } catch (err) {
+    console.error('공지 수정 실패', err);
+    alert('공지 수정 실패');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   if (!notice) return null;
 
@@ -130,7 +126,6 @@ export default function NoticeEdit() {
         <_.PageTitle>공지사항 수정</_.PageTitle>
         <_.BoxGroup>
           <_.TextInput name="title" value={notice.title} onChange={handleChange} placeholder="공지 제목" />
-          <_.TextInput name="teamId" value={notice.teamId || ''} onChange={handleChange} placeholder="팀 ID" />
 
           <_.TagBox>
             <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>

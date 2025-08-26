@@ -27,6 +27,7 @@ export default function NavBar() {
           <_.ProfileArea>
             <_.ProfileImg src={DefaultProfile} alt="프로필" />
             <_.ProfileInfo>
+              <_.Job>{user.userType}</_.Job>
               <_.UserName>{user.name || '이름'}</_.UserName>
             </_.ProfileInfo>
           </_.ProfileArea>

@@ -4,7 +4,7 @@ import Notice from '@_notice/Notice';
 import DetailNotice from '@_notice/Detail/DetailNotice';
 import CreateNotice from '@_pages/Notice/Create/CreateNotice';
 import NotFound from '@_components/NotFound/NotFound';
-import NoticeEdit from '@_pages/Notice/Detail/Edit/NoticeEdit';
+import NoticeEdit from '@_pages/Notice/Edit/NoticeEdit';
 import ProjectChoice from '@_pages/Item/Choice/ProjectChoice';
 import Approval from '@_pages/Item/Approval/Approval';
 import Teamspace from '@_pages/Teamspace/Teamspace';

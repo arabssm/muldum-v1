@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { ref } from 'process';
 
 const API_BASE = import.meta.env.VITE_API_URL;
 
@@ -6,14 +7,13 @@ const API_BASE = import.meta.env.VITE_API_URL;
 const axiosInstance = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' },
+  
   withCredentials: true, 
 });
 axiosInstance.interceptors.request.use(async (config) => {
   let token = localStorage.getItem('access_token');
-  console.log('현재 토큰', token);
   const refreshToken = localStorage.getItem('refresh_token');
   if (!token && refreshToken) {
-    console.log('토큰 없음 → refresh 실행 예정');
     token = await refreshAccessToken();
   }
 
@@ -44,9 +44,12 @@ const processQueue = (token: string | null, error: any) => {
 };
 
 const refreshAccessToken = async (): Promise<string> => {
-  const { data } = await refreshClient.post('/ara/auth/refresh',{"refreshToken": localStorage.getItem('refresh_token')});
-  const token: string = data.accessToken;
-  if (!token) throw new Error('No accessToken in refresh response');
+  const { data } = await refreshClient.post('/ara/auth/refresh', {
+    refreshToken: localStorage.getItem('refresh_token'),
+  });
+  const token: string = data.access_token;
+  console.log('새로 발급된 토큰', token);
+  if (!token) throw new Error('No access_token in refresh response');
   localStorage.setItem('access_token', token);
   return token;
 };
@@ -57,7 +60,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
 
-      if (isRefreshing) {
+      if (isRefreshing) { 
         return new Promise((resolve, reject) => {
           pendingQueue.push((token: string) => {
             original.headers = original.headers ?? {};
@@ -79,7 +82,7 @@ axiosInstance.interceptors.response.use(
       } catch (e) {
         processQueue(null, e);
         isRefreshing = false;
-        localStorage.removeItem('access_token');
+        localStorage.removeItem('access_Token');
         return Promise.reject(e);
       }
     }

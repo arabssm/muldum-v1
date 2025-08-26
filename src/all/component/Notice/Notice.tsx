@@ -71,7 +71,7 @@ export default function Notice() {
             key={notice.id}
             idx={notice.id}
             title={notice.title}
-            date={notice.createdAt} 
+            date={notice.updatedAt} 
           />
         ))}
         <Pagination
