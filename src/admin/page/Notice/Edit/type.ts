@@ -7,4 +7,5 @@ export interface Notice {
     imageCaption: string;
     content: string[];
     author: string;
+    deadlineDate: string;
 }

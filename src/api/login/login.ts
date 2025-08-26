@@ -1,4 +1,3 @@
-// src/api/login/login.ts
 import axiosInstance from "../../lib/axiosInatance";
 
 export interface LoginResponse {

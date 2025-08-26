@@ -49,12 +49,13 @@ export const ProfileArea = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  row-gap: 1.4rem;
   padding: 12px;
+  margin-bottom: 8%;
 `;
 
 export const ProfileImg = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 24%;
   border-radius: 50%;
   object-fit: cover;
 `;
@@ -62,9 +63,16 @@ export const ProfileImg = styled.img`
 export const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 `;
 
 export const UserName = styled.span`
-  font-size: 14px;
+  font-size: 1.125rem;
   font-weight: 600;
+`;
+
+export const Job = styled.div`
+  display: flex;
+  color: #B2B2B2;
+  font-size: 0.9rem;
 `;
