@@ -8,28 +8,35 @@ import NoticeEdit from '@_pages/Notice/Detail/Edit/NoticeEdit';
 import ProjectChoice from '@_pages/Item/Choice/ProjectChoice';
 import Approval from '@_pages/Item/Approval/Approval';
 import Teamspace from '@_pages/Teamspace/Teamspace';
-import STeamspace from '@_page/Teamspace/Teamspace'
+import STeamspace from '@_page/Teamspace/Teamspace';
 import ClubHistory from '@_pages/ClubHistory/ClubHistory';
 import Onboarding from '@_page/onboarding/index';
 import Object from '@_page/object/object';
 import All from '@_page/object/all';
 import Resendpage from '@_page/object/resend';
-import {useLoginModalStore} from './atom/Modal';
-import {useUserStore} from './atom/User';
+import { useLoginModalStore } from './atom/Modal';
+import { useUserStore } from './atom/User';
 import LoginModal from './all/component/modal/login/login';
 import SEvaluate from '@_page/evaluate/evaluate';
 import Evaluate from '@_pages/Evaluate/evaluate';
 import Month from '@_page/month/month';
 import GoogleLogin from '@_all/pages/GogleLogin';
+import { useLoadingStore } from './atom/Loading';
+import Loading from './all/component/loading/loading';
+
 export default function App() {
   const { isOpen } = useLoginModalStore();
   const { user } = useUserStore();
+  const { isLoading } = useLoadingStore();
+
+  if (isLoading) return <Loading />;
+
   return (
     <>
       <Routes>
         <Route path="/google/login" element={<GoogleLogin />} />
         <Route path="/" element={user?.role === "STUDENT" ? <Onboarding /> : <Main />} />
-        <Route path="/notice" element={ <Notice />} />
+        <Route path="/notice" element={<Notice />} />
         <Route path="/project-approval" element={user?.role === "STUDENT" ? <Object /> : <Approval />} />
         <Route path="/notice/:id" element={<DetailNotice />} />
         <Route path="/create-notice" element={<CreateNotice />} />
