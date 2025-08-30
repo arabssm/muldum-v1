@@ -1,5 +1,5 @@
 import axiosInstance from "../../lib/axiosInatance";
-
+import axios from 'axios';
 export default async function getNoticeAra() {
   const res = await axiosInstance.get(`ara/notice`);
   return res.status === 200 ? res.data : res.status;
@@ -27,12 +27,18 @@ export async function saveFile(file: File) {
   if (res.status !== 200) throw new Error(`URL 발급 실패 (status: ${res.status})`);
 
   const presignedUrl = res.data; 
-
-  await axiosInstance.put(presignedUrl, file, {
+  const uploadRes = await fetch(presignedUrl, {
+    method: "PUT",
     headers: {
       "Content-Type": file.type,
-    }
+    },
+    body: file,
   });
+
+  if (!uploadRes.ok) {
+    throw new Error(`업로드 실패 (status: ${uploadRes.status})`);
+  }
+
   return presignedUrl.split("?")[0];
 }
 
