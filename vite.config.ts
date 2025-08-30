@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@_assets': path.resolve(__dirname, 'src/all/assets'),
+      '@_assets': path.resolve(__dirname, 'src/assets'),
       '@_modalImages': path.resolve(__dirname, 'src/assets/modal'),
       '@_components': path.resolve(__dirname, 'src/admin/components'),
       '@_menu': path.resolve(__dirname, 'src/admin/components/Menu'),

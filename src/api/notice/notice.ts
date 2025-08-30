@@ -20,15 +20,22 @@ export async function deleteNotice(id: number) {
   return res.status === 200 ? res.data : res.status;
 }
 
+
+
 export async function saveFile(file: File) {
-  const formData = new FormData();
-  formData.append("files", file);
-  const res = await axiosInstance.post("/ara/files/upload", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+  const res = await axiosInstance.get(`/ara/files/presigned?fileName=${file.name}`);
+  if (res.status !== 200) throw new Error(`URL 발급 실패 (status: ${res.status})`);
+
+  const presignedUrl = res.data; 
+
+  await axiosInstance.put(presignedUrl, file, {
+    headers: {
+      "Content-Type": file.type,
+    }
   });
-  if (res.status !== 200) throw new Error(`업로드 실패 (status: ${res.status})`);
-  return res.data;
+  return presignedUrl.split("?")[0];
 }
+
 
 export type FilePayload = { url: string };
 export type NoticeFile = { url: string };

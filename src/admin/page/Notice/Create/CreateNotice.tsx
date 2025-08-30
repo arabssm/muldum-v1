@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as _ from './style';
 import NavBar from '../../../../all/component/sibebar/sidebar';
-import EditSuccess from '@_modal/Notice/EditSuccess';
+import NoticeSuccess from '@_modal/Notice/CreateNotice';
 import '@_styles';
 import useNoticeState from './useNoticeState';
 import { saveFile, createNoticeGeneral,createNoticeGeneralno } from '../../../../api/notice/notice';
@@ -78,41 +78,34 @@ export default function CreateNotice() {
       return prev.filter((_, i) => i !== index);
     });
   };
+const handleSubmit = async () => {
+  if (isSubmitting) return;
+  if (!notice.title.trim()) return alert('제목을 입력하세요.');
+  if (!notice.content.trim()) return alert('내용을 입력하세요.');
 
-  const handleSubmit = async () => {
-    if (isSubmitting) return;
-    if (!notice.title.trim()) return alert('제목을 입력하세요.');
-    if (!notice.content.trim()) return alert('내용을 입력하세요.');
-
-    setIsSubmitting(true);
-    try {
-      const uploadedUrls: string[] = [];
-      for (const file of imageFiles) {
-        const url = await saveFile(file);
-        uploadedUrls.push(url);
-      }
-      if(uploadedUrls.length === 0){
-        await createNoticeGeneralno(
-          notice.title,
-          notice.content,
-          deadlineDate
-        );
-      }
-      const filesPayload = uploadedUrls.map((url) => ({ url }));
-      await createNoticeGeneral(
-        notice.title,
-        notice.content,
-        filesPayload,
-        deadlineDate
-        );
-      setShowModal(true);
-    } catch (err) {
-      console.error(err);
-      alert('공지 등록 실패');
-    } finally {
-      setIsSubmitting(false);
+  setIsSubmitting(true);
+  try {
+    const uploadedUrls: string[] = [];
+    for (const file of imageFiles) {
+      const url = await saveFile(file); 
+      uploadedUrls.push(url);
     }
-  };
+
+    if (uploadedUrls.length === 0) {
+      await createNoticeGeneralno(notice.title, notice.content, deadlineDate);
+    } else {
+      const filesPayload = uploadedUrls.map((url) => ({ url }));
+      await createNoticeGeneral(notice.title, notice.content, filesPayload, deadlineDate);
+    }
+
+    setShowModal(true);
+  } catch (err) {
+    console.error(err);
+    alert('공지 등록 실패');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   useEffect(() => {
     return () => previewUrls.filter((u) => u.startsWith('blob:')).forEach(URL.revokeObjectURL);
@@ -183,7 +176,7 @@ export default function CreateNotice() {
       </_.Wrapper>
 
       {showModal && (
-        <EditSuccess
+        <NoticeSuccess
           onClose={() => {
             setShowModal(false);
             navigate('/notice');
