@@ -12,6 +12,7 @@ interface User {
 
 interface UserState {
   user: User | null
+  hydrated: boolean
   setUser: (user: User) => void
   clearUser: () => void
 }

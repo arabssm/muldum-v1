@@ -3,20 +3,25 @@ import * as _ from "./style";
 import "@_styles";
 import NavBar from "@_all/component/sibebar/sidebar";
 import Team from "@_components/Teamspace/Team";
-import Plus from "@_all/assets/team/ggsite.svg";
+import Plus from "@_assets/team/ggsite.svg";
+import Invite from "../../../api/teamspace/invite"
 
 export default function Teamspace() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newUrl, setNewUrl] = useState("");
 
-    const handleAddUrl = () => {
-        if (newUrl.trim() === "") return;
-        if (!newUrl.startsWith("https://")) return alert("올바른 URL을 입력하세요.");
-        if (!newUrl.includes("docs.google.com/spreadsheets")) return alert("Google 시트 링크만 입력할 수 있습니다.");
-        alert("Google 시트 링크가 저장되었습니다!");
+    const handleAddUrl = async () => {
+    try {
+        await Invite(newUrl);
         setNewUrl("");
         setIsModalOpen(false);
+        alert("링크가 추가되었습니다!");
+    } catch (err) {
+        console.error(err);
+        alert("추가에 실패했습니다.");
+    }
     };
+
 
     return (
         <_.Wrapper>

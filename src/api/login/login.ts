@@ -17,13 +17,11 @@ export default async function googleLogin(code: string): Promise<LoginResponse |
     });
 
     if (res.status === 200) {
+      alert("로그인에 성공하였습니다.")
       return res.data as LoginResponse;
-    } else {
-      alert('로그인에 실패했습니다. 다시 시도해주세요.');
-      return null;
     }
   } catch (err) {
-    console.error('[googleLogin] error:', err);
+    alert(err.message);
     return null;
   }
 }

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import CheckIcon from '@_all/assets/modal/check.svg';
+import CheckIcon from '@_assets/modal/check.svg';
 import * as _ from '../style';
 import '@_styles';
 import { Props } from './type'
 
 export default function ConfirmDeleteModal({ onClose }: Props) {
-const modalRef = useRef<HTMLDivElement>(null);
+const modalRef = useRef<HTMLDivElement>(null);  
 const [counts, setSecondsLeft] = useState(5);
 
 useEffect(() => {

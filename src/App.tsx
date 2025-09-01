@@ -10,7 +10,6 @@ import Approval from '@_pages/Item/Approval/Approval';
 import Teamspace from '@_pages/Teamspace/Teamspace';
 import STeamspace from '@_page/Teamspace/Teamspace';
 import ClubHistory from '@_pages/ClubHistory/ClubHistory';
-import Onboarding from '@_page/onboarding/index';
 import Object from '@_page/object/object';
 import All from '@_page/object/all';
 import Resendpage from '@_page/object/resend';
@@ -35,9 +34,9 @@ export default function App() {
     <>
       <Routes>
         <Route path="/google/login" element={<GoogleLogin />} />
-        <Route path="/" element={user?.role === "STUDENT" ? <Onboarding /> : <Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="/notice" element={<Notice />} />
-        <Route path="/project-approval" element={user?.role === "STUDENT" ? <Object /> : <Approval />} />
+        <Route path="/project-approval" element={user?.userType === "TEACHER" ? <Approval /> : <Object />} />
         <Route path="/notice/:id" element={<DetailNotice />} />
         <Route path="/create-notice" element={<CreateNotice />} />
         <Route path="/notice/edit/:id" element={<NoticeEdit />} />
@@ -45,10 +44,10 @@ export default function App() {
         <Route path="/object" element={<ProjectChoice />} />
         <Route path="/object/all" element={<All />} />
         <Route path="/object/detail/:id" element={<Resendpage />} />
-        <Route path="/team-space" element={user?.role === "TEACHER" ? <Teamspace /> : <STeamspace />} />
+        <Route path="/team-space" element={user?.userType === "TEACHER" ? <Teamspace /> : <STeamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
         <Route path="/shared-calendar" element={<Month />} />
-        <Route path="/evaluate" element={user?.role === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
+        <Route path="/evaluate" element={user?.userType === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {isOpen && <LoginModal />}

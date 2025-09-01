@@ -4,7 +4,7 @@ import * as _ from './style';
 
 import { useLoginModalStore } from '../../../atom/Modal';
 import { useUserStore } from '../../../atom/User';
-import DefaultProfile from '../../assets/profile.svg';
+import DefaultProfile from '@_assets/profile.svg';
 
 import SettingModal from '../Setting/SettingModal';
 import { useSettingModalStore } from "../../../atom/Modal";

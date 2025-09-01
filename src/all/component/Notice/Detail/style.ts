@@ -51,12 +51,13 @@ export const Content = styled.div`
 `;
 
 export const BackButton = styled.button`
-    margin-top: 5%;
-    padding: 1% 2%;
-    margin-left: 8%;
-    font-size: 1.1rem;
-    background-color: #FF9B62;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    margin-left: 7%;
     color: #fff;
+    background: none;
     border: none;
     border-radius: 3rem;
     cursor: pointer;

@@ -9,6 +9,7 @@ import NavBar from '@_navbar/sidebar';
 import Pagination from './Pagination';
 import { NoticeItem } from './type';
 import {getNotice} from '@_api/notice/notice';
+
 export default function Notice() {
     const [notices, setNotices] = useState<NoticeItem[]>([]);
     const [search, setSearch] = useState('');
