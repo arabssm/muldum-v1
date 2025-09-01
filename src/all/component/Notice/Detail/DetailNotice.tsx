@@ -78,7 +78,7 @@ export default function Detail() {
           {doc1?.files?.map((file: any, idx: number) => (
             <_.pic
               key={file.fileId ?? idx}
-              src={`${import.meta.env.VITE_API_URL}${file.filePath}`}
+              src={`${file.url}`}
               alt={file.fileName}
               style={{ width: 300, borderRadius: 6 }}
             />
