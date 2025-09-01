@@ -8,6 +8,7 @@ import makeDocument from './makeDocument';
 import { getNoticeDetail, deleteNotice } from '../../../../api/notice/notice';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '../../../../atom/User';
+import arrow from '@_assets/arrow.svg'
 
 export default function Detail() {
   const { id } = useParams<{ id: string }>();
@@ -64,6 +65,10 @@ export default function Detail() {
   return (
     <_.Container>
       <NavBar />
+      <_.BackButton onClick={() => navigate(-1)}>
+  <img src={arrow} alt="Back" />
+</_.BackButton>
+
       <_.Wrapper>
         <_.PageTitle>{doc1?.title || ''}</_.PageTitle>
 
@@ -99,8 +104,6 @@ export default function Detail() {
           {doc1?.content ? makeDocument(doc1.content) : ''}
         </_.Content>
       </_.Wrapper>
-
-      <_.BackButton onClick={() => navigate(-1)}>이전</_.BackButton>
 
       {showModal && (
         <DeleteModal
