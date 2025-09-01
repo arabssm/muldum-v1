@@ -82,16 +82,21 @@ export default function NoticeEdit() {
     return () => localBlobUrls.forEach(u => URL.revokeObjectURL(u));
   }, [localBlobUrls]);
 
-const handleSubmit = async () => {
+  const handleSubmit = async () => {
   if (isSubmitting || !notice || !id) return;
   setIsSubmitting(true);
 
   try {
-    // 새 파일 업로드
-    const uploadedUrls: string[] = [];
-    for (const file of localFiles) {
-      const { url } = await saveFile(file);
-      uploadedUrls.push(url.replace(import.meta.env.VITE_API_URL as string, ''));
+    let allUrls: string[] = [...serverUrls];
+
+    // 이미지가 있으면 파일 업로드
+    if (localFiles.length > 0) {
+      const uploadedUrls: string[] = [];
+      for (const file of localFiles) {
+        const { url } = await saveFile(file);
+        uploadedUrls.push(url);
+      }
+      allUrls = [...allUrls, ...uploadedUrls];
     }
 
     // patchData 생성
@@ -101,11 +106,12 @@ const handleSubmit = async () => {
       deadlineDate: notice.deadlineDate,
     };
 
-    const allUrls = [...serverUrls, ...uploadedUrls];
+    // 이미지가 있으면 files 추가
     if (allUrls.length > 0) {
       patchData.files = allUrls.map(url => ({ url }));
     }
 
+    // updateNotice 실행
     await updateNotice(Number(id), patchData);
     setShowModal(true);
   } catch (err) {
@@ -115,6 +121,7 @@ const handleSubmit = async () => {
     setIsSubmitting(false);
   }
 };
+
 
 
   if (!notice) return null;
@@ -151,14 +158,15 @@ const handleSubmit = async () => {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
               {serverUrls.map((p, i) => (
                 <img
-                  key={`sv-${i}`}
-                  src={`${import.meta.env.VITE_API_URL}${p}`}
+                  key={i}
+                  src={p}
                   style={{ width: 120, borderRadius: 6, cursor: 'pointer' }}
                   onClick={() => removeServerImage(i)}
                 />
               ))}
             </div>
           )}
+
 
           {localBlobUrls.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
