@@ -10,5 +10,6 @@ return (
         <NavBar />
         <Slider />
         <Menu />
+        <img src="https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/uploads/KakaoTalk_Photo_2025-08-25-01-26-19.png" />
     </_.Container>
 )}

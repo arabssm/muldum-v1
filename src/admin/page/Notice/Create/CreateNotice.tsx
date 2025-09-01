@@ -14,7 +14,11 @@ export default function CreateNotice() {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const MinDate = `${year}-${month}-${day}`;
   const deadlineDate = getDeadlineDate(notice.startDate, notice.endDate);
 
   useEffect(() => {
@@ -133,7 +137,7 @@ const handleSubmit = async () => {
             placeholder="공지사항의 제목을 등록하세요"
           />
 
-          <_.TextInput type="date" name="startDate" value={notice.startDate} onChange={handleChange} />
+          <_.TextInput type="date" name="startDate" value={notice.startDate} onChange={handleChange} min={MinDate}/>
 
           <_.TagBox>
             <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
