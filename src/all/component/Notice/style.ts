@@ -87,11 +87,11 @@ export const DateText = styled.span`
 
 export const PaginationWrapper = styled.div`
     position: fixed;
-    bottom:6%;
+    bottom: 8%;
+    left: 8%;
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 1% 0;
     background-color: #fff;
     gap: 1%;
 `;
