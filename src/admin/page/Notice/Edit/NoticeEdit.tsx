@@ -76,7 +76,7 @@ export default function NoticeEdit() {
       URL.revokeObjectURL(prev[idx]);
       return prev.filter((_, i) => i !== idx);
     });
-         const input = document.getElementById('image-upload') as HTMLInputElement;
+    const input = document.getElementById('image-upload') as HTMLInputElement;
      if (input) input.value = '';
   };
 
@@ -105,7 +105,7 @@ export default function NoticeEdit() {
       deadlineDate: notice.deadlineDate,
     };
 
-    // 이미지가 있으면 files 추가
+
     if (allUrls.length > 0) {
       patchData.files = allUrls.map(url => ({ url }));
     }

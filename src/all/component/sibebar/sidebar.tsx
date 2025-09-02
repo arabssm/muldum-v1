@@ -6,7 +6,7 @@ import { useLoginModalStore } from '../../../atom/Modal';
 import { useUserStore } from '../../../atom/User';
 import DefaultProfile from '@_assets/profile.svg';
 
-import SettingModal from '../Setting/SettingModal';
+import SettingModal from '../modal/Setting/SettingModal';
 import { useSettingModalStore } from "../../../atom/Modal";
 
 export default function NavBar() {

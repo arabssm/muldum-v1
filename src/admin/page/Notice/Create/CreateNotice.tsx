@@ -100,7 +100,7 @@ const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       return prev.filter((_, i) => i !== index);
     });
      const input = document.getElementById('image-upload') as HTMLInputElement;
-    if (input) input.value = '';
+     if (input) input.value = '';
   };
 const handleSubmit = async () => {
   if (isSubmitting) return;
