@@ -42,6 +42,24 @@ export default function CreateNotice() {
     const { name, value } = e.target;
     setNotice((prev) => ({ ...prev, [name]: value }));
   };
+  const isBeforeToday = (yyyyMMdd: string) => {
+    if (!yyyyMMdd) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selected = new Date(yyyyMMdd);
+    selected.setHours(0, 0, 0, 0);
+    return selected < today;
+  };
+
+const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  if (name === "startDate" && isBeforeToday(value)) {
+    alert("오늘 이후 날짜만 가능합니다.");
+    setNotice(prev => ({ ...prev, startDate: "" }));
+    return;
+  }
+  setNotice(prev => ({ ...prev, [name]: value }));
+};
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -81,6 +99,8 @@ export default function CreateNotice() {
       if (urlToRevoke?.startsWith('blob:')) URL.revokeObjectURL(urlToRevoke);
       return prev.filter((_, i) => i !== index);
     });
+     const input = document.getElementById('image-upload') as HTMLInputElement;
+    if (input) input.value = '';
   };
 const handleSubmit = async () => {
   if (isSubmitting) return;
@@ -136,9 +156,13 @@ const handleSubmit = async () => {
             onChange={handleChange}
             placeholder="공지사항의 제목을 등록하세요"
           />
-
-          <_.TextInput type="date" name="startDate" value={notice.startDate} onChange={handleChange} min={MinDate}/>
-
+          <_.TextInput
+            type="date"
+            name="startDate"
+            value={notice.startDate}
+            onChange={handleDateChange}
+            min={MinDate}
+          />
           <_.TagBox>
             <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
             <_.TagButton onClick={() => insertTag('제목2')}>h2</_.TagButton>

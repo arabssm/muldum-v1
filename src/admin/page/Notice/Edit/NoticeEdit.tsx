@@ -76,6 +76,8 @@ export default function NoticeEdit() {
       URL.revokeObjectURL(prev[idx]);
       return prev.filter((_, i) => i !== idx);
     });
+         const input = document.getElementById('image-upload') as HTMLInputElement;
+     if (input) input.value = '';
   };
 
   useEffect(() => {
@@ -88,18 +90,15 @@ export default function NoticeEdit() {
 
   try {
     let allUrls: string[] = [...serverUrls];
-
-    // 이미지가 있으면 파일 업로드
     if (localFiles.length > 0) {
       const uploadedUrls: string[] = [];
       for (const file of localFiles) {
         const { url } = await saveFile(file);
         uploadedUrls.push(url);
       }
-      allUrls = [...allUrls, ...uploadedUrls];
+      allUrls.map(url => ({ url }));
     }
 
-    // patchData 생성
     const patchData: any = {
       title: notice.title,
       content: notice.content,
@@ -111,7 +110,6 @@ export default function NoticeEdit() {
       patchData.files = allUrls.map(url => ({ url }));
     }
 
-    // updateNotice 실행
     await updateNotice(Number(id), patchData);
     setShowModal(true);
   } catch (err) {
