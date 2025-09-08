@@ -7,7 +7,7 @@ import { getallApply } from '@_api/object/apply';
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
   useEffect(() => {
-    getallApply(1)
+    getallApply()
       .then((data) => {
         setRequests(data);
       })
@@ -15,7 +15,6 @@ export default function All() {
         console.log( err);
       });
   }, []);
-
   return (
     <_.PageWrapper>
       <Sidebar />
@@ -31,20 +30,9 @@ export default function All() {
                 requests
                 .filter(r => r.status !== "INTEMP")
                 .map(r => (
-                  <Box
+                 <Box
                     key={r.id}
-                    request={{
-                      ...r,
-                      status:
-                        r.status === "REJECTED"
-                          ? "거절됨"
-                          : r.status === "APPROVED"
-                          ? "승인됨"
-                          : r.status === "PENDING"
-                          ? "대기중"
-                          : r.status,
-                    }}
-                    
+                    request={r}
                   />
                 ))       
               }

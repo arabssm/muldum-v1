@@ -16,32 +16,21 @@ export default function Object() {
   const [money, setMoney] = useState<number>(0);
   const [usedmoney, setUsedMoney] = useState<number>(0);
   const [requests, setRequests] = useState<Request[]>([]); 
-
-  const handleReasonChange = (no: string, newReason: string) => {
-    setRequests(rs =>
-      rs.map(r => (r.id === no ? { ...r, reason: newReason } : r))
-    );
-  };
   const handleAdd = async () => {
     if (!item.trim() || reason.trim().length < 10) {
       alert('물품명과 사유(10자 이상)를 입력하세요.');
       return;
     }
-  
     try {
-      const teamid = 1;
-      const { hostname } = new URL(link); 
-      const domain = hostname.replace(/^www\./, ''); 
-      const namePart = domain.split('.')[0]; 
-      const namePart1 = namePart.toUpperCase();
-      await Apply(item, qty, price, link, namePart1, reason, teamid);
+      console.log(item);
+      await Apply(item, qty, price, link, reason);
       window.location.reload();
     } catch (err) {
       console.error("신청 실패:", err);
     }
   };
   const finalApply= () => {
-    finalapply(1)
+    finalapply()
     .then(() => {
       alert('신청이 완료되었습니다.');
       window.location.reload();
@@ -51,16 +40,16 @@ export default function Object() {
     });
   }
   useEffect(() => {
-    getMoney(1)
+    getMoney()
     .then((data1) => {
       setMoney(data1.remainingBudget);
       console.log(data1);
-      setUsedMoney(data1.totalBudget-data1.remainingBudget)
+      setUsedMoney(data1.usedBudget)
     })
     .catch((err) => {
       console.log("게시물을 불러오는 데 실패했습니다.", err);
     });
-    getApply(1)
+    getApply()
       .then((data2) => {
         setRequests(data2);
         console.log(data2);
@@ -69,7 +58,6 @@ export default function Object() {
         console.log("게시물을 불러오는 데 실패했습니다.", err);
       });
   }, []);
-  console.log(requests);
   return (
     <_.PageWrapper>
       <Sidebar />
@@ -81,7 +69,7 @@ export default function Object() {
               <h3>전공동아리에 사용할 물품을 신청해요</h3>
             </_.Titles>
             <_.BudgetBox>
-              <span>남은예산</span>
+              <span>사용한 예산</span>
               <strong>{money}</strong>
               <_.Used>-{usedmoney}</_.Used>
             </_.BudgetBox>
@@ -138,9 +126,8 @@ export default function Object() {
                 <Box
                   key={r.id}
                   request={r}
-                  onReasonChange={handleReasonChange}
                 />
-              ))}
+              ))} 
             </_.ListWrapper>
           </_.ListSection>
         </_.Main>

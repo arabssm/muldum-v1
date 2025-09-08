@@ -41,41 +41,44 @@ export default function GoogleLogin() {
   const setUser = useUserStore((state) => state.setUser)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    let ignore = false
-    const code = params.get('code')
+useEffect(() => {
+  let ignore = false
+  const code = params.get('code')
 
-    if (code && !ignore) {
-      googleLogin(code)
-        .then((data) => {
-          if (data) {
-            localStorage.setItem('access_token', data.accessToken)
-            localStorage.setItem('refresh_token', data.refreshToken)
-            setUser({
-              userId: data.userId,
-              name: data.name,
-              role: data.role,
-              userType: data.userType,
-              teamId: data.teamId,
-            })
-            navigate('/', { replace: true }) 
-          } else {
-            navigate('/', { replace: true })
-          }
-        })
-        .catch(() => {
-          navigate('/', { replace: true })
-        })
-        .finally(() => setLoading(false))
-    } else {
-      setLoading(false)
-      navigate('/')
-    }
+  if (sessionStorage.getItem('googleLoginDone')) {
+    setLoading(false)
+    return
+  }
 
-    return () => {
-      ignore = true
-    }
-  }, [params, navigate, setUser])
+  if (code && !ignore) {
+    googleLogin(code)
+      .then((data) => {
+        if (data) {
+          localStorage.setItem('access_token', data.accessToken)
+          localStorage.setItem('refresh_token', data.refreshToken)
+          setUser({
+            userId: data.userId,
+            name: data.name,
+            role: data.role,
+            userType: data.userType,
+            teamId: data.teamId,
+          })
+        }
+        navigate('/', { replace: true })
+      })
+      .catch(() => navigate('/', { replace: true }))
+      .finally(() => setLoading(false))
+
+    sessionStorage.setItem('googleLoginDone', 'true')
+  } else {
+    setLoading(false)
+    navigate('/')
+  }
+
+  return () => {
+    ignore = true
+  }
+}, [])
 
   return (
     <>

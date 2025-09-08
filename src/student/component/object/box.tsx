@@ -2,24 +2,22 @@ import { useState, useEffect, useRef } from "react";
 import type { Props, Request } from "./types";
 import * as _ from "./style";
 import { useNavigate } from "react-router-dom";
-export default function Box({ request, onReasonChange }: Props) {
-  const [isEditing, setIsEditing] = useState(false);
+export default function Box({ request}) {
+
   const [reason, setReason] = useState(request.reason);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [state,setState]=useState(null);
   const nav=useNavigate();
-  const isEditable = request.status === "PENDING";
+
 
   useEffect(() => {
-    if (isEditing && textareaRef.current) {
-      textareaRef.current.focus();
+      if(request.status==="INTEMP"){
+        setState("임시 신청");
+      }else if(request.status==="PENDING"){
+        setState("선생님 확인중");
+      }
     }
-  }, [isEditing]);
-
-  const finishEdit = () => {
-    setIsEditing(false);
-    onReasonChange(request.id, reason.trim());
-  };
-
+  );
   return (
     <_.Card>
       <_.CardRow
@@ -33,19 +31,14 @@ export default function Box({ request, onReasonChange }: Props) {
         <_.Cell flex="0 0 40px">{request.id}</_.Cell>
         <_.Cell flex="1">{request.productName}</_.Cell>
         <_.Cell flex="0 0 60px">수량 {request.quantity}</_.Cell>
-        <_.Cell flex="0 0 100px">{request.status}</_.Cell>
+        <_.Cell flex="0 0 100px">{state}</_.Cell>
       </_.CardRow>
-      <_.ReasonRow
-        onClick={() => {
-          if (!isEditing && isEditable) setIsEditing(true);
-        }}
-      >
-        {isEditing ? (
+      <_.ReasonRow>
+        {!reason ? (
           <_.ReasonTextarea
             ref={textareaRef}
             value={reason}
             onChange={e => setReason(e.target.value)}
-            onBlur={finishEdit}
           />
         ) : (
           reason || "구매 사유를 입력해 주세요"

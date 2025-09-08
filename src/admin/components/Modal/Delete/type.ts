@@ -1,4 +1,5 @@
-export type Props = {
-    onCancel: () => void;
-    onConfirm?: () => void;
-};
+export interface Props {
+  onCancel: () => void;
+  onConfirm: () => void;
+  name?: string;
+}
