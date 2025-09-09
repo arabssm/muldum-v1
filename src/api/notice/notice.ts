@@ -23,7 +23,7 @@ export async function deleteNotice(id: number) {
 
 
 export async function saveFile(file: File) {
-  const res = await axiosInstance.get(`/ara/files/presigned?fileName=${file.name}`);
+  const res = await axiosInstance.get(`/files/presigned?fileName=${file.name}`);
   if (res.status !== 200) throw new Error(`URL 발급 실패 (status: ${res.status})`);
 
   const presignedUrl = res.data; 
