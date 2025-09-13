@@ -15,10 +15,10 @@ export default function Detail() {
   const [doc1, setData] = useState<any>();
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
- const { user } = useUserStore();
+  const { user } = useUserStore();
   useEffect(() => {
     if (!id) return;
-    getNoticeDetail(Number(id))
+    getNoticeDetail(Number(id)) 
       .then((data) => {
         setData(data);
       })

@@ -5,6 +5,7 @@ export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   margin: -3rem 0rem;
+  position: fixed;
 `;
 
 export const Content = styled.div`
@@ -14,7 +15,7 @@ export const Content = styled.div`
   row-gap: 2rem;
 `;
 
-export const Banner = styled.div`
+export const Banner = styled.img`
   width: 200%;
   z-index: -2;
   height: 12rem;
@@ -36,11 +37,7 @@ export const ClubName = styled.h1`
   margin: 0;
 `;
 
-export const Slogan = styled.p`
-  color: #B2B2B2;
-  font-size: 1rem;
-  margin-top: 0.3rem;
-`;
+
 
 export const Section = styled.div`
   padding: 1rem 2rem;
@@ -60,7 +57,7 @@ export const SectionText = styled.p`
 `;
 
 export const LogoArea = styled.div`
-  width: 10%;
+  width: 6.5%;
   height: 7rem;
   background-color: #f0f0f0;
   display: flex;
@@ -77,4 +74,41 @@ export const LogoArea = styled.div`
 export const Logo = styled.img`
   height: 4rem; 
   width: auto;
+`;
+
+export const Btn = styled.button`
+  display: flex;
+  margin-left: 70%;
+`;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    margin-left: 20%;
+
+    button {
+        background: none;
+        border: none;
+        color: #909090;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-family: 'Paperlogy';
+
+        &:hover {
+            color: #FF9B62;
+        }
+    }
+`;
+
+export const Input = styled.input`
+    display: flex;
+    width: 60%;
+    margin-left: 12%;
+    background-color: #e9e9e9ff;
+    border: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+
+    &:hover {
+        outline: none;
+    }
 `;

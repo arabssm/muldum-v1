@@ -22,13 +22,13 @@ import Month from '@_page/month/month';
 import GoogleLogin from '@_all/pages/GogleLogin';
 import { useLoadingStore } from './atom/Loading';
 import Loading from './all/component/loading/loading';
-import TeamDetail from '@_all/component/TeamDetail/TeamDetail';
+import TeamDetail from '@_all/component/team/TeamDetail/TeamDetail';
+import TeamEdit from '@_page/TeamEdit/TeamEdit';
 
 export default function App() {
   const { isOpen } = useLoginModalStore();
   const { user } = useUserStore();
   const { isLoading } = useLoadingStore();
-
   if (isLoading) return <Loading />;
 
   return (
@@ -48,8 +48,9 @@ export default function App() {
         <Route path="/team-space" element={user?.userType === "TEACHER" ? <Teamspace /> : <STeamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
         <Route path="/shared-calendar" element={<Month />} />
+        <Route path="/club/edit/:id" element={<TeamEdit />} />
         <Route path="/evaluate" element={user?.userType === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
-        <Route path="/club/:idx" element={<TeamDetail />} />
+        <Route path="/club/:id" element={<TeamDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {isOpen && <LoginModal />}
