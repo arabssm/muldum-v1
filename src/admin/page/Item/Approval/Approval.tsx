@@ -121,10 +121,13 @@ const Approval = () => {
             </_.AddonsArea>
 
             <ApprovalList
+              id={1}
               selectAll={selectAll}
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}
               setAllItemIds={setAllItemIds}
+              reasons={reasons}
+              setReasons={setReasons}
             />
           </>
         )}
@@ -173,3 +176,4 @@ const Approval = () => {
 };
 
 export default Approval;
+

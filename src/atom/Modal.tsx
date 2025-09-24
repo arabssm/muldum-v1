@@ -1,5 +1,7 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
+import { atom } from 'recoil';
 
+// Zustand stores
 interface LoginModalState {
   isOpen: boolean
   setIsOpen: (open: boolean) => void
@@ -21,5 +23,16 @@ export const useSettingModalStore = create<SettingModalStore>((set) => ({
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
 }));
+
+// Recoil atoms for compatibility
+export const loginModalState = atom({
+  key: 'loginModalState',
+  default: false,
+});
+
+export const whereismypasswordModalState = atom({
+  key: 'whereismypasswordModalState',
+  default: false,
+});
 
 export default useLoginModalStore;

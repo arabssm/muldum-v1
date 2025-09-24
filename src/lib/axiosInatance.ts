@@ -1,5 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { ref } from 'process';
+import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
 const API_BASE = import.meta.env.VITE_API_URL;
 
@@ -18,7 +17,7 @@ axiosInstance.interceptors.request.use(async (config) => {
   }
 
   if (token) {
-    config.headers = config.headers ?? {};
+    config.headers = (config.headers ?? {}) as AxiosRequestHeaders;
     config.headers.Authorization = `Bearer ${token}`;
   }
 

@@ -36,19 +36,6 @@ export default function ApprovalList({
       });
   }, [id, setAllItemIds]);
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedName, setSelectedName] = useState('');
-
-  const handleItemClick = (name: string) => {
-    setSelectedName(name);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setSelectedName('');
-  };
-
   return (
     <_.Container>
       <NavBar />
@@ -65,17 +52,13 @@ export default function ApprovalList({
               {item.productName}
             </_.ItemName>
             <_.ItemInput
-  placeholder={item.reason}
-  value={reasons[item.id] || ''}
-  onChange={(e) => handleReasonChange(item.id, e.target.value)}
-/>
-
+              placeholder={item.reason}
+              value={reasons[item.id] || ''}
+              onChange={(e) => handleReasonChange(item.id, e.target.value)}
+            />
           </_.ItemRow>
         ))}
       </_.ListWrapper>
-        {modalOpen && (
-        <DetailItem name={selectedName} onClose={closeModal} />
-      )}
     </_.Container>
   );
 }

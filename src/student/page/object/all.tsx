@@ -4,15 +4,25 @@ import Sidebar from '@_all/component/sibebar/sidebar';
 import Box from '@_component/object/box';
 import type { Request } from '@_component/object/types';
 import { getallApply } from '@_api/object/apply';
+
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
+
+  const handleReasonChange = (id: string, newReason: string) => {
+    setRequests(prev =>
+      prev.map(req =>
+        req.id === id ? { ...req, reason: newReason } : req
+      )
+    );
+  };
+
   useEffect(() => {
     getallApply(1)
       .then((data) => {
         setRequests(data);
       })
       .catch((err) => {
-        console.log( err);
+        console.log(err);
       });
   }, []);
 
@@ -44,7 +54,7 @@ export default function All() {
                           ? "대기중"
                           : r.status,
                     }}
-                    
+                    onReasonChange={handleReasonChange}
                   />
                 ))       
               }

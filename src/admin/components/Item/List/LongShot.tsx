@@ -1,16 +1,18 @@
 import * as _ from '@_pages/Item/Approval/style';
 import { Props } from '@_pages/Item/Approval/type';
+import { reason } from '@_pages/Item/Approval/Reason';
 import '@_styles';
+
 export default function RejectReasonSelector({ rejectReason, setRejectReason }: Props) {
     return (
         <_.RejectReasonArea>
-            {Reason.map((reason) => (
+            {reason.map((reasonText) => (
                 <_.RejectButton
-                    key={reason}
-                    active={rejectReason === reason}
-                    onClick={() => setRejectReason(reason)}
+                    key={reasonText}
+                    active={rejectReason === reasonText}
+                    onClick={() => setRejectReason(reasonText)}
                 >
-                    {reason}
+                    {reasonText}
                 </_.RejectButton>
             ))}
         </_.RejectReasonArea>
