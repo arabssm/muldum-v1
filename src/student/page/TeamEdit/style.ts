@@ -15,15 +15,44 @@ export const Content = styled.div`
   row-gap: 2rem;
 `;
 
-export const Banner = styled.img`
-  width: 200%;
-  z-index: -2;
+export const Banner = styled.div`
+  width: 100%;
+  z-index: 1;
   height: 12rem;
   background-color: #41f4bb; 
   background-size: cover;
-  background-position: center;
-  margin: 0 !important;
-  padding: 0 !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.editable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
+    &:hover::after {
+      content: "클릭하여 배너 이미지 변경";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      z-index: 10;
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -42,6 +71,50 @@ export const ClubName = styled.h1`
 export const Section = styled.div`
   padding: 1rem 2rem;
   margin-left: 10%;
+
+  /* NotionEditor 내부 p 태그 스타일 */
+  .notion-editor p {
+    margin: 0 0 1em 0 !important;
+    min-height: 1.2em !important;
+    line-height: 1.6 !important;
+    display: block !important;
+  }
+  
+  .notion-editor p:empty {
+    margin: 0 0 1em 0 !important;
+    min-height: 1.2em !important;
+    display: block !important;
+  }
+  
+  .notion-editor p:empty::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 1.2em;
+  }
+  
+  .notion-editor p:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* 전체 에디터 영역 스타일 */
+  .ProseMirror p {
+    margin: 0 0 1em 0 !important;
+    min-height: 1.2em !important;
+    line-height: 1.6 !important;
+  }
+  
+  .ProseMirror p:empty {
+    margin: 0 0 1em 0 !important;
+    min-height: 1.2em !important;
+  }
+  
+  .ProseMirror p:empty::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 1.2em;
+  }
 `;
 
 export const SectionTitle = styled.h2`
@@ -66,7 +139,7 @@ export const LogoArea = styled.div`
   margin-top: -5rem;
   margin-bottom: 1rem;
   margin-left: 12%;
-  z-index: -1;
+  z-index: 2;
   position: relative;
   border-radius: 1rem;
 `;
@@ -74,6 +147,17 @@ export const LogoArea = styled.div`
 export const Logo = styled.img`
   height: 4rem; 
   width: auto;
+  border-radius: 0.5rem;
+
+  &.editable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      filter: brightness(0.9);
+      transform: scale(0.95);
+    }
+  }
 `;
 
 export const Btn = styled.button`

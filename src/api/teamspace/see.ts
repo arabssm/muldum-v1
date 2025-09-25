@@ -12,7 +12,7 @@ export interface Teamtype {
 }
 
 export const fetchTeams = async (): Promise<Teamtype[]> => {
-  const res = await axiosInstance.get<{ teams: Teamtype[] }>("/teamspace/network");
+  const res = await axiosInstance.get<{ teams: Teamtype[] }>("/ara/teamspace/network");
   return res.data.teams;
 };
 

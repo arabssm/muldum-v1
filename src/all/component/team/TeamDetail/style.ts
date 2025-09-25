@@ -42,6 +42,35 @@ export const ClubName = styled.h1`
 export const Section = styled.div`
   padding: 1rem 2rem;
   margin-left: 10%;
+  width: 60%;
+
+  /* 테이블 스타일링 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+  }
+
+  tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #f0f0f0;
+  }
 `;
 
 export const SectionTitle = styled.h2`

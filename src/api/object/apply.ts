@@ -1,6 +1,5 @@
 import axiosInstance from "../../lib/axiosInatance";
 
-
 export default async function Apply(name1,number,price,link,reason) {
    console.log(name1);
     try {

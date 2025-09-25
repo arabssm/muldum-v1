@@ -1,5 +1,5 @@
 import axiosInstance from "../../lib/axiosInatance";
-import axios from 'axios';
+
 export default async function getNoticeAra() {
   const res = await axiosInstance.get(`ara/notice`);
   return res.status === 200 ? res.data : res.status;

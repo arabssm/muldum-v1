@@ -14,45 +14,53 @@ import Object from '@_page/object/object';
 import All from '@_page/object/all';
 import Resendpage from '@_page/object/resend';
 import { useLoginModalStore } from './atom/Modal';
-import { useUserStore } from './atom/User';
+import { useLoadingStore } from './atom/Loading';
 import LoginModal from './all/component/modal/login/login';
 import SEvaluate from '@_page/evaluate/evaluate';
 import Evaluate from '@_pages/Evaluate/evaluate';
 import Month from '@_page/month/month';
 import GoogleLogin from '@_all/pages/GogleLogin';
-import { useLoadingStore } from './atom/Loading';
 import Loading from './all/component/loading/loading';
 import TeamDetail from '@_all/component/team/TeamDetail/TeamDetail';
 import TeamEdit from '@_page/TeamEdit/TeamEdit';
+import AuthConfirm from '@_all/auth/auth';
 
 export default function App() {
   const { isOpen } = useLoginModalStore();
-  const { user } = useUserStore();
   const { isLoading } = useLoadingStore();
+
   if (isLoading) return <Loading />;
 
   return (
     <>
       <Routes>
-        <Route path="/google/login" element={<GoogleLogin />} />
+        {/* 기본 공개 라우트 */}
         <Route path="/" element={<Main />} />
         <Route path="/notice" element={<Notice />} />
-        <Route path="/project-approval" element={user?.userType === "TEACHER" ? <Approval /> : <Object />} />
         <Route path="/notice/:id" element={<DetailNotice />} />
-        <Route path="/create-notice" element={<CreateNotice />} />
-        <Route path="/notice/edit/:id" element={<NoticeEdit />} />
-        <Route path="/project-choice" element={<ProjectChoice />} />
-        <Route path="/object" element={<ProjectChoice />} />
-        <Route path="/object/all" element={<All />} />
-        <Route path="/object/detail/:id" element={<Resendpage />} />
-        <Route path="/team-space" element={user?.userType === "TEACHER" ? <Teamspace /> : <STeamspace />} />
         <Route path="/club-history" element={<ClubHistory />} />
         <Route path="/shared-calendar" element={<Month />} />
-        <Route path="/club/edit/:id" element={<TeamEdit />} />
-        <Route path="/evaluate" element={user?.userType === "TEACHER" ? <Evaluate /> : <SEvaluate />} />
+        <Route path="/google/login" element={<GoogleLogin />} />
+        <Route path="/team-space" element={<Teamspace />} />
         <Route path="/club/:id" element={<TeamDetail />} />
+        {/* 공지사항: 작성/수정 → TEACHER, SUPERADMIN만 */}
+        <Route element={<AuthConfirm roles={['TEACHER', 'SUPERADMIN']} />}>
+          <Route path="/create-notice" element={<CreateNotice />} />
+          <Route path="/notice/edit/:id" element={<NoticeEdit />} />
+          <Route path="/project-approval" element={<Approval />} />
+        </Route>
+
+        <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
+          <Route path="/project-choice" element={<ProjectChoice />} />
+          <Route path="/object" element={<ProjectChoice />} />
+          <Route path="/object/all" element={<All />} />
+          <Route path="/object/detail/:id" element={<Resendpage />} />
+          <Route path="/club/edit/:id" element={<TeamEdit />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
+
       {isOpen && <LoginModal />}
     </>
   );
