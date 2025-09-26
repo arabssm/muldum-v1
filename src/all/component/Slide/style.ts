@@ -31,7 +31,7 @@ export const SlideWrapper = styled.div`
 export const Overlay = styled.div`
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.3);
 `;
 
 export const Legendimg = styled.img`

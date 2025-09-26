@@ -10,6 +10,7 @@ import {
 } from '../../../../api/notice/notice';
 import { Notice } from './type';
 
+
 export default function NoticeEdit() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
