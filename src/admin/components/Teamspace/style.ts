@@ -15,6 +15,7 @@ export const Box = styled.div`
     width: 18rem;
     padding: 2% 5% 2% 2%;
     flex: 0 0 auto;
+    cursor: pointer;
 `;
 
 

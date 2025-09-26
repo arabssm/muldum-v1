@@ -50,21 +50,6 @@ export const explanation = styled.div`
     color: #909090;
 `;
 
-export const Detail = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 1rem;
-    width: 100%;
-    padding: 5% 0% 5% 2%;
-    border-radius: 1rem;
-    background-color: #FF9B62;
-    color: #fff;
-    margin-top: 10%;
-    cursor: pointer;
-`;
-
 export const Group = styled.div`
     display: flex;
     align-items: center;

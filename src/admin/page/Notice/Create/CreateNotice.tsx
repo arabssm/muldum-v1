@@ -5,7 +5,7 @@ import NavBar from '../../../../all/component/sibebar/sidebar';
 import NoticeSuccess from '@_modal/Notice/CreateNotice';
 import '@_styles';
 import useNoticeState from './useNoticeState';
-import { saveFile, createNoticeGeneral,createNoticeGeneralno } from '../../../../api/notice/notice';
+import { saveFile, createNoticeGeneral, createNoticeGeneralno } from '../../../../api/notice/notice';
 
 export default function CreateNotice() {
   const navigate = useNavigate();
@@ -41,6 +41,24 @@ export default function CreateNotice() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNotice((prev) => ({ ...prev, [name]: value }));
+  };
+  const isBeforeToday = (yyyyMMdd: string) => {
+    if (!yyyyMMdd) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selected = new Date(yyyyMMdd);
+    selected.setHours(0, 0, 0, 0);
+    return selected < today;
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "startDate" && isBeforeToday(value)) {
+      alert("오늘 이후 날짜만 가능합니다.");
+      setNotice(prev => ({ ...prev, startDate: "" }));
+      return;
+    }
+    setNotice(prev => ({ ...prev, [name]: value }));
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -81,35 +99,37 @@ export default function CreateNotice() {
       if (urlToRevoke?.startsWith('blob:')) URL.revokeObjectURL(urlToRevoke);
       return prev.filter((_, i) => i !== index);
     });
+    const input = document.getElementById('image-upload') as HTMLInputElement;
+    if (input) input.value = '';
   };
-const handleSubmit = async () => {
-  if (isSubmitting) return;
-  if (!notice.title.trim()) return alert('제목을 입력하세요.');
-  if (!notice.content.trim()) return alert('내용을 입력하세요.');
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    if (!notice.title.trim()) return alert('제목을 입력하세요.');
+    if (!notice.content.trim()) return alert('내용을 입력하세요.');
 
-  setIsSubmitting(true);
-  try {
-    const uploadedUrls: string[] = [];
-    for (const file of imageFiles) {
-      const url = await saveFile(file); 
-      uploadedUrls.push(url);
+    setIsSubmitting(true);
+    try {
+      const uploadedUrls: string[] = [];
+      for (const file of imageFiles) {
+        const url = await saveFile(file);
+        uploadedUrls.push(url);
+      }
+
+      if (uploadedUrls.length === 0) {
+        await createNoticeGeneralno(notice.title, notice.content, deadlineDate);
+      } else {
+        const filesPayload = uploadedUrls.map((url) => ({ url }));
+        await createNoticeGeneral(notice.title, notice.content, filesPayload, deadlineDate);
+      }
+
+      setShowModal(true);
+    } catch (err) {
+      console.error(err);
+      alert('공지 등록 실패');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    if (uploadedUrls.length === 0) {
-      await createNoticeGeneralno(notice.title, notice.content, deadlineDate);
-    } else {
-      const filesPayload = uploadedUrls.map((url) => ({ url }));
-      await createNoticeGeneral(notice.title, notice.content, filesPayload, deadlineDate);
-    }
-
-    setShowModal(true);
-  } catch (err) {
-    console.error(err);
-    alert('공지 등록 실패');
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
   useEffect(() => {
     return () => previewUrls.filter((u) => u.startsWith('blob:')).forEach(URL.revokeObjectURL);
@@ -136,9 +156,13 @@ const handleSubmit = async () => {
             onChange={handleChange}
             placeholder="공지사항의 제목을 등록하세요"
           />
-
-          <_.TextInput type="date" name="startDate" value={notice.startDate} onChange={handleChange} min={MinDate}/>
-
+          <_.TextInput
+            type="date"
+            name="startDate"
+            value={notice.startDate}
+            onChange={handleDateChange}
+            min={MinDate}
+          />
           <_.TagBox>
             <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
             <_.TagButton onClick={() => insertTag('제목2')}>h2</_.TagButton>
@@ -152,15 +176,34 @@ const handleSubmit = async () => {
             value={notice.content}
             onChange={handleContentChange}
             placeholder="공지사항 내용을 입력하세요 (100자 이상)"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              alert('이미지는 업로드 버튼을 사용해주세요.');
+            }}
           />
 
           <_.ChangeImg type="file" accept="image/*" id="image-upload" onChange={handleImageChange} />
-          <_.Picture onClick={() => document.getElementById('image-upload')?.click()}>
+          <_.Picture
+            onClick={() => document.getElementById('image-upload')?.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              alert('이미지는 클릭하여 업로드해주세요.');
+            }}
+          >
             이미지를 클릭하여 추가해주세요
           </_.Picture>
 
           {previewUrls.length > 0 && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}>
+            <div
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                alert('이미지는 클릭하여 업로드해주세요.');
+              }}
+            >
               {previewUrls.map((url, idx) => (
                 <img
                   key={idx}
@@ -168,6 +211,7 @@ const handleSubmit = async () => {
                   alt={`미리보기 ${idx}`}
                   style={{ width: 120, borderRadius: 6, cursor: 'pointer' }}
                   onClick={() => handleRemoveImage(idx)}
+                  onDragStart={(e) => e.preventDefault()}
                 />
               ))}
             </div>

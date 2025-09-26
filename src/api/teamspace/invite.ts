@@ -1,7 +1,7 @@
 import axiosInstance from "../../lib/axiosInatance";
 export default async function TeacherInvite(url: string) {
   try {
-    const res = await axiosInstance.post('/tch/teamspace/invite', {
+    const res = await axiosInstance.post('/tch/student/invite', {
       googleSheetUrl: url,
     });
     return res.data;

@@ -6,7 +6,7 @@ import { useLoginModalStore } from '../../../atom/Modal';
 import { useUserStore } from '../../../atom/User';
 import DefaultProfile from '@_assets/profile.svg';
 
-import SettingModal from '../Setting/SettingModal';
+import SettingModal from '../modal/Setting/SettingModal';
 import { useSettingModalStore } from "../../../atom/Modal";
 
 export default function NavBar() {
@@ -19,6 +19,8 @@ export default function NavBar() {
   const { isOpen, open, close } = useSettingModalStore();
 
   if (!hydrated) return null;
+
+  const role = user?.userType ?? 'GUEST';
 
   return (
     <>
@@ -33,48 +35,49 @@ export default function NavBar() {
           </_.ProfileArea>
         )}
 
-        {IconMenu.map((item) => {
-          if (item.label === '로그인' && user) return null;
+        {IconMenu.map((menu) => {
+          // 접근 가능한 child 필터링
+          const accessibleChildren = menu.children.filter((child) => {
+            if (child.roles.includes('ALL')) return true;       // 항상 허용
+            if (child.roles.includes('GUEST') && !user) return true; // 로그인 안했을 때만
+            if (user && child.roles.includes(user.userType)) return true; // 권한 일치
+            return false;
+          });
 
-          const isExcluded = item.label === '로그인' || item.label === '설정';
+          if (accessibleChildren.length === 0) return null;
 
-          const isActive = !isExcluded && (
-            Array.isArray(item.path)
-              ? item.path.some(
-                  (p) =>
-                    location.pathname === p ||
-                    location.pathname.startsWith(p + '/')
-                )
-              : location.pathname === item.path ||
-                location.pathname.startsWith(item.path + '/')
+          const isActive = accessibleChildren.some(
+            (child) =>
+              location.pathname === child.path ||
+              location.pathname.startsWith(child.path + '/')
           );
 
           const TagComponent =
-            item.label === '로그인'
+            menu.label === '로그인'
               ? _.LoginTag
-              : item.label === '설정'
+              : menu.label === '설정'
               ? _.SettingTag
               : _.TagArea;
 
           return (
             <TagComponent
-              key={item.label}
+              key={menu.label}
               onClick={() => {
-                if (item.label === '로그인') {
+                if (menu.label === '로그인') {
                   setIsOpen(true);
-                } else if (item.label === '설정') {
+                } else if (menu.label === '설정') {
                   open();
                 } else {
-                  navigate(item.path[0]);
+                  navigate(accessibleChildren[0].path);
                 }
               }}
               isActive={isActive}
             >
               <_.Icon
-                src={isActive ? item.iconActive : item.icon}
-                alt={item.label}
+                src={isActive ? menu.iconActive : menu.icon}
+                alt={menu.label}
               />
-              <_.Text isActive={isActive}>{item.label}</_.Text>
+              <_.Text isActive={isActive}>{menu.label}</_.Text>
             </TagComponent>
           );
         })}
@@ -83,9 +86,7 @@ export default function NavBar() {
       <SettingModal
         isOpen={isOpen}
         onClose={close}
-        onConfirm={() => {
-          close();
-        }}
+        onConfirm={close}
       />
     </>
   );

@@ -11,6 +11,15 @@ export default function Detail() {
   const [doc1, SetData] = useState<any>();
 
   useEffect(() => {
+    getNoticeDetail(id)
+      .then((data) => {
+        SetData(data);
+
+      })
+      .catch((err) => {
+        // 에러 처리
+      });
+  }, []);
     if (id) {
       getNoticeDetail(Number(id))
         .then((data) => {

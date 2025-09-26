@@ -22,9 +22,6 @@ export default function Best({ period }: BestProps) {
                             <_.Name>{item.name}</_.Name>
                         </_.Group>
                         <_.explanation>{item.explanation}</_.explanation>
-                        <_.Detail onClick={() => { handleAlert(); }}>
-                            자세히보기
-                        </_.Detail>
                     </_.TopBox>
                 ))}
             </_.Wrapper>

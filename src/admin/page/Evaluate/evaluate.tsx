@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";  // react-router-dom에서 useNavigate 임포트
+import { useNavigate } from "react-router-dom"; 
 import * as _ from "./style";
 import NavBar from "@_navbar/sidebar";
 import Clubs from "@_pages/Item/Approval/ClubList";

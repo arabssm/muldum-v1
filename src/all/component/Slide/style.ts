@@ -2,12 +2,20 @@ import styled from '@emotion/styled';
 import Slider from 'react-slick';
 
 export const High = styled.div`
+    position: relative;
+    z-index: -5;
     width: 90%;
     overflow: hidden;
 `;
 
 export const StyledSlider = styled(Slider)`
     width: 100%;
+`;
+
+export const CalendarContainer = styled.div`
+  width: 80%;
+  margin-left: auto;
+  margin-right: 1rem;
 `;
 
 export const SlideWrapper = styled.div`
@@ -23,7 +31,7 @@ export const SlideWrapper = styled.div`
 export const Overlay = styled.div`
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.3);
 `;
 
 export const Legendimg = styled.img`

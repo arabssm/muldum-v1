@@ -1,27 +1,33 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as _ from "./style";
-import { Maindata, SideClub } from "./data";
+import { fetchTeams, Teamtype } from "@_api/teamspace/see";
 
 export default function Team() {
-    return (
-        <_.Container>
-        <_.Title>전공동아리</_.Title>
-        <_.BoxWrapper>
-            {Maindata.map((item) => (
-            <_.Box key={item.idx}>
-                <_.ClubTitle>{item.club}</_.ClubTitle>
-                <_.Name>{item.team}</_.Name>
-            </_.Box>
-            ))}
-        </_.BoxWrapper>
-        <_.Title>자율동아리</_.Title>
-        <_.BoxWrapper>
-            {SideClub.map((item) => (
-            <_.Box key={item.idx}>
-                <_.ClubTitle>{item.club}</_.ClubTitle>
-                <_.Name>{item.team}</_.Name>
-            </_.Box>
-            ))}
-        </_.BoxWrapper>
-        </_.Container>
-    );
+  const navigate = useNavigate();
+  const [teams, setTeams] = useState<Teamtype[]>([]);
+
+  useEffect(() => {
+    fetchTeams()
+      .then((data) => setTeams(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleClick = (teamId: number) => {
+    navigate(`/club/${teamId}`);
+  };
+
+  return (
+    <_.Container>
+      <_.Title>동아리 목록</_.Title>
+      <_.BoxWrapper>
+        {teams.map((team) => (
+          <_.Box key={team.teamId} onClick={() => handleClick(team.teamId)}>
+            <_.ClubTitle>{team.teamName}</_.ClubTitle>
+            <_.Name>{team.members.map((m) => m.userName).join(", ")}</_.Name>
+          </_.Box>
+        ))}
+      </_.BoxWrapper>
+    </_.Container>
+  );
 }

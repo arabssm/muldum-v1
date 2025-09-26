@@ -20,7 +20,7 @@ export default function LoginModal() {
   async function Check(e) {
     e.preventDefault();
     setModalOpen(false);
-    console.log(24);
+
     const loginResponse = await Login();
     
     if (loginResponse) {

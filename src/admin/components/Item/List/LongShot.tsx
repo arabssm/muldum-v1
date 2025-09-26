@@ -1,3 +1,4 @@
+import { reason } from '@_pages/Item/Approval/Reason';
 import * as _ from '@_pages/Item/Approval/style';
 import { Props } from '@_pages/Item/Approval/type';
 import { reason } from '@_pages/Item/Approval/Reason';

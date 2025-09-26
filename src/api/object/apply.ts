@@ -1,14 +1,12 @@
 import axiosInstance from "../../lib/axiosInatance";
 
-
-export default async function Apply(name1,number,price,link,source,reason,team_id) {
+export default async function Apply(name1,number,price,link,reason) {
     try {
-      const res = await axiosInstance.post(`/std/items/${team_id}/temp`,{
-        "productName":name1,
+      const res = await axiosInstance.post(`/std/items/temp`,{
+        "product_name":name1,
         "quantity":number,
         "price":price,
         "productLink":link,
-        "itemSource":source,
         "reason":reason
       });
   
@@ -17,67 +15,61 @@ export default async function Apply(name1,number,price,link,source,reason,team_i
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
-  export async function getApply(team_id) {
+  export async function getApply() {
     try {
-      const res = await axiosInstance.get(`/std/items/${team_id}/temp`);
+      const res = await axiosInstance.get(`/std/items/temp`);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
-  export async function getallApply(team_id) {
+  export async function getallApply() {
     try {
-      const res = await axiosInstance.get(`/std/items/${team_id}`);
+      const res = await axiosInstance.get(`/std/items/temp`);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
-  export async function getApplyall(team_id) {
+  export async function getApplyall() {
     try {
-      const res = await axiosInstance.get(`/std/items/${team_id}`);
+      const res = await axiosInstance.get(`/std/items`);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
 
-  export async function getMoney(team_id) {
+  export async function getMoney() {
     try {
-      const res = await axiosInstance.get(`/std/items/money/${team_id}`);
+      const res = await axiosInstance.get(`/std/items/money`);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
-export async function finalapply(teamid) {
+export async function finalapply() {
     try {
-      const res = await axiosInstance.patch(`/std/items/${teamid}`);
+      const res = await axiosInstance.patch(`/std/items`);
       if (res.status !== 200) {
         return res.status;
       }
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -89,34 +81,28 @@ export async function finalapply(teamid) {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
   export async function submititem(items) {
     try {
-      const res = await axiosInstance.post(`/tch/items/submit`,{
-        "itemIds":items
-      });
+      const res = await axiosInstance.patch(`/tch/items/submit`,items);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
   export async function nosubmititem(items) {
-    console.log(items);
     try {
-      const res = await axiosInstance.post(`/tch/items/reject`,items);
+      const res = await axiosInstance.patch(`/tch/items/reject`,items);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }

@@ -1,13 +1,66 @@
 import { icons } from './icons';
 
 export const IconMenu = [
-    { label: '로그인', path: [''], icon: icons.login, iconActive: icons.profile },
-    { label: '홈 화면', path: ['/'], icon: icons.home, iconActive: icons.homeActive },
-    { label: '역대 동아리', path: ['/club-history'], icon: icons.club, iconActive: icons.clubActive },
-    { label: '공유 캘린더', path: ['/shared-calendar'], icon: icons.date, iconActive: icons.dateActive },
-    { label: '물품관리', path: ['/project-choice','/object/all','/object','/project-approval'], icon: icons.item, iconActive: icons.itemActive },
-    { label: '월말평가', path: ['/evaluate'], icon: icons.alarm, iconActive: icons.alarmActive },
-    { label: '공지사항', path: ['/notice','/create-notice','/notice/edit','notice/'], icon: icons.notice, iconActive: icons.noticeActive },
-    { label: '팀스페이스', path: ['/team-space'], icon: icons.teamspace, iconActive: icons.teamspaceActive },
-    { label: '설정', path: ['/setting'], icon: icons.setting, iconActive: icons.settingActive }
+  {
+    label: '로그인',
+    icon: icons.login,
+    iconActive: icons.profile,
+    children: [
+      { path: '', roles: ['GUEST'] }, 
+    ],
+  },
+  {
+    label: '홈 화면',
+    icon: icons.home,
+    iconActive: icons.homeActive,
+    children: [
+      { path: '/', roles: ['ALL'] },
+    ],
+  },
+  {
+    label: '역대 동아리',
+    icon: icons.club,
+    iconActive: icons.clubActive,
+    children: [
+      { path: '/club-history', roles: ['ALL'] },
+    ],
+  },
+  {
+    label: '물품관리',
+    icon: icons.item,
+    iconActive: icons.itemActive,
+    children: [
+      { path: '/project-choice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/object/all', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/object', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/project-approval', roles: ['TEACHER', 'SUPERADMIN'] }, 
+    ],
+  },
+  {
+    label: '공지사항',
+    icon: icons.notice,
+    iconActive: icons.noticeActive,
+    children: [
+      { path: '/notice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/notice/edit', roles: ['TEACHER', 'SUPERADMIN'] },
+      { path: '/create-notice', roles: ['TEACHER', 'SUPERADMIN'] }, 
+    ],
+  },
+  {
+    label: '팀스페이스',
+    icon: icons.teamspace,
+    iconActive: icons.teamspaceActive,
+    children: [
+      { path: '/team-space', roles: ['ALL'] },
+      { path: '/club/:id', roles: ['ALL'] },
+    ],
+  },
+  {
+    label: '설정',
+    icon: icons.setting,
+    iconActive: icons.settingActive,
+    children: [
+      { path: '/setting', roles: ['ALL'] }, 
+    ],
+  },
 ];

@@ -3,15 +3,33 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from 'axio
 const API_BASE = import.meta.env.VITE_API_URL;
 
 
+const getCookie = (name: string): string | null => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  return null;
+};
+
+const setCookie = (name: string, value: string, days: number = 7): void => {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
+};
+
+const deleteCookie = (name: string): void => {
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+};
+
+
 const axiosInstance = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' },
-  
-  withCredentials: true, 
+
+  withCredentials: true,
 });
 axiosInstance.interceptors.request.use(async (config) => {
-  let token = localStorage.getItem('access_token');
-  const refreshToken = localStorage.getItem('refresh_token');
+  let token = getCookie('access_token');
+  const refreshToken = getCookie('refresh_token');
   if (!token && refreshToken) {
     token = await refreshAccessToken();
   }
@@ -44,12 +62,12 @@ const processQueue = (token: string | null, error: any) => {
 
 const refreshAccessToken = async (): Promise<string> => {
   const { data } = await refreshClient.post('/ara/auth/refresh', {
-    refreshToken: localStorage.getItem('refresh_token'),
+    refreshToken: getCookie('refresh_token'),
   });
   const token: string = data.access_token;
-  console.log('새로 발급된 토큰', token);
+
   if (!token) throw new Error('No access_token in refresh response');
-  localStorage.setItem('access_token', token);
+  setCookie('access_token', token);
   return token;
 };
 axiosInstance.interceptors.response.use(
@@ -59,7 +77,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
 
-      if (isRefreshing) { 
+      if (isRefreshing) {
         return new Promise((resolve, reject) => {
           pendingQueue.push((token: string) => {
             original.headers = original.headers ?? {};
@@ -81,7 +99,8 @@ axiosInstance.interceptors.response.use(
       } catch (e) {
         processQueue(null, e);
         isRefreshing = false;
-        localStorage.removeItem('access_Token');
+        deleteCookie('access_token');
+        deleteCookie('refresh_token');
         return Promise.reject(e);
       }
     }
