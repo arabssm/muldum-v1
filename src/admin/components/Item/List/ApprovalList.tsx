@@ -47,7 +47,7 @@ export default function ApprovalList({
         console.error('API 실패', err);
       });
   }, [id, setAllItemIds]);
-
+  
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');
 

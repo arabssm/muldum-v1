@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@_assets/*": ["src/all/assets/*"],
+      "@_assets/*": ["src/assets/*"],
       "@_modalImages/*": ["src/assets/modal/*"],
       "@_components/*": ["src/admin/components/*"],
       "@_menu/*": ["src/admin/components/Menu/*"],
@@ -16,11 +19,13 @@
       "@_page/*": ["src/student/page/*"],
       "@_component/*": ["src/student/component/*"],
       "@_all/*": ["src/all/*"],
-      "@_api/*": ["src/api/*"]
+      "@_api/*": ["src/api/*"],
+      "@_util/*": ["src/student/util/*"]
     },
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "include": ["src"], 
   "exclude": ["node_modules"]

@@ -4,8 +4,18 @@ import Sidebar from '@_all/component/sibebar/sidebar';
 import Box from '@_component/object/box';
 import type { Request } from '@_component/object/types';
 import { getallApply } from '@_api/object/apply';
+
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
+
+  const handleReasonChange = (id: string, newReason: string) => {
+    setRequests(prev =>
+      prev.map(req =>
+        req.id === id ? { ...req, reason: newReason } : req
+      )
+    );
+  };
+
   useEffect(() => {
     getallApply()
       .then((data) => {
@@ -13,6 +23,7 @@ export default function All() {
       })
       .catch((err) => {
         // 에러 처리
+        console.log(err);
       });
   }, []);
   return (
@@ -32,6 +43,18 @@ export default function All() {
                  <Box
                     key={r.id}
                     request={r}
+                    request={{
+                      ...r,
+                      status:
+                        r.status === "REJECTED"
+                          ? "거절됨"
+                          : r.status === "APPROVED"
+                          ? "승인됨"
+                          : r.status === "PENDING"
+                          ? "대기중"
+                          : r.status,
+                    }}
+                    onReasonChange={handleReasonChange}
                   />
                 ))       
               }

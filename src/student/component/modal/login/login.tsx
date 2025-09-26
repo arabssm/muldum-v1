@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { loginModalState, whereismypasswordModalState } from '@_all/atom/Modal';
+import { loginModalState, whereismypasswordModalState } from '../../../../atom/Modal';
 import { useState } from 'react';
 import emailIcon from '@_assets/login/email.svg';
 import passwordIcon from '@_assets/login/password.svg';

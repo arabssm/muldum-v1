@@ -138,6 +138,7 @@ const Approval = () => {
             </_.AddonsArea>
 
             <ApprovalList
+              id={1}
               selectAll={selectAll}
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}

@@ -5,7 +5,7 @@ export interface Notice {
     formattedDate: string;
     image: string;
     imageCaption: string;
-    content: string[];
+    content: string;
     author: string;
     deadlineDate: string;
 }
