@@ -22,7 +22,7 @@ export default function Object() {
       return;
     }
     try {
-      console.log(item);
+
       await Apply(item, qty, price, link, reason);
       window.location.reload();
     } catch (err) {
@@ -36,26 +36,26 @@ export default function Object() {
       window.location.reload();
     })
     .catch((err) => {
-      console.log("게시물을 불러오는 데 실패했습니다.", err);
+      // 에러 처리
     });
   }
   useEffect(() => {
     getMoney()
     .then((data1) => {
       setMoney(data1.remainingBudget);
-      console.log(data1);
+
       setUsedMoney(data1.usedBudget)
     })
     .catch((err) => {
-      console.log("게시물을 불러오는 데 실패했습니다.", err);
+      // 에러 처리
     });
     getApply()
       .then((data2) => {
         setRequests(data2);
-        console.log(data2);
+
       })
       .catch((err) => {
-        console.log("게시물을 불러오는 데 실패했습니다.", err);
+        // 에러 처리
       });
   }, []);
   return (

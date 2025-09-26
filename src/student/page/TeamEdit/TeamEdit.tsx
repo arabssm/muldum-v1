@@ -94,7 +94,7 @@ const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         : prev
     );
 
-    console.log("로고 업로드 완료:", uploadedUrl);
+
   } catch (error) {
     console.error("로고 업로드 실패:", error);
     alert("로고 업로드에 실패했습니다.");
@@ -107,14 +107,12 @@ const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
 
 
   const handleBannerClick = () => {
-    console.log("배너 클릭됨, canEdit:", canEdit, "isUploading:", isUploading);
     if (canEdit && !isUploading) {
       bannerInputRef.current?.click();
     }
   };
 
   const handleLogoClick = () => {
-    console.log("로고 클릭됨, canEdit:", canEdit, "isUploading:", isUploading);
     if (canEdit && !isUploading) {
       logoInputRef.current?.click();
     }

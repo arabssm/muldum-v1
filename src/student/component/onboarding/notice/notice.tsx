@@ -12,10 +12,10 @@ export default function Notice() {
     getNotice()
       .then((data) => {
         setPosts(data?.content || []);
-        console.log(data);
+
       })
       .catch((err) => {
-        console.log("게시물을 불러오는 데 실패했습니다.", err);
+        // 에러 처리
       });
   }, []);
 const filtered = posts.filter(n =>

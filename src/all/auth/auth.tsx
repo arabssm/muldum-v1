@@ -37,6 +37,7 @@ export default function AuthConfirm({ roles }: { roles: string[] }) {
       <Block>
         <h1>접근 불가</h1>
         <h3>권한이 부족합니다</h3>
+        <h2>나가라</h2>
       </Block>
     );
   }

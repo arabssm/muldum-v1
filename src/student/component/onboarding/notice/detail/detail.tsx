@@ -13,10 +13,10 @@ export default function Detail() {
     getNoticeDetail(id)
       .then((data) => {
         SetData(data);
-        console.log(data);
+
       })
       .catch((err) => {
-        console.log("게시물을 불러오는 데 실패했습니다.", err);
+        // 에러 처리
       });
   }, []);
   let date = '';

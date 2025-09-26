@@ -51,7 +51,6 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
         style: "min-height:220px; line-height:1.7; font-size:16px; padding:14px 16px; border-radius:12px; background:#fff; border:1px solid #eaecef;",
       },
       handlePaste(view, event) {
-        // Prevent image paste - users should use the upload button
         const items = Array.from(event.clipboardData?.items || []);
         for (const item of items) {
           if (item.type.startsWith("image/")) {
@@ -63,7 +62,6 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
         return false;
       },
       handleDrop(view, event, _slice, _moved) {
-        // Prevent image drop - users should use the upload button
         const files = Array.from(event.dataTransfer?.files ?? []);
         const image = files.find(f => f.type.startsWith("image/"));
         if (image) {
@@ -232,7 +230,7 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
           try {
             const uploadResult = await uploadImage(file);
             editor.chain().focus().setImage({ src: uploadResult.url }).run();
-            console.log('이미지 업로드 완료:', uploadResult.url);
+
           } catch (error) {
             console.error('이미지 업로드 실패:', error);
             alert('이미지 업로드에 실패했습니다.');

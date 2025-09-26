@@ -1,7 +1,6 @@
 import axiosInstance from "../../lib/axiosInatance";
 
 export default async function Apply(name1,number,price,link,reason) {
-   console.log(name1);
     try {
       const res = await axiosInstance.post(`/std/items/temp`,{
         "product_name":name1,
@@ -16,7 +15,6 @@ export default async function Apply(name1,number,price,link,reason) {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -28,19 +26,17 @@ export default async function Apply(name1,number,price,link,reason) {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
   export async function getallApply() {
     try {
-      const res = await axiosInstance.get(`/std/items`);
+      const res = await axiosInstance.get(`/std/items/temp`);
       if (res.status !== 200) {
         return res.status;
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -52,7 +48,6 @@ export default async function Apply(name1,number,price,link,reason) {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -65,7 +60,6 @@ export default async function Apply(name1,number,price,link,reason) {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -76,7 +70,6 @@ export async function finalapply() {
         return res.status;
       }
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -88,7 +81,6 @@ export async function finalapply() {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -100,7 +92,6 @@ export async function finalapply() {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -112,7 +103,6 @@ export async function finalapply() {
       }
       return res.data;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }

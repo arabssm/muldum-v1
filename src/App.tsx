@@ -34,30 +34,27 @@ export default function App() {
   return (
     <>
       <Routes>
-        {/* 기본 공개 라우트 */}
         <Route path="/" element={<Main />} />
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:id" element={<DetailNotice />} />
         <Route path="/club-history" element={<ClubHistory />} />
-        <Route path="/shared-calendar" element={<Month />} />
         <Route path="/google/login" element={<GoogleLogin />} />
         <Route path="/team-space" element={<Teamspace />} />
         <Route path="/club/:id" element={<TeamDetail />} />
-        {/* 공지사항: 작성/수정 → TEACHER, SUPERADMIN만 */}
+
         <Route element={<AuthConfirm roles={['TEACHER', 'SUPERADMIN']} />}>
           <Route path="/create-notice" element={<CreateNotice />} />
           <Route path="/notice/edit/:id" element={<NoticeEdit />} />
-          <Route path="/project-approval" element={<Approval />} />
         </Route>
 
         <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
-          <Route path="/project-choice" element={<ProjectChoice />} />
           <Route path="/object" element={<ProjectChoice />} />
+          <Route path="/project-approval" element={<Approval />} />
           <Route path="/object/all" element={<All />} />
           <Route path="/object/detail/:id" element={<Resendpage />} />
           <Route path="/club/edit/:id" element={<TeamEdit />} />
+          <Route path="/object/apply" element={<Object />} />
         </Route>
-
         <Route path="*" element={<NotFound />} />
       </Routes>
 

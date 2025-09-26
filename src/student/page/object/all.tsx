@@ -12,7 +12,7 @@ export default function All() {
         setRequests(data);
       })
       .catch((err) => {
-        console.log( err);
+        // 에러 처리
       });
   }, []);
   return (
@@ -21,14 +21,13 @@ export default function All() {
       <_.Container>
         <_.Main>
           <_.TextContainer>
-            <_.AllTitle>전공동아리 물품 재신청</_.AllTitle>
-            <_.Subtitle>신청 거부 당한 물품을 확인하고 비슷한 상품을 구입해요</_.Subtitle>
+            <_.AllTitle>물품 신청 현황</_.AllTitle>
+            <_.Subtitle>현재 물품 현황을 확인해요</_.Subtitle>
           </_.TextContainer>
           <_.AllTitle>신청한 물품</_.AllTitle>
           <_.ListWrapper>
               {
                 requests
-                .filter(r => r.status !== "INTEMP")
                 .map(r => (
                  <Box
                     key={r.id}

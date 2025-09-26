@@ -22,14 +22,13 @@ export default function Box({ request}) {
     <_.Card>
       <_.CardRow
         onClick={() => {
-          console.log(request.status);
+
           if (request.status.toUpperCase() === "거절됨") {
             nav(`/object/detail/${request.id}?name=${request.productName}`);
           }
         }}
       >
-        <_.Cell flex="0 0 40px">{request.id}</_.Cell>
-        <_.Cell flex="1">{request.productName}</_.Cell>
+        <_.Cell flex="1">{request.product_name}</_.Cell>
         <_.Cell flex="0 0 60px">수량 {request.quantity}</_.Cell>
         <_.Cell flex="0 0 100px">{state}</_.Cell>
       </_.CardRow>
