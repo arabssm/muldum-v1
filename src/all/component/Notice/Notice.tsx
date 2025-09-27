@@ -23,12 +23,11 @@ export default function Notice() {
       .then((data) => {
         setPosts(data?.content ?? []);
         setTotalpages(data.totalPages);
-        console.log(data);
       })
       .catch((err) => {
-        console.log("게시물을 불러오는 데 실패했습니다.", err);
+        console.error("게시물을 불러오는 데 실패했습니다.", err);
       });
-  }, []);
+  }, [page]);
 
   const filtered = posts.filter(n =>
     n.title.toLowerCase().includes(search.toLowerCase())

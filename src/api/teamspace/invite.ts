@@ -1,4 +1,6 @@
 import axiosInstance from "../../lib/axiosInatance";
+
+
 export default async function TeacherInvite(url: string) {
   try {
     const res = await axiosInstance.post('/tch/student/invite', {
@@ -10,3 +12,16 @@ export default async function TeacherInvite(url: string) {
     throw err;
   }
 }
+
+export async function StudentTeamIdInvite(url: string) {
+  try {
+    const res = await axiosInstance.post('/tch/team/invite', {
+      googleSheetUrl: url,
+    });
+    return res.data;
+  } catch (err) {
+    console.error("StudentTeamIdInvite error:", err);
+    throw err;
+  }
+}
+

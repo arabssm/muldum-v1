@@ -99,6 +99,7 @@ export default function Detail() {
         <DeleteModal
           onCancel={() => setShowModal(false)}
           onConfirm={handleDelete}
+          name={doc1.title}
         />
       )}
 

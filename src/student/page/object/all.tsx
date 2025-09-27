@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as _ from './style'; 
+import * as _ from './style';
 import Sidebar from '@_all/component/sibebar/sidebar';
 import Box from '@_component/object/box';
 import type { Request } from '@_component/object/types';
@@ -23,7 +23,6 @@ export default function All() {
       })
       .catch((err) => {
         // 에러 처리
-        console.log(err);
       });
   }, []);
   return (
@@ -37,27 +36,26 @@ export default function All() {
           </_.TextContainer>
           <_.AllTitle>신청한 물품</_.AllTitle>
           <_.ListWrapper>
-              {
-                requests
+            {
+              requests
                 .map(r => (
-                 <Box
+                  <Box
                     key={r.id}
-                    request={r}
                     request={{
                       ...r,
                       status:
                         r.status === "REJECTED"
                           ? "거절됨"
                           : r.status === "APPROVED"
-                          ? "승인됨"
-                          : r.status === "PENDING"
-                          ? "대기중"
-                          : r.status,
+                            ? "승인됨"
+                            : r.status === "PENDING"
+                              ? "대기중"
+                              : r.status,
                     }}
                     onReasonChange={handleReasonChange}
                   />
-                ))       
-              }
+                ))
+            }
           </_.ListWrapper>
         </_.Main>
       </_.Container>
