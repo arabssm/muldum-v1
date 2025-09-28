@@ -41,9 +41,11 @@ export const Group = styled.button`
 `;
 
 export const Img = styled.img`
-    width: 80%;
+    width: 2.5rem;
+    height: 2.5rem;
     margin-bottom: 0.4rem;
     cursor: pointer;
+    object-fit: contain;
 `;
 
 export const Plus = styled.span`
@@ -139,4 +141,10 @@ export const EmailList = styled.div`
         font-size: 0.9rem;
         color: #909090;
     }
+`;
+
+export const BtnGroup = styled.div`
+    display: flex;
+    width: 20%;
+    justify-content: end;
 `;
