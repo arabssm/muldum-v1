@@ -11,7 +11,7 @@ export default function Menu() {
 
 return (
     <_.Container>
-    <_.MenuArea onClick={() => navigate('/project-approval')}>
+    <_.MenuArea onClick={() => navigate('/object/apply')}>
         <_.UpGroup>
             <_.Icon src= {specialty} alt='specialty'/>
         </_.UpGroup>

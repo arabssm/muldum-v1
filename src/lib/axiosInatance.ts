@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_URL;
 
 
 const getCookie = (name: string): string | null => {
@@ -22,7 +21,7 @@ const deleteCookie = (name: string): void => {
 
 
 const axiosInstance = axios.create({
-  baseURL: API_BASE,
+  baseURL: '/api',
   headers: { 'Content-Type': 'application/json' },
 
   withCredentials: true,
@@ -43,7 +42,7 @@ axiosInstance.interceptors.request.use(async (config) => {
 });
 
 const refreshClient = axios.create({
-  baseURL: API_BASE,
+  baseURL: '/api',
   withCredentials: true,
 });
 let isRefreshing = false;

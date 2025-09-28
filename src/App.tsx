@@ -45,11 +45,11 @@ export default function App() {
         <Route element={<AuthConfirm roles={['TEACHER', 'SUPERADMIN']} />}>
           <Route path="/create-notice" element={<CreateNotice />} />
           <Route path="/notice/edit/:id" element={<NoticeEdit />} />
+          <Route path="/project-approval" element={<Approval />} />
         </Route>
 
         <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
           <Route path="/object" element={<ProjectChoice />} />
-          <Route path="/project-approval" element={<Approval />} />
           <Route path="/object/all" element={<All />} />
           <Route path="/object/detail/:id" element={<Resendpage />} />
           <Route path="/club/edit/:id" element={<TeamEdit />} />
