@@ -56,7 +56,7 @@ export const IconMenu = [
     ],
   },
   {
-    label: '설정',
+    label: '로그아웃',
     icon: icons.setting,
     iconActive: icons.settingActive,
     children: [

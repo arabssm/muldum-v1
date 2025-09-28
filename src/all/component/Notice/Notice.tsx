@@ -59,6 +59,7 @@ export default function Notice() {
             }}
           />
         </_.SearchBar>
+
         {user && user.userType === "TEACHER" && (
           <_.Add
             src={Add}
