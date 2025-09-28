@@ -59,6 +59,7 @@ export default function Notice() {
             }}
           />
         </_.SearchBar>
+
         {user && user.userType === "TEACHER" && (
           <_.Add
             src={Add}
@@ -76,7 +77,7 @@ export default function Notice() {
           date={notice.updatedAt}
         />
       )) : (
-        <p>공지가 존재하지않아!!</p>
+        <_.Text>공지가 존재하지 않습니다</_.Text>
       )}
       <Pagination
         currentPage={page}

@@ -10,8 +10,9 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin-left: 8rem;
-    padding: 0% 5%;
+    width: 100%;
+    margin-top: 0.2rem;
+    margin-left: 14.5%;
     box-sizing: border-box;
 `;
 
@@ -38,17 +39,19 @@ export const Titles = styled.div`
 export const Subtitle = styled.div`
     display: flex;
     justify-content: left;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #707070;
     margin-bottom: 3%;
 `;
 
 export const AllTitle = styled.div`
+    display: flex;
+    justify-content: left;
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1d1d1d;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    color: #1D1D1D;
+    margin-bottom: 1%;
+    margin-top: 2%;
 `;
 
 export const BudgetBox = styled.div`

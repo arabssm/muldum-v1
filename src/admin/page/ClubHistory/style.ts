@@ -17,7 +17,7 @@ export const Title = styled.div`
     font-weight: 600;
     color: #1D1D1D;
     margin-bottom: 1%;
-    margin-top: 2%;
+    margin-top: 2%
 `;
 
 export const Subtitle = styled.div`

@@ -4,6 +4,7 @@ import "@_styles";
 import NavBar from "@_all/component/sibebar/sidebar";
 import Team from "@_components/Teamspace/Team";
 import Plus from "@_assets/team/ggsite.svg";
+import Add from "@_assets/add.svg";
 import Invite, { StudentTeamIdInvite } from "../../../api/teamspace/invite";
 import { useUserStore } from "../../../atom/User";
 
@@ -44,16 +45,16 @@ export default function Teamspace() {
                     <_.Subtitle>각 동아리 별로 팀원들을 배치하고 관리해요</_.Subtitle>
                 </_.TitleBox>
                 {user && user.userType === "TEACHER" && (
-                    <>
+                    <_.BtnGroup>
                         <_.Group onClick={() => openModal('invite')}>
                             <_.Img src={Plus} alt="링크추가" />
                             <_.Plus>링크추가</_.Plus>
                         </_.Group>
                         <_.Group onClick={() => openModal('student')}>
-                            <_.Img src={Plus} alt="학생 팀원추가" />
+                            <_.Img src={Add} alt="학생 팀원추가" />
                             <_.Plus>학생 팀원추가</_.Plus>
                         </_.Group>
-                    </>
+                    </_.BtnGroup>
                 )}
             </_.Header>
             <Team />

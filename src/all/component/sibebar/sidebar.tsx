@@ -55,7 +55,7 @@ export default function NavBar() {
           const TagComponent =
             menu.label === '로그인'
               ? _.LoginTag
-              : menu.label === '설정'
+              : menu.label === '로그아웃'
               ? _.SettingTag
               : _.TagArea;
 
@@ -65,7 +65,7 @@ export default function NavBar() {
               onClick={() => {
                 if (menu.label === '로그인') {
                   setIsOpen(true);
-                } else if (menu.label === '설정') {
+                } else if (menu.label === '로그아웃') {
                   open();
                 } else {
                   navigate(accessibleChildren[0].path);

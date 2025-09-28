@@ -30,7 +30,7 @@ export const IconMenu = [
     icon: icons.item,
     iconActive: icons.itemActive,
     children: [
-      { path: '/project-choice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      // { path: '/project-choice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/object/all', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/object', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/project-approval', roles: ['TEACHER', 'SUPERADMIN'] }, 
@@ -41,7 +41,7 @@ export const IconMenu = [
     icon: icons.notice,
     iconActive: icons.noticeActive,
     children: [
-      { path: '/notice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/notice', roles: ['ALL']  },
       { path: '/notice/edit', roles: ['TEACHER', 'SUPERADMIN'] },
       { path: '/create-notice', roles: ['TEACHER', 'SUPERADMIN'] }, 
     ],
@@ -56,7 +56,7 @@ export const IconMenu = [
     ],
   },
   {
-    label: '설정',
+    label: '로그아웃',
     icon: icons.setting,
     iconActive: icons.settingActive,
     children: [
