@@ -41,7 +41,7 @@ export const IconMenu = [
     icon: icons.notice,
     iconActive: icons.noticeActive,
     children: [
-      { path: '/notice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/notice', roles: ['ALL']  },
       { path: '/notice/edit', roles: ['TEACHER', 'SUPERADMIN'] },
       { path: '/create-notice', roles: ['TEACHER', 'SUPERADMIN'] }, 
     ],

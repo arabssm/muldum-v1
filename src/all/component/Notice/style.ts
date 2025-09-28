@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
     width: 100%;
-    margin-left: 13%;
+    margin-left: 14.5%;
     margin-top: 2%;
 `;
 
 export const Wrapper = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     width: 90%;
     gap: 26%;
 `;
