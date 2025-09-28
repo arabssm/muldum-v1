@@ -8,7 +8,6 @@ import NoticeEdit from '@_pages/Notice/Edit/NoticeEdit';
 import ProjectChoice from '@_pages/Item/Choice/ProjectChoice';
 import Approval from '@_pages/Item/Approval/Approval';
 import Teamspace from '@_pages/Teamspace/Teamspace';
-import STeamspace from '@_page/Teamspace/Teamspace';
 import ClubHistory from '@_pages/ClubHistory/ClubHistory';
 import Object from '@_page/object/object';
 import All from '@_page/object/all';
@@ -16,9 +15,6 @@ import Resendpage from '@_page/object/resend';
 import { useLoginModalStore } from './atom/Modal';
 import { useLoadingStore } from './atom/Loading';
 import LoginModal from './all/component/modal/login/login';
-import SEvaluate from '@_page/evaluate/evaluate';
-import Evaluate from '@_pages/Evaluate/evaluate';
-import Month from '@_page/month/month';
 import GoogleLogin from '@_all/pages/GogleLogin';
 import Loading from './all/component/loading/loading';
 import TeamDetail from '@_all/component/team/TeamDetail/TeamDetail';
@@ -41,13 +37,11 @@ export default function App() {
         <Route path="/google/login" element={<GoogleLogin />} />
         <Route path="/team-space" element={<Teamspace />} />
         <Route path="/club/:id" element={<TeamDetail />} />
-
         <Route element={<AuthConfirm roles={['TEACHER', 'SUPERADMIN']} />}>
           <Route path="/create-notice" element={<CreateNotice />} />
           <Route path="/notice/edit/:id" element={<NoticeEdit />} />
           <Route path="/project-approval" element={<Approval />} />
         </Route>
-
         <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
           <Route path="/object" element={<ProjectChoice />} />
           <Route path="/object/all" element={<All />} />
