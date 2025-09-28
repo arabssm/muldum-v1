@@ -3,7 +3,7 @@ import * as _ from './style';
 import Sidebar from '@_all/component/sibebar/sidebar';
 import Box from '@_component/object/box';
 import type { Request } from '@_component/object/types';
-import { getallApply } from '@_api/object/apply';
+import { getApplyall } from '@_api/object/apply';
 
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
@@ -17,13 +17,10 @@ export default function All() {
   };
 
   useEffect(() => {
-    getallApply()
+    getApplyall()
       .then((data) => {
         setRequests(data);
       })
-      .catch((err) => {
-        // 에러 처리
-      });
   }, []);
   return (
     <_.PageWrapper>
@@ -41,18 +38,7 @@ export default function All() {
                 .map(r => (
                   <Box
                     key={r.id}
-                    request={{
-                      ...r,
-                      status:
-                        r.status === "REJECTED"
-                          ? "거절됨"
-                          : r.status === "APPROVED"
-                            ? "승인됨"
-                            : r.status === "PENDING"
-                              ? "대기중"
-                              : r.status,
-                    }}
-                    onReasonChange={handleReasonChange}
+                    request={{...r,}}
                   />
                 ))
             }

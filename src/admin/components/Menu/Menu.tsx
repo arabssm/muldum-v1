@@ -14,19 +14,14 @@ return (
     <_.MenuArea onClick={() => navigate('/project-approval')}>
         <_.UpGroup>
             <_.Icon src= {specialty} alt='specialty'/>
-            <_.Dday>D-30</_.Dday>
         </_.UpGroup>
         <_.DownGroup>
-            <_.Projectname>전공동아리 물품확인</_.Projectname>
-            <_.LastGroup>
-                <_.ProjectSub>최근 신청한 동아리는 팀 아라에요</_.ProjectSub>
-                <_.Deadline>마감 시간 설정</_.Deadline>
-            </_.LastGroup>
+            <_.Projectname>네트워크 물품확인</_.Projectname>
         </_.DownGroup>
     </_.MenuArea>
-            <_.MenuArea>
+            {/* <_.MenuArea>
         <_.UpGroup>
-            <_.Icon src= {congrats} alt='congrats'/>
+            <_.Icon src= {congrats} alt='congra ts'/>
             <_.Dday>D-30</_.Dday>
         </_.UpGroup>
         <_.DownGroup>
@@ -62,7 +57,7 @@ return (
                 <_.Deadline>마감 시간 설정</_.Deadline>
             </_.LastGroup>
         </_.DownGroup>
-    </_.MenuArea>
+    </_.MenuArea> */}
     </_.Container>
 );
 }
