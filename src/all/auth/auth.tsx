@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
 import { useUserStore } from "../../atom/User";
+import NavBar from "@_navbar/sidebar";
 
 export default function AuthConfirm({ roles }: { roles: string[] }) {
   const [checked, setChecked] = useState(false);
@@ -27,7 +28,8 @@ export default function AuthConfirm({ roles }: { roles: string[] }) {
   if (!checked) {
     return (
       <Block>
-        <h3>권한 확인 중...</h3>
+        <NavBar />
+        <h1>권한 확인 중...</h1>
       </Block>
     );
   }
@@ -35,9 +37,8 @@ export default function AuthConfirm({ roles }: { roles: string[] }) {
   if (!allowed) {
     return (
       <Block>
-        <h1>접근 불가</h1>
-        <h3>권한이 부족합니다</h3>
-        <h2>나가라</h2>
+        <NavBar />
+        <h1>접근할 수 없는 페이지 입니다</h1>
       </Block>
     );
   }
@@ -49,6 +50,7 @@ const Block = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
+  margin-left: 10rem;
   top: 0;
   left: 0;
   display: flex;

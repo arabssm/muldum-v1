@@ -2,18 +2,15 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
     width: 100%;
-    margin-left: 6%;
+    margin-left: 13%;
+    margin-top: 2%;
 `;
 
 export const Wrapper = styled.div`
     display: flex;
     justify-content: center;
-    margin-bottom: 1%;
-    margin-top: 2%;
-    margin-left: 7%;
     width: 90%;
     gap: 26%;
-    margin-bottom: 3%;
 `;
 
 export const PageTitle = styled.div`
@@ -114,4 +111,13 @@ export const PageButton = styled.button<{ active?: boolean }>`
 
 export const Add = styled.img`
     cursor: pointer;
+`;
+
+export const Text = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 24rem;
 `;
