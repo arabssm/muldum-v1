@@ -2,7 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import type { Props, Request } from "./types";
 import * as _ from "./style";
 import { useNavigate } from "react-router-dom";
-export default function Box({ request}) {
+
+
+
+
+export default function Box({request}) {
 
   const [reason, setReason] = useState(request.reason);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -15,6 +19,10 @@ export default function Box({ request}) {
         setState("임시 신청");
       }else if(request.status==="PENDING"){
         setState("선생님 확인중");
+      }else if(request.status==="REJECTED"){
+        setState("거절됨");
+      }else if(request.status==="APPROVED"){
+        setState("승인됨");
       }
     }
   );
@@ -23,8 +31,8 @@ export default function Box({ request}) {
       <_.CardRow
         onClick={() => {
 
-          if (request.status.toUpperCase() === "거절됨") {
-            nav(`/object/detail/${request.id}?name=${request.productName}`);
+          if (request.status==="REJECTED") {
+            nav(`/object/detail/${request.id}?name=${request.product_name}`);
           }
         }}
       >
@@ -33,15 +41,7 @@ export default function Box({ request}) {
         <_.Cell flex="0 0 100px">{state}</_.Cell>
       </_.CardRow>
       <_.ReasonRow>
-        {!reason ? (
-          <_.ReasonTextarea
-            ref={textareaRef}
-            value={reason}
-            onChange={e => setReason(e.target.value)}
-          />
-        ) : (
-          reason || "구매 사유를 입력해 주세요"
-        )}
+        불필요하다
       </_.ReasonRow>
     </_.Card>
   );
