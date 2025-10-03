@@ -10,7 +10,7 @@ import { TableRow } from "@tiptap/extension-table-row";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
 import styled from "@emotion/styled";
-import { uploadImage } from "@_api/object/upload";
+import { saveFile } from "@_api/notice/notice";
 
 type Props = {
   value?: string;
@@ -225,11 +225,11 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
         onChange={async (e) => {
           const file = e.target.files?.[0];
           if (!file) return;
-          
+
           setIsUploading(true);
           try {
-            const uploadResult = await uploadImage(file);
-            editor.chain().focus().setImage({ src: uploadResult.url }).run();
+            const uploadedUrl = await saveFile(file);
+            editor.chain().focus().setImage({ src: uploadedUrl }).run();
 
           } catch (error) {
             console.error('이미지 업로드 실패:', error);
@@ -246,7 +246,7 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
 }
 
 const Wrap = styled.div`
-  width: 80%;
+  width: 71%;
   .notion-editor {
     transition: border-color .15s ease, box-shadow .15s ease;
   }
@@ -254,6 +254,15 @@ const Wrap = styled.div`
     border-color: #d0d7de;
     box-shadow: 0 0 0 3px rgba(3,102,214,.1);
   }
+  
+  .notion-editor img {
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
   table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; }
   th, td { border: 1px solid #eaecef; padding: 8px; text-align: left; }
   th { background: #fafbfc; font-weight: 600; }

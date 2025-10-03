@@ -2,9 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import * as _ from './style';
 import '@_styles';
 import specialty from '@_assets/Club/specialty.svg';
-import autonomy from '@_assets/Club/autonomy.svg';
-import net from '@_assets/Club/net.svg';
-import congrats from '@_assets/Club/congrats.svg';
 import { useUserStore } from "../../../atom/User";
 
 
@@ -16,7 +13,7 @@ export default function Menu() {
             navigate("/project-approval");
         } else if (user.userType === "STUDENT") {
             navigate("/object/apply");
-        }else{
+        } else {
             alert("권한 부족");
             navigate("/");
         }

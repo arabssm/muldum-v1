@@ -44,6 +44,31 @@ export const Section = styled.div`
   margin-left: 10%;
   width: 60%;
 
+  /* p 태그 줄바꿈 스타일 */
+  p {
+    margin: 0 0 1em 0;
+    min-height: 1.2em;
+    line-height: 1.6;
+  }
+  
+  p:empty {
+    margin: 0 0 1em 0;
+    min-height: 1.2em;
+  }
+  
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* 이미지 크기 제한 */
+  img {
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
   /* 테이블 스타일링 */
   table {
     width: 100%;
