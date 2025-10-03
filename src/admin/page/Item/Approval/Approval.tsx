@@ -4,13 +4,12 @@ import * as _ from "./style";
 import "@_styles";
 import NavBar from "@_all/component/sibebar/sidebar";
 import ApprovalList from "@_components/Item/List/ApprovalList";
-import Clubs from "./ClubList";
+import { getClubs } from "./ClubList";
 import { submititem, nosubmititem } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
 import ReasonButtons from "./Reason";
-
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
@@ -25,6 +24,7 @@ const Approval = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [allItemIds, setAllItemIds] = useState<number[]>([]);
   const [reasons, setReasons] = useState<{ [id: number]: string }>({});
+  const [clubs, setClubs] = useState<{ id: number; name: string }[]>([]);
 
   const [selectedPossibleClub, setSelectedPossibleClub] = useState<string | null>(null);
   const [selectedImpossibleClub, setSelectedImpossibleClub] = useState<string | null>(null);
@@ -33,6 +33,14 @@ const Approval = () => {
   const [showRejectModal, setShowRejectModal] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadClubs = async () => {
+      const clubData = await getClubs();
+      setClubs(clubData);
+    };
+    loadClubs();
+  }, []);
 
   useEffect(() => {
     setSelectedItems([]);
@@ -50,14 +58,13 @@ const Approval = () => {
   };
 
   async function SSubmit() {
-     try {
-    const payload = selectedItems.map((id) => ({ item_id: id }));
-    const res = await submititem(payload);
+    try {
+      const payload = selectedItems.map((id) => ({ item_id: id }));
+      const res = await submititem(payload);
 
-  } catch (err) {
-    console.error("승인 실패", err);
-    alert("승인 중 오류 발생");
-  }
+    } catch (err) {
+      alert("승인 중 오류 발생");
+    }
   }
 
   async function NSubmit() {
@@ -74,10 +81,10 @@ const Approval = () => {
       }));
 
       const res = await nosubmititem(payload);
-      console.log("거절 성공:", res);
+      alert('거절 성공')
       setShowRejectModal(true);
     } catch (err) {
-      console.error("거절 실패:", err);
+      alert("거절 실패");
       alert("거절 중 오류가 발생했습니다.");
     }
   }
@@ -85,7 +92,7 @@ const Approval = () => {
   const closeModal = (isApprove: boolean) => {
     if (isApprove) setShowApproveModal(false);
     else setShowRejectModal(false);
-    navigate("/object");
+    navigate("/project-choice");
   };
 
   const renderContent = () => {
@@ -93,17 +100,17 @@ const Approval = () => {
     const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
     const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
     const selectedClubId = useMemo(() => {
-      const found = Clubs.find((c) => c.name === selectedClubName);
+      const found = clubs.find((c) => c.name === selectedClubName);
       const id = found?.id;
       return Number.isFinite(id as number) ? (id as number) : null;
-    }, [selectedClubName]);
+    }, [selectedClubName, clubs]);
 
     return (
       <>
         {isPossible ? (
           <>
             <ClubSelector
-              clubs={Clubs.map((c) => c.name)}
+              clubs={clubs.map((c) => c.name)}
               selectedClub={selectedClubName}
               setSelectedClub={setSelectedClub}
             />
@@ -138,7 +145,6 @@ const Approval = () => {
             </_.AddonsArea>
 
             <ApprovalList
-              id={1}
               selectAll={selectAll}
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}

@@ -13,12 +13,13 @@ export const MenuArea = styled.div`
     flex-direction: column; 
     justify-content: center;
     align-items: flex-start;
-    width: 35%;
+    width: 15%;
     background-color: #FAFAFA;
     border-radius: 12px;
     padding: 3% 3%;
     margin-bottom: 2%;
     cursor: pointer;
+    gap: 12px;
 `;
 
 export const Text = styled.div`
@@ -92,5 +93,5 @@ export const LastGroup = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 5%;
+    width: 15%;
 `;
