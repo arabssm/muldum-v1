@@ -31,8 +31,8 @@ export const IconMenu = [
     iconActive: icons.itemActive,
     children: [
       // { path: '/project-choice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
-      { path: '/object/all', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/object', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/object/all', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/project-approval', roles: ['TEACHER', 'SUPERADMIN'] }, 
     ],
   },

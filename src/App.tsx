@@ -42,6 +42,7 @@ export default function App() {
           <Route path="/notice/edit/:id" element={<NoticeEdit />} />
           <Route path="/project-approval" element={<Approval />} />
         </Route>
+        
         <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
           <Route path="/object" element={<ProjectChoice />} />
           <Route path="/object/all" element={<All />} />

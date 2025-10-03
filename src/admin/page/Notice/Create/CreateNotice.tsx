@@ -124,7 +124,6 @@ export default function CreateNotice() {
 
       setShowModal(true);
     } catch (err) {
-      console.error(err);
       alert('공지 등록 실패');
     } finally {
       setIsSubmitting(false);

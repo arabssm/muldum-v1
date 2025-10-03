@@ -10,7 +10,6 @@ export default function Team() {
   useEffect(() => {
     fetchTeams()
       .then((data) => setTeams(data))
-      .catch((err) => console.error(err));
   }, []);
 
   const handleClick = (teamId: number) => {

@@ -22,7 +22,6 @@ export default function TeamDetail() {
     return <div>로딩중...</div>;
   }
 
-  // <p></p> 를 줄바꿈 보이게 변환
   const renderContent = (html: string) => {
     if (!html) return "내용이 없습니다";
     return html.replace(/<p>\s*<\/p>/g, "<p><br></p>");
