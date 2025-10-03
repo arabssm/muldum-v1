@@ -13,18 +13,21 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
 `;
 
 export const Banner = styled.div`
   width: 100%;
-  z-index: 1;
+  z-index: -2;
   height: 12rem;
   background-color: #41f4bb; 
   background-size: cover;
-  background-position: center center;
+  background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin: 0 auto;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   position: relative;
   display: flex;
   align-items: center;
@@ -33,6 +36,7 @@ export const Banner = styled.div`
   &.editable {
     cursor: pointer;
     transition: all 0.2s ease;
+    z-index: 1;
 
     &:hover {
       filter: brightness(0.9);
@@ -42,15 +46,18 @@ export const Banner = styled.div`
       content: "클릭하여 배너 이미지 변경";
       position: absolute;
       top: 50%;
-      left: 50%;
+      left: 43%;
       transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
       color: white;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1.5rem;
       border-radius: 0.5rem;
-      font-size: 0.9rem;
+      font-size: 1rem;
+      font-weight: 500;
       white-space: nowrap;
-      z-index: 10;
+      z-index: 10000;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
   }
 `;
@@ -71,6 +78,7 @@ export const ClubName = styled.h1`
 export const Section = styled.div`
   padding: 1rem 2rem;
   margin-left: 10%;
+  overflow-x: hidden;
 
   /* NotionEditor 내부 p 태그 스타일 */
   .notion-editor p {

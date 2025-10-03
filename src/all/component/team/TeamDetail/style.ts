@@ -13,17 +13,25 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
 `;
 
-export const Banner = styled.img`
-  width: 200%;
+export const Banner = styled.div`
+  width: 100%;
   z-index: -2;
   height: 12rem;
   background-color: #41f4bb; 
   background-size: cover;
-  background-position: center;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
   margin: 0 !important;
   padding: 0 !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Header = styled.div`
@@ -37,12 +45,10 @@ export const ClubName = styled.h1`
   margin: 0;
 `;
 
-
-
 export const Section = styled.div`
   padding: 1rem 2rem;
   margin-left: 10%;
-  width: 60%;
+  overflow-x: hidden;
 
   /* p 태그 줄바꿈 스타일 */
   p {
@@ -120,7 +126,7 @@ export const LogoArea = styled.div`
   margin-top: -5rem;
   margin-bottom: 1rem;
   margin-left: 12%;
-  z-index: -1;
+  z-index: 2;
   position: relative;
   border-radius: 1rem;
 `;
@@ -128,6 +134,17 @@ export const LogoArea = styled.div`
 export const Logo = styled.img`
   height: 4rem; 
   width: auto;
+  border-radius: 0.5rem;
+
+  &.editable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      filter: brightness(0.9);
+      transform: scale(0.95);
+    }
+  }
 `;
 
 export const Btn = styled.button`

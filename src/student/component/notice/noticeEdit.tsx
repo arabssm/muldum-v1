@@ -247,15 +247,19 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
 
 const Wrap = styled.div`
   width: 71%;
+  overflow-x: hidden;
+  overflow-y: visible;
+  
   .notion-editor {
     transition: border-color .15s ease, box-shadow .15s ease;
+    min-width: 600px; /* 최소 너비 보장 */
   }
   .notion-editor:focus-within {
     border-color: #d0d7de;
     box-shadow: 0 0 0 3px rgba(3,102,214,.1);
   }
   
-  .notion-editor img {
+  .notion-editor img {  
     max-width: 100%;
     max-height: 400px;
     height: auto;
@@ -263,7 +267,12 @@ const Wrap = styled.div`
     border-radius: 8px;
   }
   
-  table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; }
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 6px 0 12px; 
+    min-width: 500px; /* 테이블 최소 너비 */
+  }
   th, td { border: 1px solid #eaecef; padding: 8px; text-align: left; }
   th { background: #fafbfc; font-weight: 600; }
   ul { list-style: disc; padding-left: 1.5rem; }

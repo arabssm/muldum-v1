@@ -7,7 +7,7 @@ import { useUserStore } from '../../../../atom/User';
 
 export default function TeamDetail() {
   const navigate = useNavigate();
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [team, setTeam] = useState<TeamDetailType | null>(null);
   const { user } = useUserStore();
 
@@ -31,9 +31,11 @@ export default function TeamDetail() {
     <_.Container>
       <NavBar />
       <_.Content>
-        <_.Banner 
-          style={{ backgroundImage: `url(${team.config.backgroundImageUrl ?? "/images/default-banner.png"})` }} 
-        />            
+        <_.Banner
+          style={{ backgroundImage: `url(${team.config.backgroundImageUrl ?? "/images/default-banner.png"})` }}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => e.preventDefault()}
+        />
         {user && user.teamId === team.teamId && (
           <_.ButtonGroup>
             <_.Btn onClick={() => navigate(`/club/edit/${team.teamId}`)}>수정하기</_.Btn>
