@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Main from '@_main/Main';
 import Notice from '@_notice/Notice';
@@ -20,12 +21,33 @@ import Loading from './all/component/loading/loading';
 import TeamDetail from '@_all/component/team/TeamDetail/TeamDetail';
 import TeamEdit from '@_page/TeamEdit/TeamEdit';
 import AuthConfirm from '@_all/auth/auth';
+import ScreenSizeWarning from './all/component/ScreenSizeWarning/ScreenSizeWarning';
 
 export default function App() {
   const { isOpen } = useLoginModalStore();
   const { isLoading } = useLoadingStore();
+  const [isDesktopSize, setIsDesktopSize] = useState(true);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const desktopSize = window.innerWidth >= 1024;
+      setIsDesktopSize(desktopSize);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
 
   if (isLoading) return <Loading />;
+
+  // 화면 크기가 작으면 경고 화면만 표시
+  if (!isDesktopSize) {
+    return <ScreenSizeWarning />;
+  }
 
   return (
     <>
