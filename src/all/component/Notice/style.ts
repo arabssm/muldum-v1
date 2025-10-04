@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: flex-start;
     width: 90%;
-    gap: 26%;
+    gap: 54%;
 `;
 
 export const PageTitle = styled.div`
@@ -49,8 +49,7 @@ export const BoxContainer = styled.div`
     display: flex;
     align-items: center;
     width: 85%;
-    margin-left: 7%;
-    padding: 1.2% 1%;
+    padding: 1.5% 0%;
     cursor: pointer;
     background-color: #fff;
 `;

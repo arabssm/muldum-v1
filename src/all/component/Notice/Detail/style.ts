@@ -100,3 +100,10 @@ export const pic = styled.img`
     width: 100%;
     margin-top: 2%;
 `; 
+
+export const Back = styled.img`
+    margin-bottom: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+`;

@@ -3,6 +3,7 @@ import * as _ from './style';
 import NavBar from '../../sibebar/sidebar';
 import Notfound from '@_notfound/NotFound';
 import DeleteModal from '@_modal/Delete/DeleteModal';
+import Back from '@_assets/arrow.svg';
 import ConfirmDeleteModal from '@_modal/Notice/ConfirmDelete';
 import makeDocument from './makeDocument';
 import { getNoticeDetail, deleteNotice } from '../../../../api/notice/notice';
@@ -61,6 +62,7 @@ export default function Detail() {
     <_.Container>
       <NavBar />
       <_.Wrapper>
+        <_.Back src={Back} alt="뒤로가기" onClick={() => navigate(-1)} />
         <_.PageTitle>{doc1.title}</_.PageTitle>
         <_.AdditionRow>
           <_.AdditionLeft>
