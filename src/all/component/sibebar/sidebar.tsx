@@ -20,7 +20,6 @@ export default function NavBar() {
 
   if (!hydrated) return null;
 
-  const role = user?.userType ?? 'GUEST';
 
   return (
     <>
@@ -36,28 +35,40 @@ export default function NavBar() {
         )}
 
         {IconMenu.map((menu) => {
-          // 접근 가능한 child 필터링
           const accessibleChildren = menu.children.filter((child) => {
-            if (child.roles.includes('ALL')) return true;       // 항상 허용
-            if (child.roles.includes('GUEST') && !user) return true; // 로그인 안했을 때만
-            if (user && child.roles.includes(user.userType)) return true; // 권한 일치
+            if (child.roles.includes('ALL')) return true;
+            if (child.roles.includes('GUEST') && !user) return true;
+            if (user && child.roles.includes(user.userType)) return true;
             return false;
           });
 
           if (accessibleChildren.length === 0) return null;
 
           const isActive = accessibleChildren.some(
-            (child) =>
-              location.pathname === child.path ||
-              location.pathname.startsWith(child.path + '/')
+            (child) => {
+              // 정확한 경로 매칭
+              if (location.pathname === child.path) return true;
+
+              // 시작 경로 매칭
+              if (location.pathname.startsWith(child.path + '/')) return true;
+
+              // 동적 경로 매칭 (예: /club/:id)
+              if (child.path.includes(':')) {
+                const pathPattern = child.path.replace(/:[^/]+/g, '[^/]+');
+                const regex = new RegExp(`^${pathPattern}$`);
+                return regex.test(location.pathname);
+              }
+
+              return false;
+            }
           );
 
           const TagComponent =
             menu.label === '로그인'
               ? _.LoginTag
-              : menu.label === '로그아웃'
-              ? _.SettingTag
-              : _.TagArea;
+              : menu.label === '설정'
+                ? _.SettingTag
+                : _.TagArea;
 
           return (
             <TagComponent
@@ -65,7 +76,7 @@ export default function NavBar() {
               onClick={() => {
                 if (menu.label === '로그인') {
                   setIsOpen(true);
-                } else if (menu.label === '로그아웃') {
+                } else if (menu.label === '설정') {
                   open();
                 } else {
                   navigate(accessibleChildren[0].path);

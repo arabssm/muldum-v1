@@ -54,6 +54,7 @@ export const IconMenu = [
     children: [
       { path: '/team-space', roles: ['ALL'] },
       { path: '/club/:id', roles: ['ALL'] },
+      { path: '/club/edit/:id', roles: ['STUDENT'] },
     ],
   },
   {

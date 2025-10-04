@@ -46,7 +46,7 @@ export const Banner = styled.div`
       content: "클릭하여 배너 이미지 변경";
       position: absolute;
       top: 50%;
-      left: 43%;
+      left: 50%;
       transform: translate(-50%, -50%);
       background: rgba(0, 0, 0, 0.8);
       color: white;
