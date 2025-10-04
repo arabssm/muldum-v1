@@ -80,7 +80,11 @@ export default function NavBar() {
                   src={isActive ? menu.iconActive : menu.icon}
                   alt={menu.label}
                 />
-                <_.Text isActive={isActive}>{menu.label}</_.Text>
+                {menu.label === '로그인' ? (
+                  <_.LoginText isActive={isActive}>{menu.label}</_.LoginText>
+                ) : (
+                  <_.Text isActive={isActive}>{menu.label}</_.Text>
+                )}
               </TagComponent>
             );
           })}

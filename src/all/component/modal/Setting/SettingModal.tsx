@@ -1,5 +1,6 @@
 import * as _ from './style';
 import { logout } from '@_api/login/login';
+import { getCookie, removeCookie } from '../../../../utils/cookie';
 
 interface SettingModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   if (!isOpen) return null;
 
   const handleConfirm = async () => {
-    const refreshToken = localStorage.getItem('refresh_token'); 
+    const refreshToken = getCookie('refresh_token');
     if (!refreshToken) {
       alert('로그인 정보가 없습니다.');
       onClose();
@@ -20,11 +21,11 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
 
     const success = await logout(refreshToken);
     if (success) {
-      localStorage.removeItem('refresh_token'); 
-      localStorage.removeItem('access_token');
+      removeCookie('refresh_token');
+      removeCookie('access_token');
       localStorage.removeItem('user-store');
       alert('로그아웃 되었습니다.');
-      window.location.href = '/'; 
+      window.location.href = '/';
     } else {
       alert('로그아웃 실패');
     }

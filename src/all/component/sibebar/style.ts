@@ -54,6 +54,11 @@ export const Text = styled.div<data>`
     margin-left: 4%;
 `;
 
+export const LoginText = styled.div<data>`
+    color: #000000;
+    margin-left: 4%;
+`;
+
 export const ProfileArea = styled.div`
   display: flex;
   align-items: center;
