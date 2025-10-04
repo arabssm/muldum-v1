@@ -1,5 +1,6 @@
 import { icons } from './icons';
 
+
 export const IconMenu = [
   {
     label: '로그인',
@@ -30,9 +31,9 @@ export const IconMenu = [
     icon: icons.item,
     iconActive: icons.itemActive,
     children: [
-      // { path: '/project-choice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
-      { path: '/object/all', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/project-choice', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/object', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
+      { path: '/object/all', roles: ['STUDENT', 'TEACHER', 'SUPERADMIN'] },
       { path: '/project-approval', roles: ['TEACHER', 'SUPERADMIN'] }, 
     ],
   },
@@ -53,6 +54,7 @@ export const IconMenu = [
     children: [
       { path: '/team-space', roles: ['ALL'] },
       { path: '/club/:id', roles: ['ALL'] },
+      { path: '/club/edit/:id', roles: ['STUDENT'] },
     ],
   },
   {

@@ -10,6 +10,14 @@ export const MainArea = styled.div`
     padding: 3% 2% 2% 2%;
     border-right: 1px solid #D1D1D1;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const MenuContainer = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const BaseTag = styled.div<data>`
@@ -28,7 +36,8 @@ export const LoginTag = styled(BaseTag)`
 `;
 
 export const SettingTag = styled(BaseTag)`
-    margin-top: 80%;
+    margin-top: auto;
+    margin-bottom: 4rem;
 `;
 
 export const TagArea = styled(BaseTag)`

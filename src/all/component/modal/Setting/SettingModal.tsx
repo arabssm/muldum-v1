@@ -23,7 +23,6 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
       localStorage.removeItem('refresh_token'); 
       localStorage.removeItem('access_token');
       localStorage.removeItem('user-store');
-      sessionStorage.removeItem("googleLoginDone");
       alert('로그아웃 되었습니다.');
       window.location.href = '/'; 
     } else {

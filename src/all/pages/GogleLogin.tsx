@@ -6,7 +6,6 @@ import googleLogin from '../../api/login/login'
 import { useUserStore } from '../../atom/User'
 import Main from '@_main/Main';
 
-// 쿠키 유틸리티 함수
 const setCookie = (name: string, value: string, days: number = 7): void => {
   const expires = new Date();
   expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
@@ -57,7 +56,6 @@ export default function GoogleLogin() {
       googleLogin(code)
         .then((data) => {
           if (data) {
-            // 쿠키에 토큰 저장 (access_token: 7일, refresh_token: 30일)
             setCookie('access_token', data.accessToken, 7)
             setCookie('refresh_token', data.refreshToken, 30)
             setUser({
