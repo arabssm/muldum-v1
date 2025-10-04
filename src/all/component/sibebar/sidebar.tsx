@@ -34,8 +34,63 @@ export default function NavBar() {
           </_.ProfileArea>
         )}
 
-        {IconMenu.map((menu) => {
-          const accessibleChildren = menu.children.filter((child) => {
+        <_.MenuContainer>
+          {IconMenu.filter(menu => menu.label !== '로그아웃').map((menu) => {
+            const accessibleChildren = menu.children.filter((child) => {
+              if (child.roles.includes('ALL')) return true;
+              if (child.roles.includes('GUEST') && !user) return true;
+              if (user && child.roles.includes(user.userType)) return true;
+              return false;
+            });
+
+            if (accessibleChildren.length === 0) return null;
+
+            const isActive = accessibleChildren.some(
+              (child) => {
+                if (location.pathname === child.path) return true;
+                if (location.pathname.startsWith(child.path + '/')) return true;
+                if (child.path.includes(':')) {
+                  const pathPattern = child.path.replace(/:[^/]+/g, '[^/]+');
+                  const regex = new RegExp(`^${pathPattern}$`);
+                  return regex.test(location.pathname);
+                }
+
+                return false;
+              }
+            );
+
+            const TagComponent =
+              menu.label === '로그인'
+                ? _.LoginTag
+                : _.TagArea;
+
+            return (
+              <TagComponent
+                key={menu.label}
+                onClick={() => {
+                  if (menu.label === '로그인') {
+                    setIsOpen(true);
+                  } else {
+                    navigate(accessibleChildren[0].path);
+                  }
+                }}
+                isActive={isActive}
+              >
+                <_.Icon
+                  src={isActive ? menu.iconActive : menu.icon}
+                  alt={menu.label}
+                />
+                <_.Text isActive={isActive}>{menu.label}</_.Text>
+              </TagComponent>
+            );
+          })}
+        </_.MenuContainer>
+
+        {(() => {
+          const settingMenu = IconMenu.find(menu => menu.label === '로그아웃');
+          if (!settingMenu) return null;
+
+          const accessibleChildren = settingMenu.children.filter((child) => {
             if (child.roles.includes('ALL')) return true;
             if (child.roles.includes('GUEST') && !user) return true;
             if (user && child.roles.includes(user.userType)) return true;
@@ -46,13 +101,8 @@ export default function NavBar() {
 
           const isActive = accessibleChildren.some(
             (child) => {
-              // 정확한 경로 매칭
               if (location.pathname === child.path) return true;
-
-              // 시작 경로 매칭
               if (location.pathname.startsWith(child.path + '/')) return true;
-
-              // 동적 경로 매칭 (예: /club/:id)
               if (child.path.includes(':')) {
                 const pathPattern = child.path.replace(/:[^/]+/g, '[^/]+');
                 const regex = new RegExp(`^${pathPattern}$`);
@@ -63,35 +113,20 @@ export default function NavBar() {
             }
           );
 
-          const TagComponent =
-            menu.label === '로그인'
-              ? _.LoginTag
-              : menu.label === '설정'
-                ? _.SettingTag
-                : _.TagArea;
-
           return (
-            <TagComponent
-              key={menu.label}
-              onClick={() => {
-                if (menu.label === '로그인') {
-                  setIsOpen(true);
-                } else if (menu.label === '설정') {
-                  open();
-                } else {
-                  navigate(accessibleChildren[0].path);
-                }
-              }}
+            <_.SettingTag
+              key={settingMenu.label}
+              onClick={() => open()}
               isActive={isActive}
             >
               <_.Icon
-                src={isActive ? menu.iconActive : menu.icon}
-                alt={menu.label}
+                src={isActive ? settingMenu.iconActive : settingMenu.icon}
+                alt={settingMenu.label}
               />
-              <_.Text isActive={isActive}>{menu.label}</_.Text>
-            </TagComponent>
+              <_.Text isActive={isActive}>{settingMenu.label}</_.Text>
+            </_.SettingTag>
           );
-        })}
+        })()}
       </_.MainArea>
 
       <SettingModal
