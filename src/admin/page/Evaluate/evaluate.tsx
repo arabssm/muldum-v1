@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import * as _ from "./style";
 import NavBar from "@_navbar/sidebar";
-import Clubs from "@_pages/Item/Approval/ClubList";
+import { getClubs } from "@_pages/Item/Approval/ClubList";
 
 export default function ClubTabs() {
     const [activeTab, setActiveTab] = useState<"작성완료" | "미완료">("작성완료");
     const [activeClubId, setActiveClubId] = useState<number>(1);
+    const [clubs, setClubs] = useState<{ id: number; name: string; }[]>([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const loadClubs = async () => {
+            const clubData = await getClubs();
+            setClubs(clubData);
+        };
+        loadClubs();
+    }, []);
 
     const report = { month: 8 };
     const reports = Array(3).fill(report);
@@ -30,7 +39,7 @@ export default function ClubTabs() {
             </_.Tab>
         </_.TabWrapper>
         <_.ClubList>
-            {Clubs.map((club) => (
+            {clubs.map((club) => (
             <_.ClubButton
                 key={club.id}
                 active={club.id === activeClubId}
