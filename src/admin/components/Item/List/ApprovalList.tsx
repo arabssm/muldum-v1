@@ -28,26 +28,27 @@ export default function ApprovalList({
   };
 
   useEffect(() => {
-    tchitem(id)
-      .then((res) => {
-        // ✅ 서버 응답 정규화
-        const normalized = (res ?? []).map((raw: any, idx: number) => {
-          const numId = Number(raw.item_id ?? idx);
-          return {
-            ...raw,
-            id: numId,
-            productName: raw.product_name ?? '이름 없음',
-          };
-        });
+    if (id !== undefined) {
+      tchitem(id)
+        .then((res) => {
+          const normalized = (res ?? []).map((raw: any, idx: number) => {
+            const numId = Number(raw.item_id ?? idx);
+            return {
+              ...raw,
+              id: numId,
+              productName: raw.product_name ?? '이름 없음',
+            };
+          });
 
-        setData(normalized);
-        setAllItemIds(normalized.map((item) => item.id));
-      })
-      .catch((err) => {
-        console.error('API 실패', err);
-      });
+          setData(normalized);
+          setAllItemIds(normalized.map((item) => item.id));
+        })
+        .catch((err) => {
+          console.error('API 실패', err);
+        });
+    }
   }, [id, setAllItemIds]);
-  
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');
 
@@ -67,7 +68,7 @@ export default function ApprovalList({
       <_.ListWrapper>
         {data.map((item, index) => (
           <_.ItemRow
-            key={item.id ?? `row-${index}`}   // ✅ key 안전하게
+            key={item.id ?? `row-${index}`}  
             onClick={() => handleSelect(item.id)}
           >
             <_.ItemIndex selected={selectedItems.includes(item.id)}>
@@ -88,7 +89,6 @@ export default function ApprovalList({
         <DetailItem
           name={selectedName}
           onConfirm={() => {
-            console.log(`${selectedName} 삭제!`);
             closeModal();
           }}
           onCancel={closeModal}
