@@ -15,7 +15,7 @@ export default async function TeacherInvite(url: string) {
 
 export async function StudentTeamIdInvite(url: string) {
   try {
-    const res = await axiosInstance.post('/tch/team/invite', {
+    const res = await axiosInstance.post('/tch/teamspace/invite', {
       googleSheetUrl: url,
     });
     return res.data;
