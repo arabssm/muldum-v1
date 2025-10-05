@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const getCookie = (name: string): string | null => {
   const value = `; ${document.cookie}`;
@@ -19,16 +19,18 @@ const deleteCookie = (name: string): void => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
 };
 
-
+// 🎯 기본 Axios 인스턴스
 const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-
   withCredentials: true,
 });
+
+// ✅ 요청 인터셉터 (JWT 토큰 붙이기)
 axiosInstance.interceptors.request.use(async (config) => {
   let token = getCookie('access_token');
   const refreshToken = getCookie('refresh_token');
+
   if (!token && refreshToken) {
     token = await refreshAccessToken();
   }
@@ -41,20 +43,19 @@ axiosInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
+// 🔄 토큰 갱신용 클라이언트
 const refreshClient = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
   withCredentials: true,
 });
+
 let isRefreshing = false;
 let pendingQueue: ((token: string) => void)[] = [];
 let pendingRejects: ((err: any) => void)[] = [];
 
 const processQueue = (token: string | null, error: any) => {
-  if (token) {
-    pendingQueue.forEach((res) => res(token));
-  } else {
-    pendingRejects.forEach((rej) => rej(error));
-  }
+  if (token) pendingQueue.forEach((res) => res(token));
+  else pendingRejects.forEach((rej) => rej(error));
   pendingQueue = [];
   pendingRejects = [];
 };
@@ -63,16 +64,19 @@ const refreshAccessToken = async (): Promise<string> => {
   const { data } = await refreshClient.post('/ara/auth/refresh', {
     refreshToken: getCookie('refresh_token'),
   });
-  const token: string = data.access_token;
 
+  const token: string = data.access_token;
   if (!token) throw new Error('No access_token in refresh response');
   setCookie('access_token', token);
   return token;
 };
+
+// ⚙️ 응답 인터셉터 (401 시 토큰 자동 갱신)
 axiosInstance.interceptors.response.use(
   (res) => res,
   async (error: AxiosError) => {
     const original = error.config as AxiosRequestConfig & { _retry?: boolean };
+
     if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
 
@@ -92,6 +96,7 @@ axiosInstance.interceptors.response.use(
         const newToken = await refreshAccessToken();
         processQueue(newToken, null);
         isRefreshing = false;
+
         original.headers = original.headers ?? {};
         (original.headers as any).Authorization = `Bearer ${newToken}`;
         return axiosInstance(original);
