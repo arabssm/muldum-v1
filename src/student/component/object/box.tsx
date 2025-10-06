@@ -41,7 +41,7 @@ export default function Box({request}) {
         <_.Cell flex="0 0 100px">{state}</_.Cell>
       </_.CardRow>
       <_.ReasonRow>
-        불필요하다
+        {request.reason}
       </_.ReasonRow>
     </_.Card>
   );
