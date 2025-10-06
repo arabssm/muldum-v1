@@ -26,7 +26,7 @@ export const Banner = styled.div`
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin: 0 !important;
+  margin-left: 2.5%;
   padding: 0 !important;
   position: relative;
   display: flex;
