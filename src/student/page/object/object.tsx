@@ -35,9 +35,6 @@ export default function Object() {
       alert('신청이 완료되었습니다.');
       window.location.reload();
     })
-    .catch((err) => {
-      // 에러 처리
-    });
   }
   useEffect(() => {
     getMoney()
@@ -46,9 +43,6 @@ export default function Object() {
 
       setUsedMoney(data1.usedBudget)
     })
-    .catch((err) => {
-      // 에러 처리
-    });
     getApply()
       .then((data2) => {
         setRequests(data2);
