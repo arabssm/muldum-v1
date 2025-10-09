@@ -283,3 +283,16 @@ export const ProductName = styled.div`
 export const TextContainer = styled.div`
   margin-bottom: 30px;
 `;
+
+export const PriceQtyWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+`;
+
+export const SmallInput = styled.input`
+  width: 100px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
