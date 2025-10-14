@@ -43,12 +43,9 @@ export default function App() {
   }, []);
 
   if (isLoading) return <Loading />;
-
-  // 화면 크기가 작으면 경고 화면만 표시
   if (!isDesktopSize) {
     return <ScreenSizeWarning />;
   }
-
   return (
     <>
       <Routes>
