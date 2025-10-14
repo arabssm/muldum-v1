@@ -28,14 +28,7 @@ export default function Box({request}) {
   );
   return (
     <_.Card>
-      <_.CardRow
-        onClick={() => {
-
-          if (request.status==="REJECTED") {
-            nav(`/object/detail/${request.id}?name=${request.product_name}`);
-          }
-        }}
-      >
+      <_.CardRow>
         <_.Cell flex="1">{request.product_name}</_.Cell>
         <_.Cell flex="0 0 60px">수량 {request.quantity}</_.Cell>
         <_.Cell flex="0 0 100px">{state}</_.Cell>
