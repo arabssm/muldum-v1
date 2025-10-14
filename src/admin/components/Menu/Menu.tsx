@@ -11,7 +11,7 @@ export default function Menu() {
     function Go() {
         if (user.userType === "TEACHER") {
             navigate("/project-approval");
-        } else if (user.userType === "STUDENT" || user.teamId) {
+        } else if (user.userType === "STUDENT" && user.teamId) {
             navigate("/object/apply");
         } else {
             alert("권한 부족");
