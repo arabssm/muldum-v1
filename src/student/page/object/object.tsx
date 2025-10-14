@@ -4,10 +4,21 @@ import Sidebar from '../../../all/component/sibebar/sidebar';
 import Box from '../../component/object/box';
 import type { Request } from '../../component/object/types';
 import Apply from '../../../api/object/apply'
-import {getApply,getMoney,finalapply} from '../../../api/object/apply'
+import { getApply, getMoney, finalapply } from '../../../api/object/apply'
 import { useNavigate } from 'react-router-dom';
+
+
+const isValidUrl = (string: string): boolean => {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+
 export default function Object() {
-  const nav=useNavigate();
+  const nav = useNavigate();
   const [item, setItem] = useState('');
   const [price, setPrice] = useState('');
   const [link, setLink] = useState('');
@@ -15,41 +26,84 @@ export default function Object() {
   const [reason, setReason] = useState('');
   const [money, setMoney] = useState<number>(0);
   const [usedmoney, setUsedMoney] = useState<number>(0);
-  const [requests, setRequests] = useState<Request[]>([]); 
+  const [requests, setRequests] = useState<Request[]>([]);
   const handleAdd = async () => {
-    if (!item.trim() || reason.trim().length < 10) {
-      alert('물품명과 사유(10자 이상)를 입력하세요.');
+    if (!item.trim()) {
+      alert('물품명을 입력해 주세요.');
       return;
     }
-    try {
 
+    if (!price.trim()) {
+      alert('가격을 입력해 주세요.');
+      return;
+    }
+
+    const priceNum = parseFloat(price.replace(/,/g, ''));
+    if (isNaN(priceNum) || priceNum <= 0) {
+      alert('올바른 가격을 입력해 주세요.');
+      return;
+    }
+
+    if (qty < 1) {
+      alert('수량은 1개 이상이어야 합니다.');
+      return;
+    }
+
+    if (reason.trim().length < 10) {
+      alert('신청 사유를 10자 이상 입력해 주세요.');
+      return;
+    }
+
+
+    try {
       await Apply(item, qty, price, link, reason);
+      setItem('');
+      setPrice('');
+      setLink('');
+      setQty(1);
+      setReason('');
       window.location.reload();
-    } catch (err) {
+    } catch (err: any) {
       console.error("신청 실패:", err);
+      const errorMessage = err.response?.data?.message || err.message || '신청 중 오류가 발생했습니다.';
+      alert(errorMessage);
     }
   };
-  const finalApply= () => {
-    finalapply()
-    .then(() => {
-      alert('신청이 완료되었습니다.');
-      window.location.reload();
-    })
-  }
+  const finalApply = () => {
+    if (requests.length === 0) {
+      alert('신청할 물품이 없습니다.');
+      return;
+    }
+
+    if (confirm('정말로 신청하시겠습니까? 신청 후에는 수정할 수 없습니다.')) {
+      finalapply()
+        .then(() => {
+          alert('신청이 완료되었습니다.');
+          window.location.reload();
+        })
+        .catch((err: any) => {
+          console.error("최종 신청 실패:", err);
+          const errorMessage = err.response?.data?.message || err.message || '신청 중 오류가 발생했습니다.';
+          alert(errorMessage);
+        });
+    }
+  };
   useEffect(() => {
     getMoney()
-    .then((data1) => {
-      setMoney(data1.remainingBudget);
+      .then((data1) => {
+        setMoney(data1.remainingBudget);
 
-      setUsedMoney(data1.usedBudget)
-    })
+        setUsedMoney(data1.usedBudget)
+      })
     getApply()
       .then((data2) => {
         setRequests(data2);
 
       })
       .catch((err) => {
-        // 에러 처리
+        console.error("데이터 로딩 실패:", err);
+        const errorMessage = err.response?.data?.message || '데이터를 불러오는 중 오류가 발생했습니다.';
+        alert(errorMessage);
       });
   }, []);
   return (
@@ -121,14 +175,14 @@ export default function Object() {
                   key={r.id}
                   request={r}
                 />
-              ))} 
+              ))}
             </_.ListWrapper>
           </_.ListSection>
         </_.Main>
 
         <_.Footer>
           <_.FooterLink>물품 신청 가이드 보기 &gt;</_.FooterLink>
-          <_.FooterLink onClick={()=>nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
+          <_.FooterLink onClick={() => nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
         </_.Footer>
       </_.Container>
     </_.PageWrapper>
