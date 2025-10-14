@@ -33,7 +33,7 @@ export default function NoticeEdit() {
           setServerUrls(data.files.map((f: { url: string }) => f.url));
         }
       } catch (err) {
-        console.error('공지 불러오기 실패', err);
+        alert('공지 불러오기 실패');
       }
     })();
   }, [id]);
@@ -114,7 +114,6 @@ export default function NoticeEdit() {
     await updateNotice(Number(id), patchData);
     setShowModal(true);
   } catch (err) {
-    console.error('공지 수정 실패', err);
     alert('공지 수정 실패');
   } finally {
     setIsSubmitting(false);

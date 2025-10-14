@@ -19,14 +19,12 @@ const deleteCookie = (name: string): void => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
 };
 
-// 🎯 기본 Axios 인스턴스
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
 
-// ✅ 요청 인터셉터 (JWT 토큰 붙이기)
 axiosInstance.interceptors.request.use(async (config) => {
   let token = getCookie('access_token');
   const refreshToken = getCookie('refresh_token');
@@ -43,7 +41,6 @@ axiosInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
-// 🔄 토큰 갱신용 클라이언트
 const refreshClient = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
@@ -71,7 +68,6 @@ const refreshAccessToken = async (): Promise<string> => {
   return token;
 };
 
-// ⚙️ 응답 인터셉터 (401 시 토큰 자동 갱신)
 axiosInstance.interceptors.response.use(
   (res) => res,
   async (error: AxiosError) => {
