@@ -6,7 +6,7 @@ import { fetchTeamDetail, TeamDetail as TeamDetailType } from "@_api/teamspace/d
 import { useUserStore } from "../../../../src/atom/User";
 import NotionEditor from "../../component/notice/noticeEdit";
 import TeacherInvite from "../../../api/teamspace/save";
-import { uploadTeamIconImage,uploadTeamBannerImage } from "../../../api/teamspace/upload";
+import { uploadTeamIconImage, uploadTeamBannerImage } from "../../../api/teamspace/upload";
 import { saveFile } from "@_api/notice/notice";
 
 export default function TeamDetail() {
@@ -17,13 +17,17 @@ export default function TeamDetail() {
   const { user } = useUserStore();
   const bannerInputRef = useRef<HTMLInputElement>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
+    if (user && user.teamId !== Number(id)) {
+      alert("자신의 팀 스페이스만 수정가능합니다.");
+      navigate("/");
+      return;
+    }
     if (!id) return;
     fetchTeamDetail(Number(id))
       .then((data) => setTeam(data))
       .catch((err) => console.error(err));
-  }, [id]);
+  }, [id, user, navigate]);
 
   if (!team) return <div>로딩중...</div>;
 
@@ -50,59 +54,59 @@ export default function TeamDetail() {
   };
 
   const handleBannerUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  const file = event.target.files?.[0];
-  if (!file) return;
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  setIsUploading(true);
-  try {
-    const uploadedUrl = await saveFile(file); 
-    await uploadTeamBannerImage(uploadedUrl);     
+    setIsUploading(true);
+    try {
+      const uploadedUrl = await saveFile(file);
+      await uploadTeamBannerImage(uploadedUrl);
 
-    setTeam(prev =>
-      prev
-        ? {
+      setTeam(prev =>
+        prev
+          ? {
             ...prev,
             config: { ...prev.config, backgroundImageUrl: uploadedUrl },
           }
-        : prev
-    );
+          : prev
+      );
 
-  } catch (error) {
-    console.error("배너 업로드 실패:", error);
-    alert("배너 업로드에 실패했습니다.");
-  } finally {
-    setIsUploading(false);
-    event.target.value = "";
-  }
-};
+    } catch (error) {
+      console.error("배너 업로드 실패:", error);
+      alert("배너 업로드에 실패했습니다.");
+    } finally {
+      setIsUploading(false);
+      event.target.value = "";
+    }
+  };
 
-const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  const file = event.target.files?.[0];
-  if (!file) return;
+  const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  setIsUploading(true);
-  try {
-    const uploadedUrl = await saveFile(file);
-    await uploadTeamIconImage(uploadedUrl);
+    setIsUploading(true);
+    try {
+      const uploadedUrl = await saveFile(file);
+      await uploadTeamIconImage(uploadedUrl);
 
-    setTeam(prev =>
-      prev
-        ? {
+      setTeam(prev =>
+        prev
+          ? {
             ...prev,
             config: { ...prev.config, iconImageUrl: uploadedUrl },
           }
-        : prev
-    );
+          : prev
+      );
 
 
-  } catch (error) {
-    console.error("로고 업로드 실패:", error);
-    alert("로고 업로드에 실패했습니다.");
-  } finally {
-    setIsUploading(false);
-    event.target.value = "";
-  }
-};
+    } catch (error) {
+      console.error("로고 업로드 실패:", error);
+      alert("로고 업로드에 실패했습니다.");
+    } finally {
+      setIsUploading(false);
+      event.target.value = "";
+    }
+  };
 
 
 
