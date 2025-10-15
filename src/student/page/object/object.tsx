@@ -3,10 +3,9 @@ import * as _ from './style';
 import Sidebar from '../../../all/component/sibebar/sidebar';
 import Box from '../../component/object/box';
 import type { Request } from '../../component/object/types';
-import Apply from '../../../api/object/apply'
-import { getApply, getMoney, finalapply } from '../../../api/object/apply'
+import Apply from '../../../api/object/apply';
+import { getApply, getMoney, finalapply } from '../../../api/object/apply';
 import { useNavigate } from 'react-router-dom';
-
 
 export default function Object() {
   const nav = useNavigate();
@@ -17,86 +16,45 @@ export default function Object() {
   const [reason, setReason] = useState('');
   const [money, setMoney] = useState<number>(0);
   const [usedmoney, setUsedMoney] = useState<number>(0);
-  const [requests, setRequests] = useState<Request[]>([]);
+  const [requests, setRequests] = useState<Request[]>([]); 
+
   const handleAdd = async () => {
-    if (!item.trim()) {
-      alert('물품명을 입력해 주세요.');
+    if (!item.trim() || reason.trim().length < 10) {
+      alert('물품명과 사유(10자 이상)를 입력하세요.');
       return;
     }
-
-    if (!price.trim()) {
-      alert('가격을 입력해 주세요.');
-      return;
-    }
-
-    const priceNum = parseFloat(price.replace(/,/g, ''));
-    if (isNaN(priceNum) || priceNum <= 0) {
-      alert('올바른 가격을 입력해 주세요.');
-      return;
-    }
-
-    if (qty < 1) {
-      alert('수량은 1개 이상이어야 합니다.');
-      return;
-    }
-
-    if (reason.trim().length < 10) {
-      alert('신청 사유를 10자 이상 입력해 주세요.');
-      return;
-    }
-
-
     try {
       await Apply(item, qty, price, link, reason);
-      setItem('');
-      setPrice('');
-      setLink('');
-      setQty(1);
-      setReason('');
       window.location.reload();
-    } catch (err: any) {
+    } catch (err) {
       console.error("신청 실패:", err);
-      const errorMessage = err.response?.data?.message || err.message || '신청 중 오류가 발생했습니다.';
-      alert(errorMessage);
     }
   };
-  const finalApply = () => {
-    if (requests.length === 0) {
-      alert('신청할 물품이 없습니다.');
-      return;
-    }
 
-    if (confirm('정말로 신청하시겠습니까? 신청 후에는 수정할 수 없습니다.')) {
-      finalapply()
-        .then(() => {
-          alert('신청이 완료되었습니다.');
-          window.location.reload();
-        })
-        .catch((err: any) => {
-          console.error("최종 신청 실패:", err);
-          const errorMessage = err.response?.data?.message || err.message || '신청 중 오류가 발생했습니다.';
-          alert(errorMessage);
-        });
-    }
-  };
+  const finalApply = () => {
+    finalapply()
+      .then(() => {
+        alert('신청이 완료되었습니다.');
+        window.location.reload();
+      });
+  }
+
   useEffect(() => {
     getMoney()
       .then((data1) => {
         setMoney(data1.remainingBudget);
+        setUsedMoney(data1.usedBudget);
+      });
 
-        setUsedMoney(data1.usedBudget)
-      })
     getApply()
       .then((data2) => {
         setRequests(data2);
-
       })
       .catch((err) => {
-        console.error("데이터 로딩 실패:", err);
-        const errorMessage = err.response?.data?.message || '데이터를 불러오는 중 오류가 발생했습니다.';
-        alert(errorMessage);
+        console.error(err);
       });
   }, []);
+
   return (
     <_.PageWrapper>
       <Sidebar />
@@ -118,26 +76,33 @@ export default function Object() {
               <_.SectionTitle>물품신청</_.SectionTitle>
               <_.AddButton onClick={handleAdd}>추가하기</_.AddButton>
             </_.FormSectionHeader>
-            <_.FormRow>
+            <_.FormRow> 
               <_.Label>구입물품</_.Label>
               <_.Input
                 placeholder="구입할 물품을 입력해 주세요"
                 value={item}
                 onChange={e => setItem(e.target.value)}
               />
-              <_.Label>가격</_.Label>
-              <_.Input
-                placeholder="가격을 입력해 주세요"
-                value={price}
-                onChange={e => setPrice(e.target.value)}
-              />
-              <_.Label>수량</_.Label>
-              <_.QtyWrapper>
-                <_.QtyButton onClick={() => setQty(q => Math.max(1, q - 1))}>–</_.QtyButton>
-                <_.Qty>{qty}</_.Qty>
-                <_.QtyButton onClick={() => setQty(q => q + 1)}>+</_.QtyButton>
-              </_.QtyWrapper>
+              <_.PriceQtyWrapper>
+                <div>
+                  <_.Label>가격</_.Label>
+                  <_.SmallInput
+                    placeholder="가격을 입력해 주세요"
+                    value={price}
+                    onChange={e => setPrice(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <_.Label>수량</_.Label>
+                  <_.QtyWrapper>
+                    <_.QtyButton onClick={() => setQty(q => Math.max(1, q - 1))}>–</_.QtyButton>
+                    <_.Qty>{qty}</_.Qty>
+                    <_.QtyButton onClick={() => setQty(q => q + 1)}>+</_.QtyButton>
+                  </_.QtyWrapper>
+                </div>
+              </_.PriceQtyWrapper>
             </_.FormRow>
+
             <_.FormRow>
               <_.Label>물품 링크</_.Label>
               <_.FullWidthInput
@@ -146,6 +111,7 @@ export default function Object() {
                 onChange={e => setLink(e.target.value)}
               />
             </_.FormRow>
+
             <_.FormRow>
               <_.Label>신청 사유</_.Label>
               <_.TextArea
@@ -162,15 +128,11 @@ export default function Object() {
             </_.ListSectionHeader>
             <_.ListWrapper>
               {requests.map(r => (
-                <Box
-                  key={r.id}
-                  request={r}
-                />
-              ))}
+                <Box key={r.id} request={r} />
+              ))} 
             </_.ListWrapper>
           </_.ListSection>
         </_.Main>
-
         <_.Footer>
           <_.FooterLink>물품 신청 가이드 보기 &gt;</_.FooterLink>
           <_.FooterLink onClick={() => nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
