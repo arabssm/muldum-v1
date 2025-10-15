@@ -94,9 +94,7 @@ export default function Detail() {
           {doc1?.content ? makeDocument(doc1.content) : '내용을 불러올 수 없습니다.'}
         </_.Content>
       </_.Wrapper>
-
-      <_.BackButton onClick={() => navigate(-1)}>이전</_.BackButton>
-
+      
       {showModal && (
         <DeleteModal
           onCancel={() => setShowModal(false)}
