@@ -28,6 +28,12 @@ export const BaseTag = styled.div<data>`
     border-radius: 0.5rem;
     cursor: pointer;
     background-color: ${({ isActive }) => (isActive ? '#FFF5EF' : 'transparent')};
+
+    ${({ isLogin }) => isLogin && `
+      &:hover {
+        background-color: #F3F3F3;
+      }
+    `}
 `;
 
 export const LoginTag = styled(BaseTag)`

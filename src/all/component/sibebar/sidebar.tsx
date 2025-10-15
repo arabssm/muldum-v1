@@ -75,6 +75,7 @@ export default function NavBar() {
                   }
                 }}
                 isActive={isActive}
+                isLogin={menu.label === '로그인'}
               >
                 <_.Icon
                   src={isActive ? menu.iconActive : menu.icon}
