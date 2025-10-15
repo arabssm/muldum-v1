@@ -50,21 +50,6 @@ export const Content = styled.div`
 
 `;
 
-export const BackButton = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2%;
-    margin-left: 7%;
-    color: #fff;
-    background: none;
-    border: none;
-    border-radius: 3rem;
-    cursor: pointer;
-    align-self: flex-start;
-    font-family: 'Paperlogy';
-`;
-
 export const AdditionRow = styled.div`
     display: flex;
     justify-content: space-between;

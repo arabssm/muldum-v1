@@ -133,8 +133,10 @@ export const LogoArea = styled.div`
 
 export const Logo = styled.img`
   height: 4rem; 
-  width: auto;
+  width: 6rem;
   border-radius: 0.5rem;
+  object-fit: cover;
+  object-position: center;
 
   &.editable {
     cursor: pointer;
@@ -142,8 +144,6 @@ export const Logo = styled.img`
 
     &:hover {
       filter: brightness(0.9);
-      transform: scale(0.95);
-    }
   }
 `;
 
