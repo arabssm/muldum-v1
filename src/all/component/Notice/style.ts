@@ -8,9 +8,8 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
     display: flex;
-    justify-content: flex-start;
     width: 90%;
-    gap: 54%;
+    justify-content: space-between;
 `;
 
 export const PageTitle = styled.div`
