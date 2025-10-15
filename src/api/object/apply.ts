@@ -1,6 +1,6 @@
 import axiosInstance from "../../lib/axiosInatance";
 
-export default async function Apply(name1,number,price,link,reason) {
+export default async function Apply(name1: string, number: number, price: string, link: string, reason: string) {
     try {
       const res = await axiosInstance.post(`/std/items/temp`,{
         "product_name":name1,
@@ -73,7 +73,7 @@ export async function finalapply() {
       throw err;
     }
   }
-  export async function tchitem(teamid) {
+  export async function tchitem(teamid: string) {
     try {
       const res = await axiosInstance.get(`/tch/items/${teamid}`);
       if (res.status !== 200) {
@@ -84,7 +84,7 @@ export async function finalapply() {
       throw err;
     }
   }
-  export async function submititem(items) {
+  export async function submititem(items: any) {
     try {
       const res = await axiosInstance.patch(`/tch/items/submit`,items);
       if (res.status !== 200) {
@@ -95,7 +95,7 @@ export async function finalapply() {
       throw err;
     }
   }
-  export async function nosubmititem(items) {
+  export async function nosubmititem(items: any) {
     try {
       const res = await axiosInstance.patch(`/tch/items/reject`,items);
       if (res.status !== 200) {

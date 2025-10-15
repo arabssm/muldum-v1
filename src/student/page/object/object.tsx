@@ -8,15 +8,6 @@ import { getApply, getMoney, finalapply } from '../../../api/object/apply'
 import { useNavigate } from 'react-router-dom';
 
 
-const isValidUrl = (string: string): boolean => {
-  try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;
-  }
-};
-
 export default function Object() {
   const nav = useNavigate();
   const [item, setItem] = useState('');
