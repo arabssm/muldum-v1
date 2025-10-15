@@ -43,12 +43,9 @@ export default function App() {
   }, []);
 
   if (isLoading) return <Loading />;
-
-  // 화면 크기가 작으면 경고 화면만 표시
   if (!isDesktopSize) {
     return <ScreenSizeWarning />;
   }
-
   return (
     <>
       <Routes>
@@ -67,7 +64,6 @@ export default function App() {
         <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
           <Route path="/project-choice" element={<ProjectChoice />} />
           <Route path="/object/all" element={<All />} />
-          <Route path="/object/detail/:id" element={<Resendpage />} />
           <Route path="/club/edit/:id" element={<TeamEdit />} />
           <Route path="/object/apply" element={<Object />} />
         </Route>
