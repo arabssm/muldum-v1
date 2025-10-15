@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   min-height: 100vh;
-  margin: -3rem 0rem;
   position: fixed;
 `;
 
@@ -16,22 +15,25 @@ export const Content = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
+  padding-top: 12rem;
 `;
 
 export const Banner = styled.div`
   width: 100%;
-  z-index: -2;
-  height: 12rem;
-  background-color: #41f4bb; 
-  background-size: cover;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  margin: 0 !important;
-  padding: 0 !important;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 12rem;
+  z-index: -999;
+  background-color: #41f4bb; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
 `;
 
 export const Header = styled.div`
@@ -123,7 +125,7 @@ export const LogoArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -5rem;
+  margin-top: -5.6rem;
   margin-bottom: 1rem;
   margin-left: 12%;
   z-index: 2;
@@ -150,6 +152,16 @@ export const Logo = styled.img`
 export const Btn = styled.button`
   display: flex;
   margin-left: 70%;
+  background: none;
+  border: none;
+  color: #909090;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: 'Paperlogy';
+
+  &:hover {
+    color: #FF9B62;
+  }
 `;
 
 export const ButtonGroup = styled.div`

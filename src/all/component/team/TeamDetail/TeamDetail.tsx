@@ -42,20 +42,19 @@ export default function TeamDetail() {
           </_.ButtonGroup>
         )}
 
-        <_.LogoArea>
-          <_.Logo
-            src={team.config.iconImageUrl ?? "/images/club-logo.png"}
-            alt={`${team.teamName} 로고`}
+          <_.LogoArea>
+            <_.Logo
+              src={team.config.iconImageUrl ?? "/images/club-logo.png"}
+              alt={`${team.teamName} 로고`}
+            />
+          </_.LogoArea>
+          <_.Header>
+            <_.ClubName>{team.teamName}</_.ClubName>
+          </_.Header>
+
+          <_.Section
+            dangerouslySetInnerHTML={{ __html: renderContent(team.content) }}
           />
-        </_.LogoArea>
-
-        <_.Header>
-          <_.ClubName>{team.teamName}</_.ClubName>
-        </_.Header>
-
-        <_.Section
-          dangerouslySetInnerHTML={{ __html: renderContent(team.content) }}
-        />
       </_.Content>
     </_.Container>
   );

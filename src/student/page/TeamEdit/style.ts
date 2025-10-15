@@ -16,33 +16,32 @@ export const Content = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
+  padding-top: 12rem;
 `;
 
 export const Banner = styled.div`
-  width: 100%;
-  z-index: -2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 12rem;
+  z-index: -999;
   background-color: #41f4bb; 
   background-size: cover;
-  background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin-left: 2.5%;
-  padding: 0 !important;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-position: center;
 
   &.editable {
     cursor: pointer;
     transition: all 0.2s ease;
     z-index: 1;
-
+  
     &:hover {
       filter: brightness(0.9);
     }
 
     &:hover::after {
+      display: flex;
       content: "클릭하여 배너 이미지 변경";
       position: absolute;
       top: 50%;
@@ -72,7 +71,6 @@ export const ClubName = styled.h1`
   font-weight: 700;
   margin: 0;
 `;
-
 
 
 export const Section = styled.div`
@@ -171,6 +169,17 @@ export const Logo = styled.img`
 export const Btn = styled.button`
   display: flex;
   margin-left: 70%;
+  margin-top: 2.4rem;
+  background: none;
+  border: none;
+  color: #909090;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: 'Paperlogy';
+
+  &:hover {
+    color: #FF9B62;
+  }
 `;
 
 export const ButtonGroup = styled.div`

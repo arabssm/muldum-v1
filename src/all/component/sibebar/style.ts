@@ -3,6 +3,7 @@ import type data from './types';
 
 export const MainArea = styled.div`
     position: fixed;
+    z-index: 99;
     top: 0;
     left: 0;
     width: 13%;
