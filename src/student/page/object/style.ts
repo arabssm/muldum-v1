@@ -103,24 +103,48 @@ export const AddButton = styled.button`
 export const FormRow = styled.div`
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     margin-bottom: 1rem;
 `;
 
 export const Label = styled.label`
-    flex: 0 0 5rem;
+    display: flex;
+    font-size: 0.875rem;
+    color: #333;
+    margin-left: 0.2rem;
+`;
+
+export const Label2 = styled.label`
+    flex: 0 0 3.3rem;
     font-size: 0.875rem;
     color: #333;
 `;
 
 export const Input = styled.input`
-  flex: 1 1 12.5rem;
+  display: flex;
+  height: 2.5rem;
+  padding: 0 20rem 0rem 0.75rem;
+  margin-left: 0.3rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-family: 'Paperlogy';
+`;
+
+export const SmallInput = styled.input`
+  width: 8rem;
   height: 2.5rem;
   padding: 0 0.75rem;
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-family: 'Paperlogy';
+`;
+
+export const PriceQtyWrapper = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
 `;
 
 export const Input1 = styled.input`
@@ -133,7 +157,12 @@ export const Input1 = styled.input`
   font-family: 'Paperlogy';
 `;
 
-
+export const Group = styled.div`
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-left: 1rem;
+`;
 
 export const FullWidthInput = styled(Input)`
     flex: 1 1 100%;
@@ -166,6 +195,7 @@ export const TextArea = styled.textarea`
     flex: 1;
     height: 6.25rem;
     padding: 0.75rem;
+    margin-left: 0.1rem;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     font-size: 0.875rem;
@@ -234,7 +264,6 @@ export const InputBlock = styled.div`
   gap: 12px;
 `;
 
-
 export const Textarea = styled.textarea`
   padding: 10px;
   border: 1px solid #ccc;
@@ -282,17 +311,4 @@ export const ProductName = styled.div`
 
 export const TextContainer = styled.div`
   margin-bottom: 30px;
-`;
-
-export const PriceQtyWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-`;
-
-export const SmallInput = styled.input`
-  width: 100px;
-  padding: 0.3rem 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 `;

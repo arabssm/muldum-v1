@@ -16,7 +16,7 @@ export default function Object() {
   const [reason, setReason] = useState('');
   const [money, setMoney] = useState<number>(0);
   const [usedmoney, setUsedMoney] = useState<number>(0);
-  const [requests, setRequests] = useState<Request[]>([]); 
+  const [requests, setRequests] = useState<Request[]>([]);
 
   const handleAdd = async () => {
     if (!item.trim() || reason.trim().length < 10) {
@@ -76,7 +76,7 @@ export default function Object() {
               <_.SectionTitle>물품신청</_.SectionTitle>
               <_.AddButton onClick={handleAdd}>추가하기</_.AddButton>
             </_.FormSectionHeader>
-            <_.FormRow> 
+            <_.FormRow>
               <_.Label>구입물품</_.Label>
               <_.Input
                 placeholder="구입할 물품을 입력해 주세요"
@@ -84,27 +84,27 @@ export default function Object() {
                 onChange={e => setItem(e.target.value)}
               />
               <_.PriceQtyWrapper>
-                <div>
+                <_.Group>
                   <_.Label>가격</_.Label>
                   <_.SmallInput
                     placeholder="가격을 입력해 주세요"
                     value={price}
                     onChange={e => setPrice(e.target.value)}
                   />
-                </div>
-                <div>
+                </_.Group>
+                <_.Group>
                   <_.Label>수량</_.Label>
                   <_.QtyWrapper>
                     <_.QtyButton onClick={() => setQty(q => Math.max(1, q - 1))}>–</_.QtyButton>
                     <_.Qty>{qty}</_.Qty>
                     <_.QtyButton onClick={() => setQty(q => q + 1)}>+</_.QtyButton>
                   </_.QtyWrapper>
-                </div>
+                </_.Group>
               </_.PriceQtyWrapper>
             </_.FormRow>
 
             <_.FormRow>
-              <_.Label>물품 링크</_.Label>
+              <_.Label2>물품 링크</_.Label2>
               <_.FullWidthInput
                 placeholder="구입할 물품의 링크를 입력해 주세요"
                 value={link}
@@ -129,7 +129,7 @@ export default function Object() {
             <_.ListWrapper>
               {requests.map(r => (
                 <Box key={r.id} request={r} />
-              ))} 
+              ))}
             </_.ListWrapper>
           </_.ListSection>
         </_.Main>
