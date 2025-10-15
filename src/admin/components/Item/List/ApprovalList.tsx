@@ -29,7 +29,7 @@ export default function ApprovalList({
 
   useEffect(() => {
     if (id !== undefined) {
-      tchitem(id)
+      tchitem(String(id))
         .then((res) => {
           const normalized = (res ?? []).map((raw: any, idx: number) => {
             const numId = Number(raw.item_id ?? idx);
@@ -68,7 +68,7 @@ export default function ApprovalList({
       <_.ListWrapper>
         {data.map((item, index) => (
           <_.ItemRow
-            key={item.id ?? `row-${index}`}  
+            key={item.id ?? `row-${index}`}
             onClick={() => handleSelect(item.id)}
           >
             <_.ItemIndex selected={selectedItems.includes(item.id)}>
