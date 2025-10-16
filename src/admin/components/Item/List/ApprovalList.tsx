@@ -4,6 +4,7 @@ import NavBar from '@_all/component/sibebar/sidebar';
 import type { Props } from './types';
 import { tchitem, tchitem111 } from '../../../../api/object/apply';
 import DetailItem from '@_components/Modal/Delete/DeleteModal';
+import ItemDetailModal from '../../Modal/ItemDetail/ItemDetailModal';
 
 export default function ApprovalList({
   id,
@@ -21,6 +22,8 @@ export default function ApprovalList({
   };
 
   const handleSelect = (id: number) => {
+    if (isApproved) return;
+
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((i) => i !== id));
     } else {
@@ -54,15 +57,27 @@ export default function ApprovalList({
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
 
   const handleItemClick = (name: string) => {
     setSelectedName(name);
     setModalOpen(true);
   };
 
+  const handleDetailClick = (item: any) => {
+    setSelectedItem(item);
+    setDetailModalOpen(true);
+  };
+
   const closeModal = () => {
     setModalOpen(false);
     setSelectedName('');
+  };
+
+  const closeDetailModal = () => {
+    setDetailModalOpen(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -73,6 +88,7 @@ export default function ApprovalList({
           <_.ItemRow
             key={item.id ?? `row-${index}`}
             onClick={() => handleSelect(item.id)}
+            style={{ cursor: isApproved ? 'default' : 'pointer' }}
           >
             <_.ItemIndex selected={selectedItems.includes(item.id)}>
               {String(index + 1).padStart(2, '0')}
@@ -80,11 +96,18 @@ export default function ApprovalList({
             <_.ItemName href={item.productLink} target="_blank">
               {item.productName}
             </_.ItemName>
-            <_.ItemInput
-              placeholder={item.reason}
-              value={reasons[item.id] || ''}
-              onChange={(e) => handleReasonChange(item.id, e.target.value)}
-            />
+            {!isApproved && (
+              <_.ItemInput
+                placeholder={item.reason}
+                value={reasons[item.id] || ''}
+                onChange={(e) => handleReasonChange(item.id, e.target.value)}
+              />
+            )}
+            {isApproved && (
+              <_.ItemText onClick={() => handleDetailClick(item)}>
+                {item.reason}
+              </_.ItemText>
+            )}
           </_.ItemRow>
         ))}
       </_.ListWrapper>
@@ -95,6 +118,12 @@ export default function ApprovalList({
             closeModal();
           }}
           onCancel={closeModal}
+        />
+      )}
+      {detailModalOpen && selectedItem && (
+        <ItemDetailModal
+          item={selectedItem}
+          onClose={closeDetailModal}
         />
       )}
     </_.Container>

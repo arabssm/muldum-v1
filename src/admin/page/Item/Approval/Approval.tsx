@@ -9,7 +9,6 @@ import { submititem, nosubmititem } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
-import ReasonButtons from "./Reason";
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
@@ -137,21 +136,28 @@ const Approval = () => {
           </>
         ) : (
           <>
-            <ReasonButtons />
-            <_.AddonsArea>
-              <_.Addons onClick={toggleSelectAll}>
-                {selectAll ? "전체해제" : "전체선택"}
-              </_.Addons>
-            </_.AddonsArea>
-
-            <ApprovalList
-              selectAll={selectAll}
-              selectedItems={selectedItems}
-              setSelectedItems={setSelectedItems}
-              setAllItemIds={setAllItemIds}
-              reasons={reasons}
-              setReasons={setReasons}
+            <ClubSelector
+              clubs={clubs.map((c) => c.name)}
+              selectedClub={selectedClubName}
+              setSelectedClub={setSelectedClub}
             />
+            <_.AddonsArea>
+              {/* 승인된 물품 조회 모드에서는 전체선택 버튼 숨김 */}
+            </_.AddonsArea>
+            {selectedClubId !== null ? (
+              <ApprovalList
+                id={selectedClubId}
+                selectAll={selectAll}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+                setAllItemIds={setAllItemIds}
+                reasons={reasons}
+                setReasons={setReasons}
+                isApproved={true}
+              />
+            ) : (
+              <_.Null>승인된 물품을 조회할 동아리를 선택해주세요</_.Null>
+            )}
           </>
         )}
       </>
@@ -168,20 +174,22 @@ const Approval = () => {
           승인 가능
         </_.ApprovalButton>
         <_.ApprovalButton onClick={() => setFilter("승인된 물품 조회")} active={filter === "승인된 물품 조회"}>
-          승인 불가능
+          승인된 물품 조회
         </_.ApprovalButton>
       </_.ButtonArea>
 
       {renderContent()}
 
-      <_.ButtonGroup>
-        <_.ApplyButton onClick={SSubmit} disabled={selectedItems.length === 0}>
-          승인하기
-        </_.ApplyButton>
-        <_.ApplyNobutton onClick={NSubmit} disabled={selectedItems.length === 0}>
-          거절하기
-        </_.ApplyNobutton>
-      </_.ButtonGroup>
+      {filter === "승인하기" && (
+        <_.ButtonGroup>
+          <_.ApplyButton onClick={SSubmit} disabled={selectedItems.length === 0}>
+            승인하기
+          </_.ApplyButton>
+          <_.ApplyNobutton onClick={NSubmit} disabled={selectedItems.length === 0}>
+            거절하기
+          </_.ApplyNobutton>
+        </_.ButtonGroup>
+      )}
 
       {showApproveModal && <ApprovalModal onClose={() => closeModal(true)} />}
       {showRejectModal && <RejectModal onClose={() => closeModal(false)} />}

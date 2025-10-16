@@ -65,3 +65,20 @@ export const ItemInput = styled.input`
     }
 `;
 
+export const ItemText = styled.div`
+  width: 40%;
+  padding: 1% 2%;
+  font-size: 1rem;
+  color: #323232;
+  font-family: 'Paperlogy';
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  
+  &:hover {
+    color: #FF9B62;
+    text-decoration: underline;
+  }
+`;
+
