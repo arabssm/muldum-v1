@@ -75,7 +75,7 @@ export async function finalapply() {
   }
   export async function tchitem(teamid: string) {
     try {
-      const res = await axiosInstance.get(`/tch/items/${teamid}`);
+      const res = await axiosInstance.get(`/tch/items/${teamid}/not-approved`);
       if (res.status !== 200) {
         return res.status;
       }
