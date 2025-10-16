@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import * as _ from './style.ts';
+import * as _ from './style';
 
 interface ItemDetailModalProps {
   item: {
