@@ -84,6 +84,17 @@ export async function finalapply() {
       throw err;
     }
   }
+  export async function tchitem111(teamid: string) {
+    try {
+      const res = await axiosInstance.get(`/tch/items/${teamid}/approved`);
+      if (res.status !== 200) {
+        return res.status;
+      }
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  }
   export async function submititem(items: any) {
     try {
       const res = await axiosInstance.patch(`/tch/items/submit`,items);

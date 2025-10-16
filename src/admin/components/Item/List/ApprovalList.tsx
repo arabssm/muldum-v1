@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as _ from './style';
 import NavBar from '@_all/component/sibebar/sidebar';
 import type { Props } from './types';
-import { tchitem } from '../../../../api/object/apply';
+import { tchitem, tchitem111 } from '../../../../api/object/apply';
 import DetailItem from '@_components/Modal/Delete/DeleteModal';
 
 export default function ApprovalList({
@@ -12,6 +12,7 @@ export default function ApprovalList({
   setAllItemIds,
   reasons,
   setReasons,
+  isApproved = false,
 }: Props & { setAllItemIds: (ids: number[]) => void; reasons: any; setReasons: any }) {
   const [data, setData] = useState<any[]>([]);
 
@@ -29,7 +30,9 @@ export default function ApprovalList({
 
   useEffect(() => {
     if (id !== undefined) {
-      tchitem(String(id))
+      const apiCall = isApproved ? tchitem111 : tchitem;
+
+      apiCall(String(id))
         .then((res) => {
           const normalized = (res ?? []).map((raw: any, idx: number) => {
             const numId = Number(raw.item_id ?? idx);
@@ -47,7 +50,7 @@ export default function ApprovalList({
           console.error('API 실패', err);
         });
     }
-  }, [id, setAllItemIds]);
+  }, [id, setAllItemIds, isApproved]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');

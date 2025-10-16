@@ -20,7 +20,7 @@ const toValidIds = (ids: unknown[]): number[] =>
   );
 
 const Approval = () => {
-  const [filter, setFilter] = useState<"가능" | "불가능">("가능");
+  const [filter, setFilter] = useState<"승인하기" | "승인된 물품 조회">("승인하기");
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [allItemIds, setAllItemIds] = useState<number[]>([]);
   const [reasons, setReasons] = useState<{ [id: number]: string }>({});
@@ -96,7 +96,7 @@ const Approval = () => {
   };
 
   const renderContent = () => {
-    const isPossible = filter === "가능";
+    const isPossible = filter === "승인하기";
     const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
     const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
     const selectedClubId = useMemo(() => {
@@ -164,10 +164,10 @@ const Approval = () => {
       <_.Title>전공동아리 물품 승인</_.Title>
       <_.Subtitle>학생들이 신청한 물품들을 확인해요</_.Subtitle>
       <_.ButtonArea>
-        <_.ApprovalButton onClick={() => setFilter("가능")} active={filter === "가능"}>
+        <_.ApprovalButton onClick={() => setFilter("승인하기")} active={filter === "승인하기"}>
           승인 가능
         </_.ApprovalButton>
-        <_.ApprovalButton onClick={() => setFilter("불가능")} active={filter === "불가능"}>
+        <_.ApprovalButton onClick={() => setFilter("승인된 물품 조회")} active={filter === "승인된 물품 조회"}>
           승인 불가능
         </_.ApprovalButton>
       </_.ButtonArea>
