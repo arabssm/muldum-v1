@@ -14,7 +14,6 @@ export default function Object() {
   const [link, setLink] = useState('');
   const [qty, setQty] = useState(1);
   const [reason, setReason] = useState('');
-  const [money, setMoney] = useState<number>(0);
   const [usedmoney, setUsedMoney] = useState<number>(0);
   const [requests, setRequests] = useState<Request[]>([]);
 
@@ -42,7 +41,6 @@ export default function Object() {
   useEffect(() => {
     getMoney()
       .then((data1) => {
-        setMoney(data1.remainingBudget);
         setUsedMoney(data1.usedBudget);
       });
 
@@ -67,8 +65,7 @@ export default function Object() {
             </_.Titles>
             <_.BudgetBox>
               <span>사용한 예산</span>
-              <strong>{money}</strong>
-              <_.Used>-{usedmoney}</_.Used>
+              <_.Used>{usedmoney}</_.Used>
             </_.BudgetBox>
           </_.Header>
           <_.FormSection>
