@@ -57,4 +57,9 @@ export const Button = styled.button`
 export const Google = styled.img`
     width: 15%;
     margin-top: 0.6%;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+        opacity: 0.7;
+    }
 `;
