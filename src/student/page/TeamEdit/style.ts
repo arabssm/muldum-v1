@@ -138,7 +138,7 @@ export const SectionText = styled.p`
 `;
 
 export const LogoArea = styled.div`
-  width: 6.5%;
+  width: 7rem;
   height: 7rem;
   background-color: #f0f0f0;
   display: flex;
@@ -154,7 +154,8 @@ export const LogoArea = styled.div`
 
 export const Logo = styled.img`
   height: 4rem; 
-  width: auto;
+  width: 4rem;
+  object-fit: cover;
   border-radius: 0.5rem;
 
   &.editable {
