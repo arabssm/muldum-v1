@@ -93,12 +93,19 @@ export default function ApprovalList({
             <_.ItemIndex selected={selectedItems.includes(item.id)}>
               {String(index + 1).padStart(2, '0')}
             </_.ItemIndex>
-            <_.ItemName href={item.productLink} target="_blank">
+            <_.ItemName 
+              href={item.productLink} 
+              target="_blank"
+              onClick={(e) => {
+                e.preventDefault();
+                handleDetailClick(item);
+              }}
+            >
               {item.productName}
             </_.ItemName>
             {!isApproved && (
               <_.ItemInput
-                placeholder={item.reason}
+                placeholder="거절시, 이 부분에다가 거절사유를 입력해주세요"
                 value={reasons[item.id] || ''}
                 onChange={(e) => handleReasonChange(item.id, e.target.value)}
               />
