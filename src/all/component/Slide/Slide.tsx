@@ -5,7 +5,7 @@ import * as _ from './style';
 import sliderSettings from './Setting';
 import '@_styles';
 import { getNotice } from "@_api/notice/notice";
-
+import background1 from "@_assets/onboarding/background1.svg"
 interface NoticeItem {
     id: number;
     title: string;
@@ -100,7 +100,7 @@ export default function SliderComponent() {
 
     return (
         <_.High>
-            <_.StyledSlider {...{...sliderSettings, infinite: notices.length > 1}}>
+            <_.StyledSlider {...{ ...sliderSettings, infinite: notices.length > 1 }}>
                 {notices.map((notice, index) => (
                     <_.SlideWrapper key={notice.id}>
                         <_.SlideContent>

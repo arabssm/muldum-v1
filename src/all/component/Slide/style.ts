@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
+import background1 from "@_assets/onboarding/background1.svg";
 
 export const High = styled.div`
     position: relative;
@@ -161,5 +162,8 @@ export const SlideContent = styled.div`
     height: 100%;
     border-radius: 0.5rem;
     overflow: hidden;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url(${background1});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
