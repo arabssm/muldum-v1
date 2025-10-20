@@ -70,7 +70,7 @@ export default function SliderComponent() {
     if (loading) {
         return (
             <_.High>
-                <_.StyledSlider {...sliderSettings}>
+                <_.StyledSlider {...{ ...sliderSettings, infinite: notices.length > 1 }}>
                     <_.SlideWrapper>
                         <_.SlideContent>
                             <_.Overlay />
@@ -85,7 +85,7 @@ export default function SliderComponent() {
     if (notices.length === 0) {
         return (
             <_.High>
-                <_.StyledSlider {...sliderSettings}>
+                <_.StyledSlider {...{ ...sliderSettings, infinite: notices.length > 1 }}>
                     <_.SlideWrapper>
                         <_.SlideContent>
                             <_.Overlay />
