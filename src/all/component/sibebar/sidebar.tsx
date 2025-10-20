@@ -90,7 +90,7 @@ export default function NavBar() {
           })}
         </_.MenuContainer>
 
-        {(() => {
+        {user && (() => {
           const settingMenu = IconMenu.find(menu => menu.label === '로그아웃');
           if (!settingMenu) return null;
 
