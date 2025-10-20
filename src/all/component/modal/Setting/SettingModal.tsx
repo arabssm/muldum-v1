@@ -24,7 +24,6 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
       removeCookie('refresh_token');
       removeCookie('access_token');
       localStorage.removeItem('user-store');
-      alert('로그아웃 되었습니다.');
       window.location.href = '/';
     } else {
       alert('로그아웃 실패');
