@@ -9,6 +9,8 @@ const sliderSettings = {
     pauseOnHover: false,
     pauseOnFocus: false,
     cssEase: 'ease-in-out',
+    variableWidth: false,
+    centerMode: false,
 };
 
 export default sliderSettings;

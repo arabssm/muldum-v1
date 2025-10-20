@@ -1,10 +1,8 @@
 import { useLoginModalStore } from '../../../../atom/Modal';
 import google from '@_assets/google.svg';
 import * as _ from './style';
-import { useNavigate } from 'react-router-dom';
 
 export default function LoginModal() {
-  const navigate = useNavigate();
   const { setIsOpen } = useLoginModalStore();
 
   const handleGoogleLogin = () => {

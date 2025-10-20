@@ -2,7 +2,12 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
     width: 100%;
-    margin-left: 15%;
+    margin: 0 15%;
+`;
+
+export const ContentItem = styled.div`
+    width: 100%;
+    box-sizing: border-box;
 `;
 
 export const Title = styled.div`

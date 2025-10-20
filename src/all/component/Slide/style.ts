@@ -4,12 +4,33 @@ import Slider from 'react-slick';
 export const High = styled.div`
     position: relative;
     z-index: -5;
-    width: 90%;
+    width: 100%;
+    max-width: 1200px;
     overflow: hidden;
+    
+    @media (max-width: 1440px) {
+        padding: 0 1.5rem;
+    }
+    
+    @media (max-width: 1200px) {
+        padding: 0 1rem;
+    }
 `;
 
 export const StyledSlider = styled(Slider)`
     width: 100%;
+    
+    .slick-list {
+        overflow: hidden;
+    }
+    
+    .slick-slide {
+        outline: none;
+        
+        > div {
+            height: 100%;
+        }
+    }
 `;
 
 export const CalendarContainer = styled.div`
@@ -20,12 +41,25 @@ export const CalendarContainer = styled.div`
 
 export const SlideWrapper = styled.div`
     position: relative;
-    width: 80%;
-    border-radius: 0.2rem;
+    width: 100%;
     height: 24vh;
-    overflow: hidden;
-    margin: 1% auto;
+    min-height: 200px;
     color: #FFFFFF;
+    padding: 1% 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    @media (max-width: 1440px) {
+        height: 22vh;
+        min-height: 180px;
+    }
+    
+    @media (max-width: 1200px) {
+        height: 20vh;
+        min-height: 160px;
+    }
 `;
 
 export const Overlay = styled.div`
@@ -48,7 +82,23 @@ export const Title = styled.div`
     font-weight: 500;
     top: 20%;
     left: 4%;
-    width: 100%;
+    width: 65%;
+    line-height: 1.2;
+    
+    @media (max-width: 1440px) {
+        font-size: 2.2rem;
+        width: 60%;
+    }
+    
+    @media (max-width: 1200px) {
+        font-size: 1.8rem;
+        width: 55%;
+    }
+    
+    @media (max-width: 1024px) {
+        font-size: 1.5rem;
+        width: 50%;
+    }
 `;
 
 export const SubTitle = styled.div`
@@ -57,6 +107,18 @@ export const SubTitle = styled.div`
     font-weight: 400;
     left: 4%;
     top: 67%;
+    
+    @media (max-width: 1440px) {
+        font-size: 1.3rem;
+    }
+    
+    @media (max-width: 1200px) {
+        font-size: 1.1rem;
+    }
+    
+    @media (max-width: 1024px) {
+        font-size: 1rem;
+    }
 `;
 
 export const Date = styled.div`
@@ -65,6 +127,18 @@ export const Date = styled.div`
     position: absolute;
     left: 4%;
     top: 52%;
+    
+    @media (max-width: 1440px) {
+        font-size: 1.3rem;
+    }
+    
+    @media (max-width: 1200px) {
+        font-size: 1.1rem;
+    }
+    
+    @media (max-width: 1024px) {
+        font-size: 1rem;
+    }
 `;
 
 export const Ddate = styled.div`
@@ -79,4 +153,13 @@ export const Index = styled.div`
     position: absolute;
     left: 96%;
     top: 84%;
+`;
+
+export const SlideContent = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 `;

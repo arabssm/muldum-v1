@@ -7,7 +7,6 @@ import Add from '@_assets/add.svg'
 import Box from './Box';
 import NavBar from '@_navbar/sidebar';
 import Pagination from './Pagination';
-import { NoticeItem } from './type';
 import { getNotice } from '@_api/notice/notice';
 import { useUserStore } from '../../../atom/User';
 
@@ -30,7 +29,7 @@ export default function Notice() {
   }, [page]);
 
   const filtered = posts.filter(n =>
-    n.title.toLowerCase().includes(search.toLowerCase())
+    n.title && n.title.toLowerCase().includes(search.toLowerCase())
   );
 
 
