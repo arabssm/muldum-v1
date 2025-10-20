@@ -13,10 +13,10 @@ export default function Notfound() {
 
     return (
         <_.Container>
-        <NavBar />
-        <_.Error>404</_.Error>
-        <_.Title>요청하신 화면을 찾을 수 없습니다</_.Title>
-        <_.SubTitle onClick={() => navigate('/')}>홈 화면으로 돌아가기</_.SubTitle>
-    </_.Container>
-);
+            <NavBar />
+            <_.Error>404</_.Error>
+            <_.Title>요청하신 화면을 찾을 수 없습니다</_.Title>
+            <_.SubTitle onClick={() => navigate('/')}>홈 화면으로 돌아가기</_.SubTitle>
+        </_.Container>
+    );
 }
