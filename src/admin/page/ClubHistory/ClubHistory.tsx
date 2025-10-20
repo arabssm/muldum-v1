@@ -23,14 +23,12 @@ export default function ClubHistory() {
                 <_.Subtitle>이때까지 전공동아리 활동 전적을 확인해요</_.Subtitle>
 
                 <_.PeriodSelect value={periods[currentIndex]} onChange={handleChange}>
-                    <option value="">선택</option>
                     {periods.map((period, idx) => (
                         <_.PeriodOption key={idx} value={period}>
                             {period}
                         </_.PeriodOption>
                     ))}
                 </_.PeriodSelect>
-
                 <Best period={periods[currentIndex]} />
             </_.Wrapper>
         </_.Container>
