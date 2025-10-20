@@ -125,8 +125,8 @@ export default function Object() {
               <_.ApplyButton onClick={() => finalApply()}>신청하기</_.ApplyButton>
             </_.ListSectionHeader>
             <_.ListWrapper>
-              {requests.map(r => (
-                <Box key={r.id} request={r} />
+              {requests.map((r, index) => (
+                <Box key={r.id} request={r} index={index} />
               ))}
             </_.ListWrapper>
           </_.ListSection>
