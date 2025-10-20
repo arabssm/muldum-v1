@@ -7,11 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Box({request}) {
-
-  const [reason, setReason] = useState(request.reason);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [state,setState]=useState(null);
-  const nav=useNavigate();
 
 
   useEffect(() => {
@@ -28,21 +24,11 @@ export default function Box({request}) {
   );
   return (
     <_.Card>
-      <_.CardRow
-        onClick={() => {
-
-          if (request.status==="REJECTED") {
-            nav(`/object/detail/${request.id}?name=${request.product_name}`);
-          }
-        }}
-      >
+      <_.CardRow>
         <_.Cell flex="1">{request.product_name}</_.Cell>
         <_.Cell flex="0 0 60px">수량 {request.quantity}</_.Cell>
         <_.Cell flex="0 0 100px">{state}</_.Cell>
       </_.CardRow>
-      <_.ReasonRow>
-        {request.reason}
-      </_.ReasonRow>
     </_.Card>
   );
 }

@@ -64,7 +64,6 @@ export default function App() {
         <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
           <Route path="/project-choice" element={<ProjectChoice />} />
           <Route path="/object/all" element={<All />} />
-          <Route path="/object/detail/:id" element={<Resendpage />} />
           <Route path="/club/edit/:id" element={<TeamEdit />} />
           <Route path="/object/apply" element={<Object />} />
         </Route>
