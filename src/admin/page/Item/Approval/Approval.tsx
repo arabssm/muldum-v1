@@ -60,7 +60,7 @@ const Approval = () => {
     try {
       const payload = selectedItems.map((id) => ({ item_id: id }));
       const res = await submititem(payload);
-
+      setShowApproveModal(true);
     } catch (err) {
       alert("승인 중 오류 발생");
     }
@@ -80,7 +80,6 @@ const Approval = () => {
       }));
 
       const res = await nosubmititem(payload);
-      alert('거절 성공')
       setShowRejectModal(true);
     } catch (err) {
       alert("거절 실패");

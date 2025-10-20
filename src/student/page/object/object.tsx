@@ -26,7 +26,8 @@ export default function Object() {
       await Apply(item, qty, price, link, reason);
       window.location.reload();
     } catch (err) {
-      alert('물품 링크가 지정된 서비스의 물품이 맞는지 다시 확인하세요');
+      console.log(err.response);
+      alert(err.response.data.message);
     }
   };
 
