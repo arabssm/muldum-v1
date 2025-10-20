@@ -14,9 +14,10 @@ export const Box = styled.div`
     border-radius: 0.5rem;
     width: 70%;
     height: 100%;    
-    padding: 3% 4%;
+    padding: 4%;
     flex: 0 0 auto;
     cursor: pointer;
+    gap: 30%;
 `;
 
 
@@ -26,7 +27,7 @@ export const BoxWrapper = styled.div`
     padding-bottom: 1rem;
     margin-bottom: 4rem;
     grid-template-columns: repeat(3, 1fr);
-    row-gap: 30%;
+    row-gap: 40%;
     &::-webkit-scrollbar {
         display: none;
     }
@@ -58,7 +59,7 @@ export const ClubTitle = styled.div`
     font-size: 1.4rem;
     font-weight: 500;
     color: #1D1D1D;
-    margin-bottom: 4%;
+    display: flex;
 `;
 
 export const Name = styled.div`
