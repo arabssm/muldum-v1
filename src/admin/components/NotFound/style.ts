@@ -29,3 +29,7 @@ export const SubTitle = styled.div`
     color: #909090;
     cursor: pointer;
 `;
+
+export const Dohun = styled.div`
+    text-align: center;
+`;
