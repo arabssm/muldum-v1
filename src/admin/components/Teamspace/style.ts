@@ -12,21 +12,22 @@ export const Box = styled.div`
     display: flex;
     background-color: #FAFAFA;
     border-radius: 0.5rem;
-    width: 18rem;
-    padding: 2% 5% 2% 2%;
+    width: 70%;
+    height: 100%;    
+    padding: 3% 4%;
     flex: 0 0 auto;
     cursor: pointer;
 `;
 
 
 export const BoxWrapper = styled.div`
-    display: flex;
+    display: grid;
     gap: 1.5rem;
     overflow-x: auto;
     padding-bottom: 1rem;
     margin-bottom: 4rem;
     scroll-behavior: smooth;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     &::-webkit-scrollbar {
         display: none;
