@@ -15,7 +15,6 @@ export const Box = styled.div`
     width: 70%;
     height: 100%;    
     padding: 3% 4%;
-    margin: 1rem 0;
     flex: 0 0 auto;
     cursor: pointer;
 `;
@@ -27,7 +26,7 @@ export const BoxWrapper = styled.div`
     padding-bottom: 1rem;
     margin-bottom: 4rem;
     grid-template-columns: repeat(3, 1fr);
-
+    row-gap: 40%;
     &::-webkit-scrollbar {
         display: none;
     }
