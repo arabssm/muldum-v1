@@ -37,6 +37,7 @@ export default async function Apply(name1: string, number: number, price: string
       }
       return res.data;
     } catch (err) {
+      alert(err);
       throw err;
     }
   }

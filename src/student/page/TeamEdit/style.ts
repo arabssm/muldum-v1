@@ -138,6 +138,7 @@ export const SectionText = styled.p`
 `;
 
 export const LogoArea = styled.div`
+  position: fixed;
   width: 7rem;
   height: 7rem;
   background-color: #f0f0f0;
@@ -147,7 +148,7 @@ export const LogoArea = styled.div`
   margin-top: -5rem;
   margin-bottom: 1rem;
   margin-left: 12%;
-  z-index: 2;
+  z-index: -1;
   position: relative;
   border-radius: 1rem;
 `;
