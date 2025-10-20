@@ -26,6 +26,7 @@ export const BoxWrapper = styled.div`
     padding-bottom: 1rem;
     margin-bottom: 4rem;
     scroll-behavior: smooth;
+    grid-template-columns: repeat(2, 1fr);
 
     &::-webkit-scrollbar {
         display: none;
