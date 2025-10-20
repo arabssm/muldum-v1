@@ -52,6 +52,7 @@ export default function SliderComponent() {
     const calculateDDay = (deadlineDate: string) => {
         const today = new Date();
         const deadline = new Date(deadlineDate);
+        console.log(deadline);
         const diffTime = deadline.getTime() - today.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
