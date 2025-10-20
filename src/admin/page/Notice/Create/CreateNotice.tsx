@@ -174,7 +174,7 @@ export default function CreateNotice() {
             id="notice-content"
             value={notice.content}
             onChange={handleContentChange}
-            placeholder="공지사항 내용을 입력하세요 (100자 이상)"
+            placeholder="공지사항 내용을 입력하세요 (10자 이상)"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               e.preventDefault();
