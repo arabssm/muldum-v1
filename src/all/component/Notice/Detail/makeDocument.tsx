@@ -40,7 +40,13 @@ function parseText(input: string): ReactNode {
   }
 
   if (!earliestMatch || !matchComponent) {
-    return input;
+    // 줄바꿈을 <br> 태그로 변환
+    return input.split('\n').map((line, index, array) => (
+      <span key={index}>
+        {line}
+        {index < array.length - 1 && <br />}
+      </span>
+    ));
   }
 
   const [fullMatch, inner] = earliestMatch;

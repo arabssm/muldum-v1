@@ -38,6 +38,7 @@ export const date = styled.div`
 export const Body = styled.main`
     flex: 1;
     background: #FFFFFF;
+    white-space: pre-wrap;
 `;
 
 export const NotFound = styled.div`

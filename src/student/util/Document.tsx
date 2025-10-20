@@ -23,15 +23,15 @@ export default function makeDocument(text: string = ''): ReactElement | null {
       component: content => <strong>{content}</strong>,
     },
     {
-        pattern: /<이미지\s+src="(.+?)"\s*\/?>/,
-    component: (url) =>
-      typeof url === 'string' ? (
-        <img
-          src={url}
-          alt="추가된이미지"
-          style={{ width: '100%', objectFit: 'cover' }}
-        />
-      ) : null,
+      pattern: /<이미지\s+src="(.+?)"\s*\/?>/,
+      component: (url) =>
+        typeof url === 'string' ? (
+          <img
+            src={url}
+            alt="추가된이미지"
+            style={{ width: '100%', objectFit: 'cover' }}
+          />
+        ) : null,
     }
   ];
 
@@ -50,7 +50,13 @@ export default function makeDocument(text: string = ''): ReactElement | null {
     }
 
     if (!earliestMatch || !matchComponent) {
-      return input;
+      // 줄바꿈을 <br> 태그로 변환
+      return input.split('\n').map((line, index, array) => (
+        <span key={index}>
+          {line}
+          {index < array.length - 1 && <br />}
+        </span>
+      ));
     }
 
     const [fullMatch, inner] = earliestMatch;
