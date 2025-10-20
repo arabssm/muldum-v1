@@ -10,12 +10,12 @@ export const Container = styled.div`
 export const Box = styled.div`
     display: flex;
     flex-direction: column;
-    display: flex;
     background-color: #FAFAFA;
     border-radius: 0.5rem;
     width: 70%;
     height: 100%;    
     padding: 3% 4%;
+    margin: 1rem 0;
     flex: 0 0 auto;
     cursor: pointer;
 `;
@@ -25,7 +25,7 @@ export const BoxWrapper = styled.div`
     display: grid;
     gap: 1.5rem;
     padding-bottom: 1rem;
-    margin: 2rem 0 4rem 0;
+    margin-bottom: 4rem;
     grid-template-columns: repeat(3, 1fr);
 
     &::-webkit-scrollbar {
