@@ -1,9 +1,11 @@
 export interface Request {
     id: string;
-    productName: string;
+    product_name: string;
     quantity: number;
     status: string;
     reason: string;
+    price?: string;
+    productLink?: string;
 }
 
 export interface Props {

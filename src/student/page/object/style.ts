@@ -121,14 +121,19 @@ export const Label2 = styled.label`
 `;
 
 export const Input = styled.input`
-  display: flex;
+  flex: 1;
   height: 2.5rem;
-  padding: 0 20rem 0rem 0.75rem;
+  padding: 0 0.75rem;
   margin-left: 0.3rem;
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-family: 'Paperlogy';
+  
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
 `;
 
 export const SmallInput = styled.input`

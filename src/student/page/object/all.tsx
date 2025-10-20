@@ -35,10 +35,12 @@ export default function All() {
           <_.ListWrapper>
             {
               requests
-                .map(r => (
+                .map((r, index) => (
                   <Box
                     key={r.id}
-                    request={{...r,}}
+                    request={{ ...r, }}
+                    index={index}
+                    hideReason={true}
                   />
                 ))
             }

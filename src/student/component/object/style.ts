@@ -117,3 +117,62 @@ export const ReasonTextarea = styled.textarea`
     line-height: 1.5;
     outline: none;
 `;
+
+export const ItemRow = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #fff;
+    min-width: 0;
+    width: 96.7%;
+    
+    &:hover {
+        background-color: #f8f9fa;
+        border-color: #FF9B62;
+        box-shadow: 0 2px 4px rgba(255, 155, 98, 0.1);
+    }
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+`;
+
+export const ItemIndex = styled.div`
+    flex: 0 0 40px;
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+`;
+
+export const ItemName = styled.div`
+    flex: 1;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+    margin-right: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+`;
+
+export const ItemStatus = styled.div<{ status: string }>`
+    flex: 0 0 120px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: right;
+    color: ${({ status }) => {
+        switch (status) {
+            case 'APPROVED': return '#28a745';
+            case 'REJECTED': return '#dc3545';
+            case 'PENDING': return '#ffc107';
+            case 'INTEMP': return '#6c757d';
+            default: return '#333';
+        }
+    }};
+`;
