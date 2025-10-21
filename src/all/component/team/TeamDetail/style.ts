@@ -174,3 +174,16 @@ export const ButtonGroup = styled.div`
         }
     }
 `;
+
+export const DeleteBtn = styled.button`
+    background: none;
+    border: none;
+    color: #909090;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-family: 'Paperlogy';
+
+    &:hover {
+        color: #ff4444;
+    }
+`;

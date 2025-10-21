@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as _ from "./style";
 import NavBar from "@_navbar/sidebar";
-import { fetchTeamDetail, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
+import { fetchTeamDetail, deleteTeam, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
 import { useUserStore } from '../../../../atom/User';
 
 export default function TeamDetail() {
@@ -22,6 +22,19 @@ export default function TeamDetail() {
     return <div>로딩중...</div>;
   }
 
+  const handleDeleteTeam = async (teamId: number) => {
+    if (window.confirm("정말로 이 팀을 삭제하시겠습니까?")) {
+      try {
+        await deleteTeam(teamId);
+        alert("팀이 삭제되었습니다.");
+        navigate("/team-space");
+      } catch (error) {
+        console.error("팀 삭제 실패:", error);
+        alert("팀 삭제에 실패했습니다.");
+      }
+    }
+  };
+
   const renderContent = (html: string) => {
     if (!html) return "내용이 없습니다";
     return html.replace(/<p>\s*<\/p>/g, "<p><br></p>");
@@ -39,6 +52,11 @@ export default function TeamDetail() {
         {user && user.teamId === team.teamId && (
           <_.ButtonGroup>
             <_.Btn onClick={() => navigate(`/club/edit/${team.teamId}`)}>수정하기</_.Btn>
+          </_.ButtonGroup>
+        )}
+        {user && user.userType === "TEACHER" && (
+          <_.ButtonGroup>
+            <_.DeleteBtn onClick={() => handleDeleteTeam(team.teamId)}>삭제하기</_.DeleteBtn>
           </_.ButtonGroup>
         )}
 

@@ -22,4 +22,8 @@ export const fetchTeamDetail = async (teamId: number): Promise<TeamDetail> => {
   const res = await axiosInstance.get<TeamDetail>(`/ara/teamspace/network/team/${teamId}`);
   return res.data;
 };
+
+export const deleteTeam = async (teamId: number): Promise<void> => {
+  await axiosInstance.delete(`/tch/teamspace/network/team/${teamId}`);
+};
 2
