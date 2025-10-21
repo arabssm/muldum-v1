@@ -8,6 +8,7 @@ import { submititem, nosubmititem } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
+import {ContentContainer} from "./style";
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
@@ -175,19 +176,19 @@ const Approval = () => {
         </_.ApprovalButton>
       </_.ButtonArea>
 
-      {renderContent()}
-
-      {filter === "승인하기" && (
-        <_.ButtonGroup>
-          <_.ApplyButton onClick={SSubmit} disabled={selectedItems.length === 0}>
-            승인하기
-          </_.ApplyButton>
-          <_.ApplyNobutton onClick={NSubmit} disabled={selectedItems.length === 0}>
-            거절하기
-          </_.ApplyNobutton>
-        </_.ButtonGroup>
-      )}
-
+      <_.ContentContainer>
+        {renderContent()}
+        {filter === "승인하기" && (
+          <_.ButtonGroup>
+            <_.ApplyButton onClick={SSubmit} disabled={selectedItems.length === 0}>
+              승인하기
+            </_.ApplyButton>
+            <_.ApplyNobutton onClick={NSubmit} disabled={selectedItems.length === 0}>
+              거절하기
+            </_.ApplyNobutton>
+          </_.ButtonGroup>
+        )}
+      </_.ContentContainer>
       {showApproveModal && <ApprovalModal onClose={() => closeModal(true)} />}
       {showRejectModal && <RejectModal onClose={() => closeModal(false)} />}
     </>

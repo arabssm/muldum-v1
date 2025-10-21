@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
 `;
 
 export const PageTitle = styled.div`
@@ -23,7 +23,9 @@ export const PageTitle = styled.div`
 `;
 
 export const BoxGroup = styled.div`
-    width: 90%;
+    width: 100%;
+    padding: .5rem;
+    box-sizing: border-box;
 `;
 
 export const TagBox = styled.div`
