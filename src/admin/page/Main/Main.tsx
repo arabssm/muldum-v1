@@ -12,7 +12,6 @@ export default function Main() {
     }, []);
     return (
         <_.Container>
-            <NavBar />
             <_.ContentItem>
                 <Slider />
             </_.ContentItem>

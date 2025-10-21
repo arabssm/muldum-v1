@@ -22,6 +22,8 @@ import TeamDetail from '@_all/component/team/TeamDetail/TeamDetail';
 import TeamEdit from '@_page/TeamEdit/TeamEdit';
 import AuthConfirm from '@_all/auth/auth';
 import ScreenSizeWarning from './all/component/ScreenSizeWarning/ScreenSizeWarning';
+import AppRoutes from "./AppRoutes";
+import NavBar from "@_navbar/sidebar";
 
 export default function App() {
   const { isOpen } = useLoginModalStore();
@@ -48,29 +50,8 @@ export default function App() {
   }
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/notice/:id" element={<DetailNotice />} />
-        <Route path="/club-history" element={<ClubHistory />} />  
-        <Route path="/google/login" element={<GoogleLogin />} />
-        <Route path="/team-space" element={<Teamspace />} />
-        <Route path="/club/:id" element={<TeamDetail />} />
-        <Route path='/team-space-menu' element={<Selectwhatteam />} />
-        <Route element={<AuthConfirm roles={['TEACHER', 'SUPERADMIN']} />}>
-          <Route path="/create-notice" element={<CreateNotice />} />
-          <Route path="/notice/edit/:id" element={<NoticeEdit />} />
-          <Route path="/project-approval" element={<Approval />} />
-        </Route>
-        <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
-          <Route path="/project-choice" element={<ProjectChoice />} />
-          <Route path="/object/all" element={<All />} />
-          <Route path="/club/edit/:id" element={<TeamEdit />} />
-          <Route path="/object/apply" element={<Object />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
+      <NavBar />
+      <AppRoutes />
       {isOpen && <LoginModal />}
     </>
   );
