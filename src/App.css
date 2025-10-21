@@ -6,10 +6,11 @@
 
 @font-face {
   font-family: 'Paperlogy';
-  src: url('/ara/public/Paperlogy.ttf') format('truetype');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
   font-weight: 800;
-  font-style: normal;
+  font-style: semibold;
   font: 'Paperlogy';
+  font-display: swap;
 }
 
 body {
