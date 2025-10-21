@@ -67,6 +67,16 @@ export default function Teamspace() {
                             </_.ModalTitle>
                             <_.ModalSubtitle>모달 외의 영역을 누르면 나가져요</_.ModalSubtitle>
                         </_.ModalHeader>
+                        <_.FormatViewButton
+                            onClick={() => {
+                                const url = modalType === 'invite'
+                                    ? 'https://docs.google.com/spreadsheets/d/1wxBZDyQAlHmRn7xMZuFxa0TF-hSeTyin0CksiCuUjZc/edit?gid=0#gid=0'
+                                    : 'https://docs.google.com/spreadsheets/d/1uw5E0so-9RSVQu3cIv-Cv5rSyOFaTdReUYsrgmwyxTw/edit?gid=0#gid=0';
+                                window.open(url, '_blank');
+                            }}
+                        >
+                            형식보기
+                        </_.FormatViewButton>
                         <_.InviteRow>
                             <input
                                 type="url"

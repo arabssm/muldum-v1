@@ -147,3 +147,21 @@ export const BtnGroup = styled.div`
     width: 20%;
     justify-content: end;
 `;
+
+export const FormatViewButton = styled.button`
+    padding: 0.6rem 1.2rem;
+    background: #FF9B62;
+    color: white;
+    border: none;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+    font-family: 'Paperlogy';
+    cursor: pointer;
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background: #e8864d;
+    }
+`;
