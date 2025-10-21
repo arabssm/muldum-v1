@@ -4,7 +4,7 @@ import background1 from "@_assets/onboarding/background1.svg";
 
 export const High = styled.div`
     position: relative;
-    z-index: -5;
+    z-index: 1;
     width: 100%;
     max-width: 1200px;
     overflow: hidden;
@@ -47,6 +47,7 @@ export const SlideWrapper = styled.div`
     min-height: 200px;
     color: #FFFFFF;
     padding: 1% 0;
+    cursor: pointer;
     
     display: flex;
     justify-content: center;

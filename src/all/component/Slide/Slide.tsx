@@ -18,6 +18,7 @@ interface NoticeItem {
 export default function SliderComponent() {
     const [notices, setNotices] = useState<NoticeItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isDragging, setIsDragging] = useState(false);
     const nav = useNavigate();
     useEffect(() => {
         const fetchNotices = async () => {
@@ -100,11 +101,23 @@ export default function SliderComponent() {
         );
     }
 
+    const handleSlideClick = (noticeId: number) => {
+        if (!isDragging) {
+            nav(`/notice/${noticeId}`);
+        }
+    };
+
     return (
         <_.High>
             <_.StyledSlider {...{ ...sliderSettings, infinite: notices.length > 1 }}>
                 {notices.map((notice, index) => (
-                    <_.SlideWrapper key={notice.id} onClick={() => nav(`/notice/${notice.id}`)}>
+                    <_.SlideWrapper
+                        key={notice.id}
+                        onMouseDown={() => setIsDragging(false)}
+                        onMouseMove={() => setIsDragging(true)}
+                        onMouseUp={() => setTimeout(() => setIsDragging(false), 100)}
+                        onClick={() => handleSlideClick(notice.id)}
+                    >
                         <_.SlideContent>
                             <_.Overlay />
                             <_.Title>{notice.title}</_.Title>
