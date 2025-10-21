@@ -239,8 +239,7 @@ export const ApplyButton = styled.button`
 export const ListWrapper = styled.div`
     flex: 1;
     overflow-y: auto;
-    padding-right: 0.5rem;
-    margin-top: 3%;
+    padding: 1rem 0.25rem 0.25rem;
 `;
 
 export const Footer = styled.div`
