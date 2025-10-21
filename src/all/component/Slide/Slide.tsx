@@ -104,8 +104,8 @@ export default function SliderComponent() {
         <_.High>
             <_.StyledSlider {...{ ...sliderSettings, infinite: notices.length > 1 }}>
                 {notices.map((notice, index) => (
-                    <_.SlideWrapper key={notice.id}>
-                        <_.SlideContent onClick={() => nav(`/notice/${notice.id}`)}>
+                    <_.SlideWrapper key={notice.id} onClick={() => nav(`/notice/${notice.id}`)}>
+                        <_.SlideContent>
                             <_.Overlay />
                             <_.Title>{notice.title}</_.Title>
                             <_.Date>{formatDate(notice.updatedAt)}</_.Date>
