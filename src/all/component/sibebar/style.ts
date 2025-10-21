@@ -5,7 +5,7 @@ export const MainArea = styled.div`
     z-index: 10;
     top: 0;
     left: 0;
-    width: 13%;
+    min-width: 13rem;
     height: 100vh;
     padding: 3% 2% 2% 2%;
     border-right: 1px solid #D1D1D1;
