@@ -55,8 +55,7 @@ export default function Object() {
   }, []);
 
   return (
-    <_.PageWrapper>
-      <Sidebar />
+    <>
       <_.Container>
         <_.Main>
           <_.Header>
@@ -136,6 +135,6 @@ export default function Object() {
           <_.FooterLink onClick={() => nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
         </_.Footer>
       </_.Container>
-    </_.PageWrapper>
+    </>
   );
 }

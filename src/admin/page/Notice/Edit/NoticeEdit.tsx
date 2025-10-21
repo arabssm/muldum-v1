@@ -125,8 +125,7 @@ export default function NoticeEdit() {
   if (!notice) return null;
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Wrapper>
         <_.PageTitle>공지사항 수정</_.PageTitle>
         <_.BoxGroup>
@@ -193,6 +192,6 @@ export default function NoticeEdit() {
           }}
         />
       )}
-    </_.Container>
+    </>
   );
 }

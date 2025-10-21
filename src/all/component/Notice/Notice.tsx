@@ -42,8 +42,7 @@ export default function Notice() {
     }
   };
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Wrapper>
         <_.PageTitle>공지사항</_.PageTitle>
         <_.SearchBar>
@@ -83,6 +82,6 @@ export default function Notice() {
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-    </_.Container>
+    </>
   );
 }

@@ -143,8 +143,7 @@ export default function CreateNotice() {
   }
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Wrapper>
         <_.PageTitle>공지사항 등록</_.PageTitle>
         <_.BoxGroup>
@@ -230,6 +229,6 @@ export default function CreateNotice() {
           }}
         />
       )}
-    </_.Container>
+    </>
   );
 }

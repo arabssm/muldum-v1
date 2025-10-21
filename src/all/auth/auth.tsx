@@ -37,7 +37,6 @@ export default function AuthConfirm({ roles }: { roles: string[] }) {
   if (!allowed) {
     return (
       <Block>
-        <NavBar />
         <h1>접근할 수 없는 페이지 입니다</h1>
       </Block>
     );

@@ -123,8 +123,7 @@ export default function TeamDetail() {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Content>
         <_.Banner
           style={{
@@ -179,6 +178,6 @@ export default function TeamDetail() {
           />
         </_.Section>
       </_.Content>
-    </_.Container>
+    </>
   );
 }

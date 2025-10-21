@@ -16,8 +16,7 @@ export default function ClubHistory() {
     };
 
     return (
-        <_.Container>
-            <NavBar />
+        <>
             <_.Wrapper>
                 <_.Title>역대 전공동아리</_.Title>
                 <_.Subtitle>이때까지 전공동아리 활동 전적을 확인해요</_.Subtitle>
@@ -31,6 +30,6 @@ export default function ClubHistory() {
                 </_.PeriodSelect>
                 <Best period={periods[currentIndex]} />
             </_.Wrapper>
-        </_.Container>
+        </>
     );
 }

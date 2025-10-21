@@ -59,8 +59,7 @@ export default function Detail() {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Wrapper>
         <_.Back src={Back} alt="뒤로가기" onClick={() => navigate(-1)} />
         <_.PageTitle>{doc1.title}</_.PageTitle>
@@ -111,6 +110,6 @@ export default function Detail() {
           }}
         />
       )}
-    </_.Container>
+    </>
   );
 }

@@ -41,8 +41,7 @@ export default function TeamDetail() {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Content>
         <_.Banner
           style={{ backgroundImage: `url(${team.config.backgroundImageUrl ?? "/images/default-banner.png"})` }}
@@ -75,6 +74,6 @@ export default function TeamDetail() {
           dangerouslySetInnerHTML={{ __html: renderContent(team.content) }}
         />
       </_.Content>
-    </_.Container>
+    </>
   );
 }

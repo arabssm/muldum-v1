@@ -23,8 +23,7 @@ export default function All() {
       })
   }, []);
   return (
-    <_.PageWrapper>
-      <Sidebar />
+    <>
       <_.Container>
         <_.Main>
           <_.TextContainer>
@@ -47,6 +46,6 @@ export default function All() {
           </_.ListWrapper>
         </_.Main>
       </_.Container>
-    </_.PageWrapper>
+    </>
   );
 }

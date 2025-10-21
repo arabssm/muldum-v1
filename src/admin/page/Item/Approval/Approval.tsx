@@ -164,8 +164,7 @@ const Approval = () => {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Title>전공동아리 물품 승인</_.Title>
       <_.Subtitle>학생들이 신청한 물품들을 확인해요</_.Subtitle>
       <_.ButtonArea>
@@ -192,7 +191,7 @@ const Approval = () => {
 
       {showApproveModal && <ApprovalModal onClose={() => closeModal(true)} />}
       {showRejectModal && <RejectModal onClose={() => closeModal(false)} />}
-    </_.Container>
+    </>
   );
 };
 
