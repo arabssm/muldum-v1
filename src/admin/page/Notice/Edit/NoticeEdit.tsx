@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as _ from './style';
-import NavBar from '../../../../all/component/sibebar/sidebar';
 import EditSuccess from '@_modal/Notice/EditSuccess';
 import {
   getNoticeDetail,
   updateNotice,
-  saveFile
+  saveFile, CreateNoticeBase
 } from '../../../../api/notice/notice';
 import { Notice } from './type';
-
 
 export default function NoticeEdit() {
   const { id } = useParams<{ id: string }>();
@@ -90,7 +88,7 @@ export default function NoticeEdit() {
   setIsSubmitting(true);
 
   try {
-    let allUrls: string[] = [...serverUrls];
+    const allUrls: string[] = [...serverUrls];
     if (localFiles.length > 0) {
       const uploadedUrls: string[] = [];
       for (const file of localFiles) {
@@ -100,10 +98,11 @@ export default function NoticeEdit() {
       allUrls.map(url => ({ url }));
     }
 
-    const patchData: any = {
+    const patchData: CreateNoticeBase = {
       title: notice.title,
       content: notice.content,
       deadlineDate: notice.deadlineDate,
+      files: []
     };
 
 

@@ -1,5 +1,4 @@
 import * as _ from './style';
-import NavBar from '@_all/component/sibebar/sidebar';
 import Menu from '@_menu/Menu';
 import '@_styles';
 

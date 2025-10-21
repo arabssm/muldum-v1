@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import * as _ from './style';
-import Sidebar from '../../../all/component/sibebar/sidebar';
 import Box from '../../component/object/box';
 import type { Request } from '../../component/object/types';
 import Apply from '../../../api/object/apply';

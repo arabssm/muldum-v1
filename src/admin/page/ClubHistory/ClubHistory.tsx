@@ -1,6 +1,5 @@
 import { useState } from "react";
 import * as _ from "./style";
-import NavBar from "@_all/component/sibebar/sidebar";
 import Best from "@_components/ClubHistory/Best";
 
 export default function ClubHistory() {

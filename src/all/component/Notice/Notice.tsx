@@ -8,7 +8,6 @@ import Box from './Box';
 import Pagination from './Pagination';
 import { getNotice } from '@_api/notice/notice';
 import { useUserStore } from '../../../atom/User';
-import {NotionContainer, NotionContentContainer} from "./style";
 
 export default function Notice() {
   const [search, setSearch] = useState('');

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as _ from './style';
-import NavBar from '../../../../all/component/sibebar/sidebar';
 import NoticeSuccess from '@_modal/Notice/CreateNotice';
 import '@_styles';
 import useNoticeState from './useNoticeState';

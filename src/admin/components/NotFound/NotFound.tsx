@@ -1,6 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as _ from './style';
-import NavBar from '@_all/component/sibebar/sidebar';
 import type { LocationState } from './types';
 
 export default function Notfound() {

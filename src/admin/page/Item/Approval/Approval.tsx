@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import * as _ from "./style";
 import "@_styles";
-import NavBar from "@_all/component/sibebar/sidebar";
 import ApprovalList from "@_components/Item/List/ApprovalList";
 import { getClubs } from "./ClubList";
 import { submititem, nosubmititem } from "@_api/object/apply";

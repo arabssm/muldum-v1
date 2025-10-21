@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as _ from "./style";
-import NavBar from "@_navbar/sidebar";
 import { fetchTeamDetail, deleteTeam, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
 import { useUserStore } from '../../../../atom/User';
 
