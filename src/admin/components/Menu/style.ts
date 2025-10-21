@@ -13,7 +13,7 @@ export const MenuArea = styled.div`
     flex-direction: column; 
     justify-content: center;
     align-items: flex-start;
-    width: 15%;
+    width: 20%;
     background-color: #FAFAFA;
     border-radius: 12px;
     padding: 3% 3%;
