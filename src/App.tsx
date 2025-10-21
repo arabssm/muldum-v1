@@ -18,7 +18,7 @@ const MainContainer = styled.main`
 
 const ContentContainer = styled.div`
     flex: 1;
-    overflow: auto;
+    overflow-y: auto;
     padding: 0 2rem;
 `;
 
