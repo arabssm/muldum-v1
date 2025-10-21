@@ -31,20 +31,13 @@ export const GetUser = async () => {
 
   const { data } = await axiosInstance.get("/user/me");
 
-  // const user = {
-  //   userId: data.userId ?? data.id,
-  //   name: data.name,
-  //   role: data.role ?? data.user_type,
-  //   userType: data.userType ?? data.user_type,
-  //   teamId: extractTeamId(data.profile),
-  // };
-
   const user = {
-    userId: 1,
-    name: "User",
-    role: "STUDENT",
-    userType: "STUDENT",
-    teamId: 1,
-  }
+    userId: data.userId ?? data.id,
+    name: data.name,
+    role: data.role ?? data.user_type,
+    userType: data.userType ?? data.user_type,
+    teamId: extractTeamId(data.profile),
+  };
+
   setUser(user);
 };
