@@ -18,7 +18,6 @@ const MainContainer = styled.main`
 
 const ContentContainer = styled.div`
     flex: 1;
-    margin-left: 13%;
     padding: 2rem 3rem 2rem 1rem;
     box-sizing: border-box;
     overflow: auto;
