@@ -12,7 +12,7 @@ import Teamspace from '@_pages/Teamspace/Teamspace';
 import ClubHistory from '@_pages/ClubHistory/ClubHistory';
 import Object from '@_page/object/object';
 import All from '@_page/object/all';
-import Resendpage from '@_page/object/resend';
+import Selectwhatteam from '@_all/pages/selectwhatteam'
 import { useLoginModalStore } from './atom/Modal';
 import { useLoadingStore } from './atom/Loading';
 import LoginModal from './all/component/modal/login/login';
@@ -52,10 +52,11 @@ export default function App() {
         <Route path="/" element={<Main />} />
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:id" element={<DetailNotice />} />
-        <Route path="/club-history" element={<ClubHistory />} />
+        <Route path="/club-history" element={<ClubHistory />} />  
         <Route path="/google/login" element={<GoogleLogin />} />
         <Route path="/team-space" element={<Teamspace />} />
         <Route path="/club/:id" element={<TeamDetail />} />
+        <Route path='/team-space-menu' element={<Selectwhatteam />} />
         <Route element={<AuthConfirm roles={['TEACHER', 'SUPERADMIN']} />}>
           <Route path="/create-notice" element={<CreateNotice />} />
           <Route path="/notice/edit/:id" element={<NoticeEdit />} />

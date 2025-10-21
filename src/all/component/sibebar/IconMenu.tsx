@@ -52,6 +52,7 @@ export const IconMenu = [
     icon: icons.teamspace,
     iconActive: icons.teamspaceActive,
     children: [
+      { path: '/team-space-menu', roles: ['ALL'] },
       { path: '/team-space', roles: ['ALL'] },
       { path: '/club/:id', roles: ['ALL'] },
       { path: '/club/edit/:id', roles: ['STUDENT'] },
