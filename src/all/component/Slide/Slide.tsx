@@ -6,6 +6,7 @@ import sliderSettings from './Setting';
 import '@_styles';
 import { getNotice } from "@_api/notice/notice";
 import background1 from "@_assets/onboarding/background1.svg"
+import { useNavigate } from "react-router-dom";
 interface NoticeItem {
     id: number;
     title: string;
@@ -17,7 +18,7 @@ interface NoticeItem {
 export default function SliderComponent() {
     const [notices, setNotices] = useState<NoticeItem[]>([]);
     const [loading, setLoading] = useState(true);
-
+    const nav = useNavigate();
     useEffect(() => {
         const fetchNotices = async () => {
             try {
@@ -104,7 +105,7 @@ export default function SliderComponent() {
             <_.StyledSlider {...{ ...sliderSettings, infinite: notices.length > 1 }}>
                 {notices.map((notice, index) => (
                     <_.SlideWrapper key={notice.id}>
-                        <_.SlideContent>
+                        <_.SlideContent onClick={() => nav(`/notice/${notice.id}`)}>
                             <_.Overlay />
                             <_.Title>{notice.title}</_.Title>
                             <_.Date>{formatDate(notice.updatedAt)}</_.Date>
