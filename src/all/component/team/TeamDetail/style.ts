@@ -48,7 +48,7 @@ export const ClubName = styled.h1`
 export const Section = styled.div`
   padding: 1rem 2rem;
   margin-left: 10%;
-  overflow-x: hidden;
+  overflow-x: auto;
 
   p {
     margin: 0 0 1em 0;
@@ -97,6 +97,14 @@ export const Section = styled.div`
 
   tr:hover {
     background-color: #f0f0f0;
+  }
+
+  hr {
+    width: 80%;
+    min-width: 500px;
+    margin: 6px 0 12px;
+    border: none;
+    border-top: 1px solid #eaecef;
   }
 `;
 

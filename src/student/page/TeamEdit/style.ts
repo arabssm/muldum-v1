@@ -5,20 +5,17 @@ export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   margin: -3rem 0rem;
-  overflow-y: auto;
-  position: relative;
+  position: fixed;
 `;
 
 export const Content = styled.div`
   flex: 1;
-  width:100%;
-  position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
-  overflow: visible;
-  min-height: 100%;
-  padding-bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
 `;
 
 export const Banner = styled.div`
@@ -141,15 +138,17 @@ export const SectionText = styled.p`
 `;
 
 export const LogoArea = styled.div`
-  position: absolute;
   width: 7rem;
   height: 7rem;
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 8rem;
-  left: 12%;
+  margin-top: -5rem;
+  margin-bottom: 1rem;
+  margin-left: 12%;
+  z-index: 2;
+  position: relative;
   border-radius: 1rem;
 `;
 
