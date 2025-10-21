@@ -8,14 +8,6 @@ export const High = styled.div`
     width: 100%;
     max-width: 1200px;
     overflow: hidden;
-    
-    @media (max-width: 1440px) {
-        padding: 0 1.5rem;
-    }
-    
-    @media (max-width: 1200px) {
-        padding: 0 1rem;
-    }
 `;
 
 export const StyledSlider = styled(Slider)`

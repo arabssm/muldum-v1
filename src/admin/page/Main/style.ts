@@ -31,11 +31,7 @@ export const ContentItem = styled.div`
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 1.5rem;
-    
-    /* 작은 노트북에서는 간격 줄이기 */
-    @media (max-width: 1199px) and (min-width: 900px) {
-        margin-bottom: 1rem;
-    }
+    padding: 0 1rem;
 `;
 
 export const Title = styled.div`

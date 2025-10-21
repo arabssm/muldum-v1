@@ -56,25 +56,25 @@ export default function ItemDetailModal({ item, onClose, hideReason = false }: I
           <_.Title>물품 상세 정보</_.Title>
           <_.CloseButton onClick={onClose}>×</_.CloseButton>
         </_.Header>
-        
+
         <_.Content>
           <_.InfoRow>
             <_.Label>물품명</_.Label>
             <_.Value>{truncateText(item.product_name)}</_.Value>
           </_.InfoRow>
-          
+
           <_.InfoRow>
             <_.Label>수량</_.Label>
             <_.Value>{item.quantity}개</_.Value>
           </_.InfoRow>
-          
+
           {formattedPrice && (
             <_.InfoRow>
               <_.Label>가격</_.Label>
               <_.Value>{formattedPrice}</_.Value>
             </_.InfoRow>
           )}
-          
+
           {item.productLink && (
             <_.InfoRow>
               <_.Label>링크</_.Label>
@@ -83,7 +83,7 @@ export default function ItemDetailModal({ item, onClose, hideReason = false }: I
               </_.LinkValue>
             </_.InfoRow>
           )}
-          
+
           {!hideReason && (
             <_.InfoRow>
               <_.Label>신청 사유</_.Label>
@@ -98,7 +98,7 @@ export default function ItemDetailModal({ item, onClose, hideReason = false }: I
             </_.InfoRow>
           )}
         </_.Content>
-        
+
         <_.Footer>
           <_.ConfirmButton onClick={onClose}>확인</_.ConfirmButton>
         </_.Footer>
