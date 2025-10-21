@@ -9,12 +9,12 @@ export const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin: 1.5% 2% 4% 2%;
 `;
 
 export const TitleBox = styled.div`
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 `;
 
 export const Title = styled.div`

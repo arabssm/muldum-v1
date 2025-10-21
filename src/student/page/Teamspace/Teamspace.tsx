@@ -22,8 +22,7 @@ const handleInvite = () => {
 };
 
     return (
-        <_.Wrapper>
-            <NavBar />
+        <>
             <_.Header>
                 <_.TitleBox>
                     <_.Title>동아리 팀원들을 배치해요</_.Title>
@@ -62,6 +61,6 @@ const handleInvite = () => {
                     </_.ModalContent>
                 </_.ModalOverlay>
             )}
-        </_.Wrapper>
+        </>
     );
 }
