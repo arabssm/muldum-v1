@@ -26,7 +26,6 @@ export default function SliderComponent() {
                 const response = await getNotice(1);
                 if (response && Array.isArray(response.content)) {
                     setNotices(response.content);
-                    console.log(response.content)
                 } else {
                     setNotices([]);
                 }
@@ -54,7 +53,6 @@ export default function SliderComponent() {
     const calculateDDay = (deadlineDate: string) => {
         const today = new Date();
         const deadline = new Date(deadlineDate);
-        console.log(deadline);
         const diffTime = deadline.getTime() - today.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
