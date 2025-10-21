@@ -11,13 +11,13 @@ export default function Main() {
         GetUser();
     }, []);
     return (
-        <_.Container>
+        <>
             <_.ContentItem>
                 <Slider />
             </_.ContentItem>
             <_.ContentItem>
                 <Menu />
             </_.ContentItem>
-        </_.Container>
+        </>
     )
 }

@@ -31,7 +31,6 @@ export const ContentItem = styled.div`
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 1.5rem;
-    padding: 0 1rem;
 `;
 
 export const Title = styled.div`
