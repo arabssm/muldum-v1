@@ -5,13 +5,14 @@ export const MainArea = styled.div`
     z-index: 10;
     top: 0;
     left: 0;
-    min-width: 13rem;
+    min-width: 15rem;
     height: 100vh;
-    padding: 3% 2% 2% 2%;
+    padding: 1.5rem 1rem;
     border-right: 1px solid #D1D1D1;
     background-color: white;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 `;
 
 export const MenuContainer = styled.div`

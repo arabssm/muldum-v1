@@ -9,7 +9,8 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  flex: 1;
+  position: absolute;
+  right: 0; top: 0; left: 15rem;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
@@ -26,7 +27,6 @@ export const Banner = styled.div`
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin-left: 2.5%; /* TeamEdit와 동일하게 */
   padding: 0 !important;
   position: relative;
   display: flex;
@@ -34,9 +34,12 @@ export const Banner = styled.div`
   justify-content: center;
 `;
 
+export const ContentArea = styled.div`
+  padding: 1rem 12%;
+`;
+
 export const Header = styled.div`
-  padding: 0 2rem;
-  margin-left: 10%;
+  padding: 0;
 `;
 
 export const ClubName = styled.h1`
@@ -46,8 +49,7 @@ export const ClubName = styled.h1`
 `;
 
 export const Section = styled.div`
-  padding: 1rem 2rem;
-  margin-left: 10%;
+  padding: 1rem 0;
   overflow-x: auto;
 
   p {
