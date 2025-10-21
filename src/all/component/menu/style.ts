@@ -26,7 +26,7 @@ export const GridContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 1rem; 
-    width: 94%;
+    width: 100%;
 `;
 
 export const CardContainer = styled.div`

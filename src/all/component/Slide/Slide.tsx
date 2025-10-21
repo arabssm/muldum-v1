@@ -64,7 +64,7 @@ export default function SliderComponent() {
             return '마감';
         }
         else {
-            return '기간없음';
+            return ' ';
         }
     };
 
