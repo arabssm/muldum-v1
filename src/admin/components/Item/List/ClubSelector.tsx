@@ -2,20 +2,22 @@ import * as _ from '@_pages/Item/Approval/style';
 import { ClubSelectorProps } from '@_pages/Item/Approval/type';
 
 export default function ClubSelector({ clubs, selectedClub, setSelectedClub }: ClubSelectorProps) {
-    const handleSelect = (club: string) => {
-        setSelectedClub(club === selectedClub ? null : club);
+    const handleSelect = (clubName: string) => {
+        setSelectedClub(clubName === selectedClub ? null : clubName);
     };
 
     return (
         <_.ClubArea>
             {clubs.map((club, i) => (
-                <_.ClubName
-                    key={i}
-                    onClick={() => handleSelect(club)}
-                    selected={selectedClub === club}
-                >
-                    {club}
-                </_.ClubName>
+                <_.ClubWrapper key={i}>
+                    <_.ClubName
+                        onClick={() => handleSelect(club.name)}
+                        selected={selectedClub === club.name}
+                    >
+                        {club.name}
+                    </_.ClubName>
+                    {club.hasNewItems && <_.NewBadge>NEW</_.NewBadge>}
+                </_.ClubWrapper>
             ))}
         </_.ClubArea>
     );

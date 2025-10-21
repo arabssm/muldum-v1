@@ -51,12 +51,32 @@ export const ClubArea = styled.div`
     margin-bottom: 2.5%;
 `;
 
+export const ClubWrapper = styled.div`
+    position: relative;
+    display: inline-block;
+`;
+
 export const ClubName = styled.div<{ selected?: boolean }>`
     padding: 0.7rem 1rem;
     border: 0.06rem solid ${({ selected }) => (selected ? '#FF9B62' : '#B2B2B2')};
     background-color: ${({ selected }) => (selected ? '#FFF5EF' : 'white')};
     border-radius: 4px;
     cursor: pointer;
+`;
+
+export const NewBadge = styled.div`
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #FF4444;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 8px;
+    transform: rotate(15deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 `;
 
 export const DetailArea = styled.div`

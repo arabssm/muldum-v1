@@ -23,7 +23,7 @@ const Approval = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [allItemIds, setAllItemIds] = useState<number[]>([]);
   const [reasons, setReasons] = useState<{ [id: number]: string }>({});
-  const [clubs, setClubs] = useState<{ id: number; name: string }[]>([]);
+  const [clubs, setClubs] = useState<{ id: number; name: string; hasNewItems: boolean }[]>([]);
 
   const [selectedPossibleClub, setSelectedPossibleClub] = useState<string | null>(null);
   const [selectedImpossibleClub, setSelectedImpossibleClub] = useState<string | null>(null);
@@ -108,7 +108,7 @@ const Approval = () => {
         {isPossible ? (
           <>
             <ClubSelector
-              clubs={clubs.map((c) => c.name)}
+              clubs={clubs}
               selectedClub={selectedClubName}
               setSelectedClub={setSelectedClub}
             />
@@ -136,7 +136,7 @@ const Approval = () => {
         ) : (
           <>
             <ClubSelector
-              clubs={clubs.map((c) => c.name)}
+              clubs={clubs}
               selectedClub={selectedClubName}
               setSelectedClub={setSelectedClub}
             />

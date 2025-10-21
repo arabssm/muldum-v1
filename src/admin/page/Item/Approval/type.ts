@@ -9,7 +9,7 @@ export interface FilterProps {
 }
 
 export interface ClubSelectorProps {
-    clubs: string[];
+    clubs: { id: number; name: string; hasNewItems: boolean }[];
     selectedClub: string | null;
     setSelectedClub: (club: string | null) => void;
 }
