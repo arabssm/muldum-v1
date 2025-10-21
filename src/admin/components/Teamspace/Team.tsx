@@ -50,24 +50,6 @@ export default function Team() {
             <_.Name>{team.members.map((m) => m.userName).join(", ")}</_.Name>
           </_.Box>
         ))}
-        {teams.map((team) => (
-          <_.Box key={team.teamId} onClick={() => handleClick(team.teamId)}>
-            <_.ClubTitle>{team.teamName}</_.ClubTitle>
-            <_.Name>{team.members.map((m) => m.userName).join(", ")}</_.Name>
-          </_.Box>
-        ))}
-        {teams.map((team) => (
-          <_.Box key={team.teamId} onClick={() => handleClick(team.teamId)}>
-            <_.ClubTitle>{team.teamName}</_.ClubTitle>
-            <_.Name>{team.members.map((m) => m.userName).join(", ")}</_.Name>
-          </_.Box>
-        ))}
-        {teams.map((team) => (
-          <_.Box key={team.teamId} onClick={() => handleClick(team.teamId)}>
-            <_.ClubTitle>{team.teamName}</_.ClubTitle>
-            <_.Name>{team.members.map((m) => m.userName).join(", ")}</_.Name>
-          </_.Box>
-        ))}
       </_.BoxWrapper>
     </_.Container>
   );
