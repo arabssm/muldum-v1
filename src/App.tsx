@@ -18,29 +18,15 @@ const MainContainer = styled.main`
 
 const ContentContainer = styled.div`
     flex: 1;
-    padding: 2rem 3rem 2rem 1rem;
-    box-sizing: border-box;
     overflow: auto;
-    
-    /* 큰 노트북 (1440px 이상) */
-    @media (min-width: 1440px) {
-        padding: 2rem 4rem 2rem 1.5rem;
-    }
-    
-    /* 일반 노트북 (1200px - 1439px) */
-    @media (max-width: 1439px) and (min-width: 1200px) {
-        padding: 2rem 2.5rem 2rem 1.2rem;
-    }
-    
-    /* 작은 노트북 (1024px - 1199px) */
-    @media (max-width: 1199px) and (min-width: 1024px) {
-        padding: 1.5rem 2rem 1.5rem 1rem;
-    }
-    
-    /* 매우 작은 노트북 (900px - 1023px) */
-    @media (max-width: 1023px) and (min-width: 900px) {
-        padding: 1.5rem 1.5rem 1.5rem 0.8rem;
-    }
+    padding: 0 2rem;
+`;
+
+const ContentScrollContainer = styled.div`
+    max-width: 1200px;
+    min-width: 688px;
+    margin: 4rem auto;
+    box-sizing: border-box;
 `;
 
 export default function App() {
@@ -70,7 +56,9 @@ export default function App() {
     <MainContainer>
       <NavBar />
       <ContentContainer>
-        <AppRoutes />
+        <ContentScrollContainer>
+          <AppRoutes />
+        </ContentScrollContainer>
       </ContentContainer>
       {isOpen && <LoginModal />}
     </MainContainer>
