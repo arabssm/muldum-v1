@@ -26,7 +26,7 @@ export const Banner = styled.div`
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin: 0 !important;
+  margin-left: 2.5%; /* TeamEdit와 동일하게 */
   padding: 0 !important;
   position: relative;
   display: flex;
@@ -50,7 +50,6 @@ export const Section = styled.div`
   margin-left: 10%;
   overflow-x: hidden;
 
-  /* p 태그 줄바꿈 스타일 */
   p {
     margin: 0 0 1em 0;
     min-height: 1.2em;
@@ -66,7 +65,6 @@ export const Section = styled.div`
     margin-bottom: 0;
   }
 
-  /* 이미지 크기 제한 */
   img {
     max-width: 100%;
     max-height: 400px;
@@ -75,24 +73,22 @@ export const Section = styled.div`
     border-radius: 8px;
   }
 
-  /* 테이블 스타일링 */
   table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
-    margin: 1rem 0;
-    font-size: 0.9rem;
+    margin: 6px 0 12px;
+    min-width: 500px;
   }
 
   th, td {
-    border: 1px solid #ddd;
-    padding: 6px 10px;
+    border: 1px solid #eaecef;
+    padding: 8px;
     text-align: left;
   }
 
   th {
-    background-color: #f5f5f5;
+    background: #fafbfc;
     font-weight: 600;
-    color: #333;
   }
 
   tr:nth-of-type(even) {
@@ -117,7 +113,7 @@ export const SectionText = styled.p`
 `;
 
 export const LogoArea = styled.div`
-  width: 6.5%;
+  width: 7rem;
   height: 7rem;
   background-color: #f0f0f0;
   display: flex;
@@ -133,10 +129,9 @@ export const LogoArea = styled.div`
 
 export const Logo = styled.img`
   height: 4rem; 
-  width: 6rem;
-  border-radius: 0.5rem;
+  width: 4rem;
   object-fit: cover;
-  object-position: center;
+  border-radius: 0.5rem;
 
   &.editable {
     cursor: pointer;
@@ -144,6 +139,8 @@ export const Logo = styled.img`
 
     &:hover {
       filter: brightness(0.9);
+      transform: scale(0.95);
+    }
   }
 `;
 

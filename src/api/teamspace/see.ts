@@ -11,8 +11,9 @@ export interface Teamtype {
   members: Member[];
 }
 
-export const fetchTeams = async (): Promise<Teamtype[]> => {
-  const res = await axiosInstance.get<{ teams: Teamtype[] }>("/ara/teamspace/network");
+export const fetchTeams = async (classNumber?: number): Promise<Teamtype[]> => {
+  const params = classNumber ? { class: classNumber } : {};
+  const res = await axiosInstance.get<{ teams: Teamtype[] }>("/ara/teamspace/network", { params });
   return res.data.teams;
 };
 

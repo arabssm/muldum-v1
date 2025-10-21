@@ -4,14 +4,13 @@ export const Container = styled.div`
     display: flex;
     gap: 1rem;
     flex-direction: column;
-    margin: 2rem 0;
 `;
 
 export const Box = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #FAFAFA;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     width: 70%;
     height: 100%;    
     padding: 4%;
@@ -53,6 +52,43 @@ export const Title = styled.div`
     font-weight: 600;
     color: #1D1D1D;
     margin-bottom: 2%;
+`;
+
+export const FilterContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+`;
+
+export const FilterButton = styled.button<{ isActive: boolean }>`
+    padding: 0.5rem 0;
+    border: none;
+    background: transparent;
+    color: ${props => props.isActive ? '#FF9B62' : '#666'};
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: ${props => props.isActive ? '600' : '400'};
+    position: relative;
+    transition: all 0.2s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: ${props => props.isActive ? '#FF9B62' : 'transparent'};
+        transition: all 0.2s ease;
+    }
+
+    &:hover {
+        color: #FF9B62;
+        
+        &::after {
+            background-color: ${props => props.isActive ? '#FF9B62' : '#ccc'};
+        }
+    }
 `;
 
 export const ClubTitle = styled.div`

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 import { Placeholder } from "@tiptap/extension-placeholder";
@@ -18,12 +18,21 @@ type Props = {
   readOnly?: boolean;
 };
 
+interface SlashMenuItem {
+  label: string;
+  keywords: string[];
+  action: () => void;
+  icon?: string;
+}
+
 export default function NotionEditor({ value = "", onChange, readOnly }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const [slashOpen, setSlashOpen] = useState(false);
   const [slashPos, setSlashPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [slashQuery, setSlashQuery] = useState("");
   const [slashStartPos, setSlashStartPos] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
 
   const editor = useEditor({
@@ -72,67 +81,159 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
         return false;
       },
       handleKeyDown: (_view, e) => {
+        // 슬래시 메뉴가 열려있을 때의 키보드 처리
+        if (slashOpen) {
+          if (e.key === "Escape") {
+            closeSlashMenu();
+            return true;
+          }
+
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            const items = getFilteredItems();
+            setSelectedIndex(prev => Math.min(prev + 1, items.length - 1));
+            return true;
+          }
+
+          if (e.key === "ArrowUp") {
+            e.preventDefault();
+            setSelectedIndex(prev => Math.max(prev - 1, 0));
+            return true;
+          }
+
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const items = getFilteredItems();
+            if (items[selectedIndex]) {
+              executeSlashCommand(items[selectedIndex].action);
+            }
+            return true;
+          }
+
+          if (e.key === "Backspace" && slashQuery === "") {
+            const from = slashStartPos;
+            const to = editor?.state.selection.from || slashStartPos;
+            editor?.chain().focus().deleteRange({ from, to }).run();
+            closeSlashMenu();
+            e.preventDefault();
+            return true;
+          }
+
+          if (e.key === "Backspace" && slashQuery.length > 0) {
+            setSlashQuery(prev => {
+              const newQuery = prev.slice(0, -1);
+              setSelectedIndex(0);
+              return newQuery;
+            });
+            e.preventDefault();
+            return true;
+          }
+
+          if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            setSlashQuery(prev => {
+              const newQuery = prev + e.key;
+              setSelectedIndex(0);
+              return newQuery;
+            });
+            e.preventDefault();
+            return true;
+          }
+        }
+
+        // 슬래시 입력 감지
         if (e.key === "/" && !e.metaKey && !e.ctrlKey && !e.altKey && !slashOpen) {
           const currentPos = editor?.state.selection.from || 0;
           setSlashStartPos(currentPos);
 
+          // 슬래시 입력 후 약간의 지연을 두고 메뉴 열기
           setTimeout(() => {
-            const sel = window.getSelection();
-            if (!sel || sel.rangeCount === 0) return;
-            const rect = sel.getRangeAt(0).getBoundingClientRect();
-            setSlashPos({ x: rect.left, y: rect.bottom + window.scrollY });
-            setSlashQuery("");
-            setSlashOpen(true);
-          }, 0);
-        } else if (e.key === "Escape" && slashOpen) {
-          setSlashOpen(false);
-          setSlashQuery("");
-        } else if (slashOpen && e.key === "Backspace" && slashQuery === "") {
-
-          const from = slashStartPos;
-          const to = editor?.state.selection.from || slashStartPos;
-          editor?.chain().focus().deleteRange({ from, to }).run();
-          setSlashOpen(false);
-          e.preventDefault();
-          return true;
-        } else if (slashOpen && e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
-          setTimeout(() => {
-            setSlashQuery(prev => prev + e.key);
-          }, 0);
-        } else if (slashOpen && e.key === "Backspace" && slashQuery.length > 0) {
-          setSlashQuery(prev => prev.slice(0, -1));
-          e.preventDefault();
-          return true;
+            openSlashMenu();
+          }, 50);
         }
+
         return false;
       },
     },
   });
 
-  useEffect(() => {
-    const close = (e: MouseEvent) => {
-      const menu = document.getElementById("slash-menu");
-      if (menu && !menu.contains(e.target as Node)) setSlashOpen(false);
-    };
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
-  }, [slashOpen]);
+  // 슬래시 메뉴 열기
+  const openSlashMenu = useCallback(() => {
+    if (!editor) return;
 
-  const insertTable = (rows: number, cols: number) => {
-    const from = slashStartPos;
-    const to = editor?.state.selection.from || slashStartPos;
+    try {
+      // TipTap 에디터에서 직접 커서 위치 가져오기
+      const { view } = editor;
+      const { state } = view;
+      const { selection } = state;
 
-    if (from <= to) {
-      editor?.chain().focus().deleteRange({ from, to }).insertTable({ rows, cols, withHeaderRow: true }).run();
-    } else {
-      editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: true }).run();
+      // 커서 위치를 DOM 좌표로 변환
+      const coords = view.coordsAtPos(selection.from);
+
+      console.log('TipTap coords:', coords);
+
+      // 메뉴 위치 계산
+      const menuWidth = 320;
+      const menuHeight = 280;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const padding = 16;
+
+      // x 위치: 커서 위치에서 시작
+      let x = coords.left;
+
+      // 화면 오른쪽 경계를 넘으면 조정
+      if (x + menuWidth > viewportWidth - padding) {
+        x = viewportWidth - menuWidth - padding;
+      }
+
+      // 왼쪽 경계 체크
+      if (x < padding) {
+        x = padding;
+      }
+
+      // y 위치: 커서 바로 아래에 표시
+      let y = coords.bottom + 6;
+
+      // 화면 아래쪽을 넘으면 위로 표시
+      if (y + menuHeight > viewportHeight - padding) {
+        y = coords.top - menuHeight - 6;
+      }
+
+      console.log('Menu position:', { x, y });
+
+      setSlashPos({ x, y });
+      setSlashQuery("");
+      setSelectedIndex(0);
+      setSlashOpen(true);
+
+      console.log('Slash menu opened');
+    } catch (error) {
+      console.error('Error opening slash menu:', error);
+
+      // 폴백: 에디터 요소 기준으로 위치 계산
+      const editorElement = document.querySelector('.notion-editor');
+      if (editorElement) {
+        const rect = editorElement.getBoundingClientRect();
+        setSlashPos({
+          x: rect.left + 20,
+          y: rect.top + 50
+        });
+        setSlashQuery("");
+        setSelectedIndex(0);
+        setSlashOpen(true);
+      }
     }
+  }, [editor]);
 
+  // 슬래시 메뉴 닫기
+  const closeSlashMenu = useCallback(() => {
     setSlashOpen(false);
     setSlashQuery("");
-  };
+    setSelectedIndex(0);
+  }, []);
 
-  const executeCommand = (action: () => void) => {
+  // 슬래시 명령 실행
+  const executeSlashCommand = useCallback((action: () => void) => {
     const from = slashStartPos;
     const to = editor?.state.selection.from || slashStartPos;
 
@@ -144,20 +245,75 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
       action();
     }, 0);
 
-    setSlashOpen(false);
-    setSlashQuery("");
-  };
+    closeSlashMenu();
+  }, [editor, slashStartPos, closeSlashMenu]);
 
-  const allItems = useMemo(() => [
-    { label: "텍스트", keywords: ["텍스트", "text", "paragraph"], action: () => editor?.chain().focus().setParagraph().run() },
-    { label: "제목 1", keywords: ["제목", "제목1", "h1", "heading"], action: () => editor?.chain().focus().toggleHeading({ level: 1 }).run() },
-    { label: "제목 2", keywords: ["제목2", "h2"], action: () => editor?.chain().focus().toggleHeading({ level: 2 }).run() },
-    { label: "글머리 목록", keywords: ["목록", "리스트", "bullet"], action: () => editor?.chain().focus().toggleBulletList().run() },
-    { label: "번호 목록", keywords: ["번호", "숫자", "ordered"], action: () => editor?.chain().focus().toggleOrderedList().run() },
-    { label: "구분선", keywords: ["구분", "선", "line", "hr"], action: () => editor?.chain().focus().setHorizontalRule().run() },
-  ], [editor, insertTable]);
+  // 테이블 삽입
+  const insertTable = useCallback((rows: number, cols: number) => {
+    const from = slashStartPos;
+    const to = editor?.state.selection.from || slashStartPos;
 
-  const filteredItems = useMemo(() => {
+    if (from <= to) {
+      editor?.chain().focus().deleteRange({ from, to }).insertTable({ rows, cols, withHeaderRow: true }).run();
+    } else {
+      editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: true }).run();
+    }
+
+    closeSlashMenu();
+  }, [editor, slashStartPos, closeSlashMenu]);
+
+  // 이미지 업로드
+  const handleImageUpload = useCallback(() => {
+    const from = slashStartPos;
+    const to = editor?.state.selection.from || slashStartPos;
+    if (from <= to) {
+      editor?.chain().focus().deleteRange({ from, to }).run();
+    }
+    fileInputRef.current?.click();
+    closeSlashMenu();
+  }, [editor, slashStartPos, closeSlashMenu]);
+
+  // 메뉴 아이템 정의
+  const allItems = useMemo<SlashMenuItem[]>(() => [
+    {
+      label: "텍스트",
+      keywords: ["텍스트", "text", "paragraph", "p"],
+      action: () => editor?.chain().focus().setParagraph().run()
+    },
+    {
+      label: "제목 1",
+      keywords: ["제목", "제목1", "h1", "heading", "header"],
+      action: () => editor?.chain().focus().toggleHeading({ level: 1 }).run()
+    },
+    {
+      label: "제목 2",
+      keywords: ["제목2", "h2", "소제목"],
+      action: () => editor?.chain().focus().toggleHeading({ level: 2 }).run()
+    },
+    {
+      label: "글머리 목록",
+      keywords: ["목록", "리스트", "bullet", "ul", "불릿"],
+      action: () => editor?.chain().focus().toggleBulletList().run()
+    },
+    {
+      label: "번호 목록",
+      keywords: ["번호", "숫자", "ordered", "ol", "넘버링"],
+      action: () => editor?.chain().focus().toggleOrderedList().run()
+    },
+    {
+      label: "할 일 목록",
+      keywords: ["할일", "체크", "todo", "task", "checkbox"],
+      action: () => editor?.chain().focus().toggleTaskList().run()
+    },
+    {
+      label: "구분선",
+      keywords: ["구분", "선", "line", "hr", "구분선"],
+      action: () => editor?.chain().focus().setHorizontalRule().run()
+    },
+  ], [editor]);
+
+  // 필터된 아이템 가져오기
+  const getFilteredItems = useCallback(() => {
     if (!slashQuery) return allItems;
     return allItems.filter(item =>
       item.keywords.some(keyword =>
@@ -166,52 +322,86 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
     );
   }, [allItems, slashQuery]);
 
+  // 외부 클릭시 메뉴 닫기
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        closeSlashMenu();
+      }
+    };
+
+    if (slashOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [slashOpen, closeSlashMenu]);
+
   if (!editor) return null;
+
+  const filteredItems = getFilteredItems();
 
   return (
     <Wrap>
       <EditorContent editor={editor} />
+
       {slashOpen && (
-        <SlashMenu id="slash-menu" style={{ left: slashPos.x, top: slashPos.y }}>
+        <SlashMenu
+          ref={menuRef}
+          style={{ left: slashPos.x, top: slashPos.y }}
+        >
           {slashQuery && (
             <QueryDisplay>/{slashQuery}</QueryDisplay>
           )}
 
-          {filteredItems.length > 0 ? (
-            <>
-              <SectionTitle>블록</SectionTitle>
-              {filteredItems.map(item => (
-                <MenuItem key={item.label} onClick={() => executeCommand(item.action)}>
-                  {item.label}
+          <MenuSection>
+            <SectionTitle>기본 블록</SectionTitle>
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item, index) => (
+                <MenuItem
+                  key={item.label}
+                  $selected={index === selectedIndex}
+                  onClick={() => executeSlashCommand(item.action)}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                >
+                  <ItemLabel>{item.label}</ItemLabel>
                 </MenuItem>
-              ))}
-            </>
-          ) : (
-            <NoResults>검색 결과가 없습니다</NoResults>
-          )}
+              ))
+            ) : (
+              <NoResults>검색 결과가 없습니다</NoResults>
+            )}
+          </MenuSection>
 
           {!slashQuery && (
             <>
-              <SectionTitle>표</SectionTitle>
-              <TableRowBtns>
-                <button onClick={() => insertTable(2, 2)}>2×2</button>
-                <button onClick={() => insertTable(3, 3)}>3×3</button>
-                <button onClick={() => insertTable(4, 4)}>4×4</button>
-              </TableRowBtns>
+              <MenuSection>
+                <SectionTitle>표</SectionTitle>
+                <TableGrid>
+                  <TableButton onClick={() => insertTable(2, 2)}>
+                    <TableIcon>⊞</TableIcon>
+                    <span>2×2 표</span>
+                  </TableButton>
+                  <TableButton onClick={() => insertTable(3, 3)}>
+                    <TableIcon>⊞</TableIcon>
+                    <span>3×3 표</span>
+                  </TableButton>
+                  <TableButton onClick={() => insertTable(4, 4)}>
+                    <TableIcon>⊞</TableIcon>
+                    <span>4×4 표</span>
+                  </TableButton>
+                </TableGrid>
+              </MenuSection>
 
-              <SectionTitle>미디어</SectionTitle>
-              <MenuItem onClick={() => {
-                const from = slashStartPos;
-                const to = editor?.state.selection.from || slashStartPos;
-                if (from <= to) {
-                  editor?.chain().focus().deleteRange({ from, to }).run();
-                }
-                fileInputRef.current?.click();
-                setSlashOpen(false);
-                setSlashQuery("");
-              }} disabled={isUploading}>
-                {isUploading ? '업로드 중...' : '이미지 업로드…'}
-              </MenuItem>
+              <MenuSection>
+                <SectionTitle>미디어</SectionTitle>
+                <MenuItem
+                  onClick={handleImageUpload}
+                  disabled={isUploading}
+                >
+                  <ItemLabel>
+                    {isUploading ? '업로드 중...' : '이미지 업로드'}
+                  </ItemLabel>
+                </MenuItem>
+              </MenuSection>
             </>
           )}
         </SlashMenu>
@@ -230,13 +420,11 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
           try {
             const uploadedUrl = await saveFile(file);
             editor.chain().focus().setImage({ src: uploadedUrl }).run();
-
           } catch (error) {
             console.error('이미지 업로드 실패:', error);
             alert('이미지 업로드에 실패했습니다.');
           } finally {
             setIsUploading(false);
-            setSlashOpen(false);
             e.currentTarget.value = "";
           }
         }}
@@ -246,13 +434,13 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
 }
 
 const Wrap = styled.div`
-  width: 71%;
+  width: 80%;
   overflow-x: hidden;
   overflow-y: visible;
   
   .notion-editor {
     transition: border-color .15s ease, box-shadow .15s ease;
-    min-width: 600px; /* 최소 너비 보장 */
+    min-width: 600px;
   }
   .notion-editor:focus-within {
     border-color: #d0d7de;
@@ -271,7 +459,7 @@ const Wrap = styled.div`
     width: 100%; 
     border-collapse: collapse; 
     margin: 6px 0 12px; 
-    min-width: 500px; /* 테이블 최소 너비 */
+    min-width: 500px;
   }
   th, td { border: 1px solid #eaecef; padding: 8px; text-align: left; }
   th { background: #fafbfc; font-weight: 600; }
@@ -281,59 +469,111 @@ const Wrap = styled.div`
 `;
 
 const SlashMenu = styled.div`
-  position: absolute;
-  z-index: 50;
-  width: 240px;
+  position: fixed;
+  z-index: 1000;
+  width: 320px;
+  max-height: 280px;
+  overflow-y: auto;
   background: #fff;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 12px 30px rgba(0,0,0,.12);
-  border-radius: 12px;
-  padding: 8px;
+  border: 1px solid #e1e5e9;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  border-radius: 8px;
+  padding: 8px 0;
+`;
+
+const QueryDisplay = styled.div`
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #6b7280;
+  border-bottom: 1px solid #f1f3f4;
+  margin-bottom: 4px;
+  font-family: 'SF Mono', Monaco, monospace;
+`;
+
+const MenuSection = styled.div`
+  margin-bottom: 8px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const SectionTitle = styled.div`
   font-size: 11px;
-  color: #6b7280;
-  letter-spacing: .04em;
+  color: #9ca3af;
+  letter-spacing: .5px;
   text-transform: uppercase;
-  margin: 6px 8px;
+  font-weight: 600;
+  margin: 8px 16px 4px;
 `;
 
-const MenuItem = styled.button`
+const MenuItem = styled.button<{ $selected?: boolean }>`
   width: 100%;
-  text-align: left;
-  padding: 10px 12px;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
   border: none;
-  background: transparent;
+  background: ${props => props.$selected ? '#f8f9fa' : 'transparent'};
   cursor: pointer;
   font-size: 14px;
-  &:hover:not(:disabled) f8fafc; }
-`;
-
-const TableRowBtns = styled.div`
-  display: flex; gap: 6px; padding: 6px 8px 10px;
-  button {
-    flex: 1;
-    padding: 8px 0;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #fff;
-    cursor: pointer;
-    &:hover { background: #f9fafb; }
+  transition: background-color 0.1s ease;
+  
+  &:hover:not(:disabled) {
+    background: #f8f9fa;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `;
 
-const QueryDisplay = styled.div`
+const ItemIcon = styled.span`
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 16px;
+`;
+
+const ItemLabel = styled.span`
+  color: #374151;
+  font-weight: 400;
+`;
+
+const TableGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 8px;
+`;
+
+const TableButton = styled.button`
+  display: flex;
+  align-items: center;
   padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
   font-size: 14px;
-  color: #6b7280;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 4px;
+  color: #374151;
+  transition: background-color 0.1s ease;
+  
+  &:hover {
+    background: #f8f9fa;
+  }
+`;
+
+const TableIcon = styled.span`
+  margin-right: 8px;
+  font-size: 16px;
 `;
 
 const NoResults = styled.div`
-  padding: 16px 12px;
+  padding: 16px;
   text-align: center;
   color: #9ca3af;
   font-size: 14px;
