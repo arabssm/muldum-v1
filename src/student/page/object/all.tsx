@@ -7,7 +7,6 @@ import { getApplyall } from '@_api/object/apply';
 
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
-
   const handleReasonChange = (id: string, newReason: string) => {
     setRequests(prev =>
       prev.map(req =>
@@ -32,7 +31,7 @@ export default function All() {
           </_.TextContainer>
           <_.AllTitle>신청한 물품</_.AllTitle>
           <_.ListWrapper>
-            {
+            { Array.isArray(requests) &&
               requests
                 .map((r, index) => (
                   <Box
