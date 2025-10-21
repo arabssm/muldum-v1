@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
-    width: 100%;
-    margin-left: 14.5%;
-    margin-top: 2%;
-`;
-
 export const Wrapper = styled.div`
     display: flex;
-    width: 90%;
+    width: 100%;
     justify-content: space-between;
+    margin-bottom: 1rem;
 `;
 
 export const PageTitle = styled.div`
@@ -47,10 +42,11 @@ export const SearchInput = styled.input`
 export const BoxContainer = styled.div`
     display: flex;
     align-items: center;
-    width: 85%;
-    padding: 1.5% 0%;
+    width: 100%;
+    padding: 1rem;
     cursor: pointer;
     background-color: #fff;
+    box-sizing: border-box;
 `;
 
 export const Left = styled.div`
@@ -81,9 +77,10 @@ export const DateText = styled.span`
 `;
 
 export const PaginationWrapper = styled.div`
-    position: fixed;
-    bottom: 8%;
-    left: 8%;
+    min-height: 30px;
+    height: 30px;
+    position: sticky;
+    bottom: 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -118,4 +115,15 @@ export const Text = styled.div`
     font-size: 1.5rem;
     font-weight: 600;
     margin-top: 24rem;
+`;
+
+export const NotionContainer = styled.div`
+    height: calc(100vh - 8rem);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const NotionContentContainer = styled.div`
+    flex: 1;
 `;
