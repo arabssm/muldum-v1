@@ -2,13 +2,13 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import * as _ from "./style";
 import "@_styles";
-import NavBar from "@_all/component/sibebar/sidebar";
 import ApprovalList from "@_components/Item/List/ApprovalList";
 import { getClubs } from "./ClubList";
 import { submititem, nosubmititem } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
+import {ContentContainer} from "./style";
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
@@ -164,8 +164,7 @@ const Approval = () => {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Title>전공동아리 물품 승인</_.Title>
       <_.Subtitle>학생들이 신청한 물품들을 확인해요</_.Subtitle>
       <_.ButtonArea>
@@ -177,22 +176,22 @@ const Approval = () => {
         </_.ApprovalButton>
       </_.ButtonArea>
 
-      {renderContent()}
-
-      {filter === "승인하기" && (
-        <_.ButtonGroup>
-          <_.ApplyButton onClick={SSubmit} disabled={selectedItems.length === 0}>
-            승인하기
-          </_.ApplyButton>
-          <_.ApplyNobutton onClick={NSubmit} disabled={selectedItems.length === 0}>
-            거절하기
-          </_.ApplyNobutton>
-        </_.ButtonGroup>
-      )}
-
+      <_.ContentContainer>
+        {renderContent()}
+        {filter === "승인하기" && (
+          <_.ButtonGroup>
+            <_.ApplyButton onClick={SSubmit} disabled={selectedItems.length === 0}>
+              승인하기
+            </_.ApplyButton>
+            <_.ApplyNobutton onClick={NSubmit} disabled={selectedItems.length === 0}>
+              거절하기
+            </_.ApplyNobutton>
+          </_.ButtonGroup>
+        )}
+      </_.ContentContainer>
       {showApproveModal && <ApprovalModal onClose={() => closeModal(true)} />}
       {showRejectModal && <RejectModal onClose={() => closeModal(false)} />}
-    </_.Container>
+    </>
   );
 };
 

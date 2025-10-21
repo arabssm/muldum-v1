@@ -12,7 +12,6 @@ export const Container = styled.div`
     overflow: hidden;
     width: 100%;
     margin-top: 0.2rem;
-    margin-left: 14.5%;
     box-sizing: border-box;
 `;
 
@@ -79,6 +78,7 @@ export const FormSection = styled.div`
     background: #fff;
     border-radius: 0.75rem;
     margin-bottom: 2rem;
+    padding: .5rem;
 `;
 
 export const FormSectionHeader = styled.div`
@@ -209,6 +209,7 @@ export const TextArea = styled.textarea`
 `;
 
 export const ListSection = styled.div`
+    padding: .5rem;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -238,16 +239,15 @@ export const ApplyButton = styled.button`
 export const ListWrapper = styled.div`
     flex: 1;
     overflow-y: auto;
-    padding-right: 0.5rem;
-    margin-top: 3%;
+    padding: 1rem 0.25rem 0.25rem;
 `;
 
 export const Footer = styled.div`
+    padding: 1rem .5rem 1rem 1rem;   
     flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     border-top: 1px solid #eee;
-    padding-top: 1rem;
     font-size: 0.875rem;
     color: #909090;
 `;

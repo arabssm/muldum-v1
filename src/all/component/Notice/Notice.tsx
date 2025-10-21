@@ -5,7 +5,6 @@ import '@_styles';
 import Search from '@_assets/onboarding/search.svg';
 import Add from '@_assets/add.svg'
 import Box from './Box';
-import NavBar from '@_navbar/sidebar';
 import Pagination from './Pagination';
 import { getNotice } from '@_api/notice/notice';
 import { useUserStore } from '../../../atom/User';
@@ -42,8 +41,8 @@ export default function Notice() {
     }
   };
   return (
-    <_.Container>
-      <NavBar />
+    <_.NotionContainer>
+      <_.NotionContentContainer>
       <_.Wrapper>
         <_.PageTitle>공지사항</_.PageTitle>
         <_.SearchBar>
@@ -67,7 +66,6 @@ export default function Notice() {
           />
         )}
       </_.Wrapper>
-
       {filtered.length > 0 ? filtered.map(notice => (
         <Box
           key={notice.id}
@@ -78,11 +76,12 @@ export default function Notice() {
       )) : (
         <_.Text>공지가 존재하지 않습니다</_.Text>
       )}
+      </_.NotionContentContainer>
       <Pagination
         currentPage={page}
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-    </_.Container>
+    </_.NotionContainer>
   );
 }

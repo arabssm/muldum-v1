@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+    padding: 1rem 0;
     display: flex;
     gap: 1rem;
     flex-direction: column;
@@ -51,7 +52,6 @@ export const Title = styled.div`
     font-size: 1.5rem;
     font-weight: 600;
     color: #1D1D1D;
-    margin-bottom: 2%;
 `;
 
 export const FilterContainer = styled.div`

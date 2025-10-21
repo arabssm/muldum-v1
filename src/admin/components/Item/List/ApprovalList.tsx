@@ -81,8 +81,7 @@ export default function ApprovalList({
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.ListWrapper>
         {data.map((item, index) => (
           <_.ItemRow
@@ -133,6 +132,6 @@ export default function ApprovalList({
           onClose={closeDetailModal}
         />
       )}
-    </_.Container>
+    </>
   );
 }

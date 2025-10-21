@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as _ from "./style";
-import NavBar from "@_navbar/sidebar";
 import { fetchTeamDetail, deleteTeam, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
 import { useUserStore } from '../../../../atom/User';
 
@@ -41,11 +40,10 @@ export default function TeamDetail() {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Content>
         <_.Banner
-          style={{ backgroundImage: `url(${team.config.backgroundImageUrl ?? "/images/default-banner.png"})` }}
+          style={{ backgroundImage: `url(${team.config?.backgroundImageUrl ?? "/images/default-banner.png"})` }}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => e.preventDefault()}
         />
@@ -62,19 +60,20 @@ export default function TeamDetail() {
 
         <_.LogoArea>
           <_.Logo
-            src={team.config.iconImageUrl ?? "/images/club-logo.png"}
+            src={team.config?.iconImageUrl ?? "/images/club-logo.png"}
             alt={`${team.teamName} 로고`}
           />
         </_.LogoArea>
+        <_.ContentArea>
+          <_.Header>
+            <_.ClubName>{team.teamName}</_.ClubName>
+          </_.Header>
 
-        <_.Header>
-          <_.ClubName>{team.teamName}</_.ClubName>
-        </_.Header>
-
-        <_.Section
-          dangerouslySetInnerHTML={{ __html: renderContent(team.content) }}
-        />
+          <_.Section
+            dangerouslySetInnerHTML={{ __html: renderContent(team.content) }}
+          />
+        </_.ContentArea>
       </_.Content>
-    </_.Container>
+    </>
   );
 }

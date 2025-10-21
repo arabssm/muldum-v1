@@ -8,7 +8,7 @@ export const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 90%;
+  width: 100%;
 `;
 
 export const ItemRow = styled.div`

@@ -5,6 +5,12 @@ export const Container = styled.div`
     margin-left: 14.5%;
 `;
 
+export const ContentContainer = styled.div`
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+`;
+
 export const Title = styled.div`
     display: flex;
     justify-content: left;
@@ -25,7 +31,7 @@ export const Subtitle = styled.div`
 
 export const ButtonArea = styled.div`
     display: flex;
-    width: 90%;
+    width: 100%;
     border: none;
     border-bottom: 1px solid #B2B2B2;
     gap: 2rem;
@@ -90,7 +96,7 @@ export const DetailArea = styled.div`
 export const AddonsArea = styled.div`
     display: flex;
     justify-content: right;
-    width: 90%;
+    width: 100%;
     gap: 1.3rem;
     margin-bottom: 3%;
 `;
@@ -111,7 +117,7 @@ export const Addons = styled.button`
 export const ButtonGroup = styled.div`
     display: flex;
     justify-content: right;
-    width: 90%;
+    width: 100%;
     gap: 1.3rem;
     margin-bottom: 3%;
 `;
@@ -120,7 +126,7 @@ export const ApplyButton = styled.button`
     display: flex;
     justify-content: center;
     padding: 1%;
-    width: 10%;
+    width: 7.5rem;
     border-radius: 2rem;
     background-color: #FF9B62;
     border: 0;
@@ -139,7 +145,7 @@ export const ApplyNobutton = styled.button`
     display: flex;
     justify-content: center;
     padding: 1%;
-    width: 10%;
+    width: 7.5rem;
     border-radius: 2rem;
     border: 0.1rem solid #FF9B62;
     color: #FF9B62;
@@ -157,11 +163,12 @@ export const ApplyNobutton = styled.button`
 
 export const Null = styled.div`
     display: flex;
-    width: 82%;
+    width: 100%;
     padding: 3% 4%;
     background-color: #FAFAFA;
     font-size:  1.3rem;
     color: #545454;
+    box-sizing: border-box;
 `;
 
 export const RejectReasonArea = styled.div`

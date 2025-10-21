@@ -1,7 +1,6 @@
 import * as _ from './style';
 import Menu from '@_all/component/menu/menu';
 import Slider from '@_all/component/Slide/Slide';
-import NavBar from '@_all/component/sibebar/sidebar';
 import '@_styles';
 import { GetUser } from '@_api/user/data'
 import { useEffect } from 'react';
@@ -11,14 +10,13 @@ export default function Main() {
         GetUser();
     }, []);
     return (
-        <_.Container>
-            <NavBar />
+        <>
             <_.ContentItem>
                 <Slider />
             </_.ContentItem>
             <_.ContentItem>
                 <Menu />
             </_.ContentItem>
-        </_.Container>
+        </>
     )
 }

@@ -130,6 +130,7 @@ export const ItemRow = styled.div`
     background-color: #fff;
     min-width: 0;
     width: 96.7%;
+    box-sizing: border-box;
     
     &:hover {
         background-color: #f8f9fa;

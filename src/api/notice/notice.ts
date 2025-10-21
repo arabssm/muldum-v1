@@ -46,7 +46,7 @@ export async function saveFile(file: File) {
 export type FilePayload = { url: string };
 export type NoticeFile = { url: string };
 
-type CreateNoticeBase = {
+export type CreateNoticeBase = {
   title: string;
   content: string;
   files: NoticeFile[];

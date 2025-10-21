@@ -44,7 +44,7 @@ export default function Team() {
         ))}
       </_.FilterContainer>
       <_.BoxWrapper>
-        {teams.map((team) => (
+        {teams && teams.map((team) => (
           <_.Box key={team.teamId} onClick={() => handleClick(team.teamId)}>
             <_.ClubTitle>{team.teamName}</_.ClubTitle>
             <_.Name>{team.members.map((m) => m.userName).join(", ")}</_.Name>

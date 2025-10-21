@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as _ from "./style";
-import NavBar from "@_navbar/sidebar";
 import { fetchTeamDetail, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
 import { useUserStore } from "../../../../src/atom/User";
 import NotionEditor from "../../component/notice/noticeEdit";
@@ -123,8 +122,7 @@ export default function TeamDetail() {
   };
 
   return (
-    <_.Container>
-      <NavBar />
+    <>
       <_.Content>
         <_.Banner
           style={{
@@ -179,6 +177,6 @@ export default function TeamDetail() {
           />
         </_.Section>
       </_.Content>
-    </_.Container>
+    </>
   );
 }

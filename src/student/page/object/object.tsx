@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import * as _ from './style';
-import Sidebar from '../../../all/component/sibebar/sidebar';
 import Box from '../../component/object/box';
 import type { Request } from '../../component/object/types';
 import Apply from '../../../api/object/apply';
@@ -55,8 +54,7 @@ export default function Object() {
   }, []);
 
   return (
-    <_.PageWrapper>
-      <Sidebar />
+    <>
       <_.Container>
         <_.Main>
           <_.Header>
@@ -125,7 +123,7 @@ export default function Object() {
               <_.ApplyButton onClick={() => finalApply()}>신청하기</_.ApplyButton>
             </_.ListSectionHeader>
             <_.ListWrapper>
-              {requests.map((r, index) => (
+              {Array.isArray(requests) && requests.map((r, index) => (
                 <Box key={r.id} request={r} index={index} />
               ))}
             </_.ListWrapper>
@@ -136,6 +134,6 @@ export default function Object() {
           <_.FooterLink onClick={() => nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
         </_.Footer>
       </_.Container>
-    </_.PageWrapper>
+    </>
   );
 }

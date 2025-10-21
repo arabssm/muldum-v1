@@ -12,7 +12,7 @@ export default function Best({ period }: BestProps) {
     };
 
     return (
-        <_.Container>
+        <>
             <_.Wrapper>
                 {topData.map(item => (
                     <_.TopBox key={item.idx}>
@@ -25,7 +25,7 @@ export default function Best({ period }: BestProps) {
                     </_.TopBox>
                 ))}
             </_.Wrapper>
-
+            <_.BoxWrapper>
             {bottomData.map(item => (
                 <_.Box key={item.idx}>
                     <_.Groupping>
@@ -36,6 +36,7 @@ export default function Best({ period }: BestProps) {
                     </_.Groupping>
                 </_.Box>
             ))}
-        </_.Container>
+            </_.BoxWrapper>
+        </>
     );
 }

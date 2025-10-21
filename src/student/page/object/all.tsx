@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import * as _ from './style';
-import Sidebar from '@_all/component/sibebar/sidebar';
 import Box from '@_component/object/box';
 import type { Request } from '@_component/object/types';
 import { getApplyall } from '@_api/object/apply';
 
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
-
   const handleReasonChange = (id: string, newReason: string) => {
     setRequests(prev =>
       prev.map(req =>
@@ -23,8 +21,7 @@ export default function All() {
       })
   }, []);
   return (
-    <_.PageWrapper>
-      <Sidebar />
+    <>
       <_.Container>
         <_.Main>
           <_.TextContainer>
@@ -33,7 +30,7 @@ export default function All() {
           </_.TextContainer>
           <_.AllTitle>신청한 물품</_.AllTitle>
           <_.ListWrapper>
-            {
+            { Array.isArray(requests) &&
               requests
                 .map((r, index) => (
                   <Box
@@ -47,6 +44,6 @@ export default function All() {
           </_.ListWrapper>
         </_.Main>
       </_.Container>
-    </_.PageWrapper>
+    </>
   );
 }
