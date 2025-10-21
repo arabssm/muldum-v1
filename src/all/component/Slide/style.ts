@@ -38,7 +38,6 @@ export const SlideWrapper = styled.div`
     height: 24vh;
     min-height: 200px;
     color: #FFFFFF;
-    padding: 1% 0;
     cursor: pointer;
     
     display: flex;
