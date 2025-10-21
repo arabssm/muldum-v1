@@ -22,11 +22,11 @@ export const Box = styled.div`
 
 export const BoxWrapper = styled.div`
     display: grid;
-    gap: 1.5rem;
+    gap: 2rem;
     padding-bottom: 1rem;
     margin-bottom: 4rem;
     grid-template-columns: repeat(3, 1fr);
-    row-gap: 40%;
+    row-gap: 3.5rem;
     &::-webkit-scrollbar {
         display: none;
     }
