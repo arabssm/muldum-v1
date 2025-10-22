@@ -4,10 +4,15 @@ import Slider from '@_all/component/Slide/Slide';
 import '@_styles';
 import { GetUser } from '@_api/user/data'
 import { useEffect } from 'react';
+import { getCookie } from '../../../utils/cookie';
 
 export default function Main() {
+
     useEffect(() => {
-        GetUser();
+        const accessToken = getCookie('accessToken');
+        if (accessToken) {
+            GetUser();
+        }
     }, []);
     return (
         <>
