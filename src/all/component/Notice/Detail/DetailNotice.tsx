@@ -8,6 +8,7 @@ import makeDocument from './makeDocument';
 import { getNoticeDetail, deleteNotice } from '../../../../api/notice/notice';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '../../../../atom/User';
+import Loading from '@_all/component/loading/loading';
 
 export default function Detail() {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ export default function Detail() {
       });
   }, [id]);
 
-  if (!doc1) return <h1>로딩중입니다.</h1>;
+  if (!doc1) return <Loading />;
 
   let date = '';
   if (doc1.updatedAt) {

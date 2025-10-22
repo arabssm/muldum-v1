@@ -16,7 +16,7 @@ export default function ClubSelector({ clubs, selectedClub, setSelectedClub }: C
                     >
                         {club.name}
                     </_.ClubName>
-                    {club.hasNewItems && <_.NewBadge>NEW</_.NewBadge>}
+                    {club.hasNewItems && <_.NewBadge>N</_.NewBadge>}
                 </_.ClubWrapper>
             ))}
         </_.ClubArea>
