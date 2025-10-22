@@ -27,7 +27,7 @@ export default function Detail() {
       });
   }, [id]);
 
-  if (!doc1) return <Notfound />;
+  if (!doc1) return <h1>로딩중입니다.</h1>;
 
   let date = '';
   if (doc1.updatedAt) {
