@@ -38,7 +38,6 @@ export const LoginTag = styled(BaseTag)`
 
 export const SettingTag = styled(BaseTag)`
     margin-top: auto;
-    margin-bottom: 4rem;
 `;
 
 export const TagArea = styled(BaseTag)`
