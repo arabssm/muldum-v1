@@ -8,6 +8,8 @@ import Box from './Box';
 import Pagination from './Pagination';
 import { getNotice } from '@_api/notice/notice';
 import { useUserStore } from '../../../atom/User';
+import Loading from '../loading/loading';
+
 
 export default function Notice() {
   const [search, setSearch] = useState('');
@@ -15,8 +17,10 @@ export default function Notice() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [totalPages, setTotalpages] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useUserStore();
   useEffect(() => {
+    setIsLoading(true);
     getNotice(page)
       .then((data) => {
         setPosts(data?.content ?? []);
@@ -24,6 +28,9 @@ export default function Notice() {
       })
       .catch((err) => {
         console.error("게시물을 불러오는 데 실패했습니다.", err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [page]);
 
@@ -43,39 +50,43 @@ export default function Notice() {
   return (
     <_.NotionContainer>
       <_.NotionContentContainer>
-      <_.Wrapper>
-        <_.PageTitle>공지사항</_.PageTitle>
-        <_.SearchBar>
-          <img src={Search} alt="Search" />
-          <_.SearchInput
-            type="text"
-            placeholder="공지사항 검색"
-            value={search}
-            onChange={e => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
-        </_.SearchBar>
+        <_.Wrapper>
+          <_.PageTitle>공지사항</_.PageTitle>
+          <_.SearchBar>
+            <img src={Search} alt="Search" />
+            <_.SearchInput
+              type="text"
+              placeholder="공지사항 검색"
+              value={search}
+              onChange={e => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </_.SearchBar>
 
-        {user && user.userType === "TEACHER" && (
-          <_.Add
-            src={Add}
-            alt="Add"
-            onClick={() => navigate('/create-notice')}
-          />
+          {user && user.userType === "TEACHER" && (
+            <_.Add
+              src={Add}
+              alt="Add"
+              onClick={() => navigate('/create-notice')}
+            />
+          )}
+        </_.Wrapper>
+        {isLoading ? (
+          <Loading />
+        ) : filtered.length > 0 ? (
+          filtered.map(notice => (
+            <Box
+              key={notice.id}
+              idx={notice.id}
+              title={notice.title}
+              date={notice.updatedAt}
+            />
+          ))
+        ) : (
+          <_.Text>공지가 존재하지 않습니다</_.Text>
         )}
-      </_.Wrapper>
-      {filtered.length > 0 ? filtered.map(notice => (
-        <Box
-          key={notice.id}
-          idx={notice.id}
-          title={notice.title}
-          date={notice.updatedAt}
-        />
-      )) : (
-        <_.Text>공지가 존재하지 않습니다</_.Text>
-      )}
       </_.NotionContentContainer>
       <Pagination
         currentPage={page}
