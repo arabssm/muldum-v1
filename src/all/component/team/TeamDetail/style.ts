@@ -11,9 +11,6 @@ export const Container = styled.div`
 export const Content = styled.div`
   position: absolute;
   right: 0; top: 0; left: 15rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 2rem;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
@@ -21,8 +18,9 @@ export const Content = styled.div`
 
 export const Banner = styled.div`
   width: 100%;
-  z-index: -2;
   height: 12rem;
+  min-height: 12rem;
+  flex-shrink: 0;
   background-color: #41f4bb; 
   background-size: cover;
   background-position: 50% 50%;
@@ -125,6 +123,9 @@ export const SectionText = styled.p`
 export const LogoArea = styled.div`
   width: 7rem;
   height: 7rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  flex-shrink: 0;
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
@@ -140,6 +141,9 @@ export const LogoArea = styled.div`
 export const Logo = styled.img`
   height: 4rem; 
   width: 4rem;
+  min-width: 4rem;
+  min-height: 4rem;
+  flex-shrink: 0;
   object-fit: cover;
   border-radius: 0.5rem;
 

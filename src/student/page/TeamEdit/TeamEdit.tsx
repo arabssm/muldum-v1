@@ -126,7 +126,7 @@ export default function TeamDetail() {
       <_.Content>
         <_.Banner
           style={{
-            backgroundImage: `url(${team.config.backgroundImageUrl})`,
+            backgroundImage: `url(${team.config?.backgroundImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/default_banner.svg"})`,
           }}
           onClick={handleBannerClick}
           className={canEdit ? "editable" : ""}
@@ -143,7 +143,7 @@ export default function TeamDetail() {
 
         <_.LogoArea>
           <_.Logo
-            src={team.config.iconImageUrl}
+            src={team.config?.iconImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/default_logo.svg"}
             alt={`${team.teamName} 로고`}
             onClick={handleLogoClick}
             className={canEdit ? "editable" : ""}
@@ -166,16 +166,18 @@ export default function TeamDetail() {
           onChange={handleLogoUpload}
         />
 
-        <_.Header>
-          <_.ClubName>{team.teamName}</_.ClubName>
-        </_.Header>
-        <_.Section>
-          <NotionEditor
-            value={team.content}
-            onChange={handleContentChange}
-            readOnly={!canEdit}
-          />
-        </_.Section>
+        <_.ContentArea>
+          <_.Header>
+            <_.ClubName>{team.teamName}</_.ClubName>
+          </_.Header>
+          <_.Section>
+            <NotionEditor
+              value={team.content}
+              onChange={handleContentChange}
+              readOnly={!canEdit}
+            />
+          </_.Section>
+        </_.ContentArea>
       </_.Content>
     </>
   );

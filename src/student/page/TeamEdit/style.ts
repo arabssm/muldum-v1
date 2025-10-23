@@ -9,10 +9,8 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  row-gap: 2rem;
+  position: absolute;
+  right: 0; top: 0; left: 15rem;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
@@ -20,13 +18,13 @@ export const Content = styled.div`
 
 export const Banner = styled.div`
   width: 100%;
-  z-index: -2;
   height: 12rem;
+  min-height: 12rem;
+  flex-shrink: 0;
   background-color: #41f4bb; 
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin-left: 2.5%;
   padding: 0 !important;
   position: relative;
   display: flex;
@@ -36,7 +34,6 @@ export const Banner = styled.div`
   &.editable {
     cursor: pointer;
     transition: all 0.2s ease;
-    z-index: 1;
 
     &:hover {
       filter: brightness(0.9);
@@ -62,9 +59,12 @@ export const Banner = styled.div`
   }
 `;
 
+export const ContentArea = styled.div`
+  padding: 1rem 12%;
+`;
+
 export const Header = styled.div`
-  padding: 0 2rem;
-  margin-left: 10%;
+  padding: 0;
 `;
 
 export const ClubName = styled.h1`
@@ -76,9 +76,8 @@ export const ClubName = styled.h1`
 
 
 export const Section = styled.div`
-  padding: 1rem 2rem;
-  margin-left: 10%;
-  overflow-x: hidden;
+  padding: 1rem 0;
+  overflow-x: auto;
 
   /* NotionEditor 내부 p 태그 스타일 */
   .notion-editor p {
@@ -123,6 +122,48 @@ export const Section = styled.div`
     width: 0;
     height: 1.2em;
   }
+
+  img {
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 6px 0 12px;
+    min-width: 500px;
+  }
+
+  th, td {
+    border: 1px solid #eaecef;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background: #fafbfc;
+    font-weight: 600;
+  }
+
+  tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #f0f0f0;
+  }
+
+  hr {
+    width: 80%;
+    min-width: 500px;
+    margin: 6px 0 12px;
+    border: none;
+    border-top: 1px solid #eaecef;
+  }
 `;
 
 export const SectionTitle = styled.h2`
@@ -140,6 +181,9 @@ export const SectionText = styled.p`
 export const LogoArea = styled.div`
   width: 7rem;
   height: 7rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  flex-shrink: 0;
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
@@ -155,6 +199,9 @@ export const LogoArea = styled.div`
 export const Logo = styled.img`
   height: 4rem; 
   width: 4rem;
+  min-width: 4rem;
+  min-height: 4rem;
+  flex-shrink: 0;
   object-fit: cover;
   border-radius: 0.5rem;
 
@@ -165,6 +212,24 @@ export const Logo = styled.img`
     &:hover {
       filter: brightness(0.9);
       transform: scale(0.95);
+    }
+
+    &:hover::after {
+      content: "클릭하여 로고 변경";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      z-index: 10000;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
   }
 `;
