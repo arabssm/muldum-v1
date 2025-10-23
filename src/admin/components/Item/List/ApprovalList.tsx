@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as _ from './style';
 import NavBar from '@_all/component/sibebar/sidebar';
 import type { Props } from './types';
-import { tchitem, tchitem111 } from '../../../../api/object/apply';
+import { tchitem, tchitem111, tchitemAll, tchitemAllApproved } from '../../../../api/object/apply';
 import DetailItem from '@_components/Modal/Delete/DeleteModal';
 import ItemDetailModal from '../../Modal/ItemDetail/ItemDetailModal';
 
@@ -14,7 +14,8 @@ export default function ApprovalList({
   reasons,
   setReasons,
   isApproved = false,
-}: Props & { setAllItemIds: (ids: number[]) => void; reasons: any; setReasons: any }) {
+  isAllClubs = false,
+}: Props & { setAllItemIds: (ids: number[]) => void; reasons: any; setReasons: any; isAllClubs?: boolean }) {
   const [data, setData] = useState<any[]>([]);
 
   const handleReasonChange = (id: number, value: string) => {
@@ -32,7 +33,29 @@ export default function ApprovalList({
   };
 
   useEffect(() => {
-    if (id !== undefined) {
+    if (isAllClubs) {
+      // 전체 클럽 선택시 팀 ID 없이 API 호출
+      const apiCall = isApproved ? tchitemAllApproved : tchitemAll;
+
+      apiCall()
+        .then((res) => {
+          const normalized = (res ?? []).map((raw: any, idx: number) => {
+            const numId = Number(raw.item_id ?? idx);
+            return {
+              ...raw,
+              id: numId,
+              productName: raw.product_name ?? '이름 없음',
+            };
+          });
+
+          setData(normalized);
+          setAllItemIds(normalized.map((item) => item.id));
+        })
+        .catch((err) => {
+          console.error('전체 API 실패', err);
+        });
+    } else if (id !== undefined) {
+      // 특정 클럽 선택시 기존 로직
       const apiCall = isApproved ? tchitem111 : tchitem;
 
       apiCall(String(id))
@@ -53,7 +76,7 @@ export default function ApprovalList({
           console.error('API 실패', err);
         });
     }
-  }, [id, setAllItemIds, isApproved]);
+  }, [id, setAllItemIds, isApproved, isAllClubs]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');

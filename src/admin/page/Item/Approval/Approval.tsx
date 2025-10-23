@@ -8,7 +8,7 @@ import { submititem, nosubmititem } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
-import {ContentContainer} from "./style";
+import { ContentContainer } from "./style";
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
@@ -97,11 +97,13 @@ const Approval = () => {
     const isPossible = filter === "승인하기";
     const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
     const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
+    const isAllClubs = selectedClubName === "전체";
     const selectedClubId = useMemo(() => {
+      if (isAllClubs) return null; // 전체 선택시 null 반환
       const found = clubs.find((c) => c.name === selectedClubName);
       const id = found?.id;
       return Number.isFinite(id as number) ? (id as number) : null;
-    }, [selectedClubName, clubs]);
+    }, [selectedClubName, clubs, isAllClubs]);
 
     return (
       <>
@@ -119,7 +121,7 @@ const Approval = () => {
               <_.Addons>다운로드</_.Addons>
             </_.AddonsArea>
 
-            {selectedClubId !== null ? (
+            {selectedClubName ? (
               <ApprovalList
                 id={selectedClubId}
                 selectAll={selectAll}
@@ -128,6 +130,7 @@ const Approval = () => {
                 setAllItemIds={setAllItemIds}
                 reasons={reasons}
                 setReasons={setReasons}
+                isAllClubs={isAllClubs}
               />
             ) : (
               <_.Null>물품승인을 할 동아리를 선택해주세요</_.Null>
@@ -143,7 +146,7 @@ const Approval = () => {
             <_.AddonsArea>
               {/* 승인된 물품 조회 모드에서는 전체선택 버튼 숨김 */}
             </_.AddonsArea>
-            {selectedClubId !== null ? (
+            {selectedClubName ? (
               <ApprovalList
                 id={selectedClubId}
                 selectAll={selectAll}
@@ -153,6 +156,7 @@ const Approval = () => {
                 reasons={reasons}
                 setReasons={setReasons}
                 isApproved={true}
+                isAllClubs={isAllClubs}
               />
             ) : (
               <_.Null>승인된 물품을 조회할 동아리를 선택해주세요</_.Null>

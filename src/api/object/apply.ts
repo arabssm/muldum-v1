@@ -118,3 +118,29 @@ export async function finalapply() {
       throw err;
     }
   }
+
+  // 전체 승인 대기 물품 조회 (팀 ID 없이)
+  export async function tchitemAll() {
+    try {
+      const res = await axiosInstance.get(`/tch/items/not-approved`);
+      if (res.status !== 200) {
+        return res.status;
+      }
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  // 전체 승인된 물품 조회 (팀 ID 없이)
+  export async function tchitemAllApproved() {
+    try {
+      const res = await axiosInstance.get(`/tch/items/approved`);
+      if (res.status !== 200) {
+        return res.status;
+      }
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  }

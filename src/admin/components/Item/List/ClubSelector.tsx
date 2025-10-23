@@ -8,6 +8,16 @@ export default function ClubSelector({ clubs, selectedClub, setSelectedClub }: C
 
     return (
         <_.ClubArea>
+            {/* 전체 탭 추가 */}
+            <_.ClubWrapper>
+                <_.ClubName
+                    onClick={() => handleSelect("전체")}
+                    selected={selectedClub === "전체"}
+                >
+                    전체
+                </_.ClubName>
+            </_.ClubWrapper>
+            
             {clubs.map((club, i) => (
                 <_.ClubWrapper key={i}>
                     <_.ClubName
