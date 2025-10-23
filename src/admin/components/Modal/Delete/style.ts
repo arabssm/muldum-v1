@@ -31,6 +31,11 @@ export const Title = styled.div`
     font-size: 1.6rem;
     font-weight: 600;
     color: #1d1d1d;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    max-width: 90%;
+    margin: 0 auto;
 `;
 
 export const SubTitle = styled.div`
