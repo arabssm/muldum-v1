@@ -12,7 +12,6 @@ export const Wrapper = styled.div`
     gap: 4px;
     margin-top: 2%;
     width: 100%;
-    margin-left: 8%;
 `;
 
 export const PageTitle = styled.div`
