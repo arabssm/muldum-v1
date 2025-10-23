@@ -5,7 +5,6 @@ import * as _ from './style';
 import sliderSettings from './Setting';
 import '@_styles';
 import { getNotice } from "@_api/notice/notice";
-import background1 from "@_assets/onboarding/background1.svg"
 import { useNavigate } from "react-router-dom";
 interface NoticeItem {
     id: number;
@@ -68,6 +67,10 @@ export default function SliderComponent() {
         }
     };
 
+    const truncateTitle = (title: string) => {
+        return title.length > 15 ? title.substring(0, 15) + '...' : title;
+    };
+
     if (loading) {
         return (
             <_.High>
@@ -118,7 +121,7 @@ export default function SliderComponent() {
                     >
                         <_.SlideContent>
                             <_.Overlay />
-                            <_.Title>{notice.title}</_.Title>
+                            <_.Title>{truncateTitle(notice.title)}</_.Title>
                             <_.Date>{formatDate(notice.updatedAt)}</_.Date>
                             <_.SubTitle>{notice.teacher}</_.SubTitle>
                             <_.Ddate>{calculateDDay(notice.deadlineDate)}</_.Ddate>
