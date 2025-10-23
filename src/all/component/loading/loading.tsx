@@ -14,7 +14,6 @@ export default function Loading() {
 
     return (
         <Container>
-            <NavBar />
             로딩중
             {[...Array(dots)].map((_, i) => (
                 <Dot key={i}>.</Dot>
