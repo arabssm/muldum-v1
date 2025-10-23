@@ -45,8 +45,6 @@ export default function Object() {
 
     try {
       const data = await Get(link);
-      console.log('링크 정보:', data);
-      // 필요에 따라 받아온 데이터로 폼 필드를 자동 채우기
       if (data.name) setItem(data.name);
       if (data.price) setPrice(data.price.toString());
     } catch (err) {

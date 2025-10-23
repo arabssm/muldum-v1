@@ -171,7 +171,7 @@ export const Group = styled.div`
 `;
 
 export const FullWidthInput = styled(Input)`
-    flex: 1 1 100%;
+    flex: 1 1 50%;
 `;
 
 export const QtyWrapper = styled.div`
