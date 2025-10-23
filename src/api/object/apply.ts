@@ -131,7 +131,6 @@ export async function finalapply() {
     }
   }
 
-  // 전체 승인된 물품 조회 (팀 ID 없이)
   export async function tchitemAllApproved() {
     try {
       const res = await axiosInstance.get(`/tch/items/approved`);
@@ -142,4 +141,18 @@ export async function finalapply() {
     } catch (err) {
       throw err;
     }
+  }
+
+  export async function Getxlsx() {
+    try{
+      const res=await axiosInstance.get('/tch/items/xlsx', {
+        responseType: 'blob'
+      });
+      if(res.status !== 200){
+        return res.status;
+      }
+      return res.data;
+    }catch(err){
+        throw err;
+      }
   }

@@ -34,7 +34,6 @@ export default function ApprovalList({
 
   useEffect(() => {
     if (isAllClubs) {
-      // 전체 클럽 선택시 팀 ID 없이 API 호출
       const apiCall = isApproved ? tchitemAllApproved : tchitemAll;
 
       apiCall()
@@ -55,7 +54,6 @@ export default function ApprovalList({
           console.error('전체 API 실패', err);
         });
     } else if (id !== undefined) {
-      // 특정 클럽 선택시 기존 로직
       const apiCall = isApproved ? tchitem111 : tchitem;
 
       apiCall(String(id))

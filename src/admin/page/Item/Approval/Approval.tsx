@@ -4,10 +4,12 @@ import * as _ from "./style";
 import "@_styles";
 import ApprovalList from "@_components/Item/List/ApprovalList";
 import { getClubs } from "./ClubList";
-import { submititem, nosubmititem } from "@_api/object/apply";
+import { submititem, nosubmititem, Getxlsx } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
+
+
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
@@ -92,13 +94,34 @@ const Approval = () => {
     navigate("/project-choice");
   };
 
+  const handleDownload = async () => {
+    try {
+      const blob = await Getxlsx();
+
+      // 다운로드 링크 생성
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `승인된물품목록_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+      // 다운로드 실행
+      document.body.appendChild(link);
+      link.click();
+
+      // 정리
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("다운로드 중 오류가 발생했습니다.");
+    }
+  };
   const renderContent = () => {
     const isPossible = filter === "승인하기";
     const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
     const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
     const isAllClubs = selectedClubName === "전체";
     const selectedClubId = useMemo(() => {
-      if (isAllClubs) return null; // 전체 선택시 null 반환
+      if (isAllClubs) return null;
       const found = clubs.find((c) => c.name === selectedClubName);
       const id = found?.id;
       return Number.isFinite(id as number) ? (id as number) : null;
@@ -117,7 +140,6 @@ const Approval = () => {
               <_.Addons onClick={toggleSelectAll}>
                 {selectAll ? "전체해제" : "전체선택"}
               </_.Addons>
-              <_.Addons>다운로드</_.Addons>
             </_.AddonsArea>
 
             {selectedClubName ? (
@@ -142,9 +164,11 @@ const Approval = () => {
               selectedClub={selectedClubName}
               setSelectedClub={setSelectedClub}
             />
-            <_.AddonsArea>
-              {/* 승인된 물품 조회 모드에서는 전체선택 버튼 숨김 */}
-            </_.AddonsArea>
+            {isAllClubs && (
+              <_.AddonsArea>
+                <_.Addons onClick={handleDownload}>다운로드</_.Addons>
+              </_.AddonsArea>
+            )}
             {selectedClubName ? (
               <ApprovalList
                 id={selectedClubId}
