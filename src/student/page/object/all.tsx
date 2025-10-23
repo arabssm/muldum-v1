@@ -6,14 +6,7 @@ import { getApplyall } from '@_api/object/apply';
 
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
-  const handleReasonChange = (id: string, newReason: string) => {
-    setRequests(prev =>
-      prev.map(req =>
-        req.id === id ? { ...req, reason: newReason } : req
-      )
-    );
-  };
-
+  
   useEffect(() => {
     getApplyall()
       .then((data) => {

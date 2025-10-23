@@ -21,6 +21,13 @@ export default function Object() {
       alert('물품명과 사유(10자 이상)를 입력하세요.');
       return;
     }
+
+    const priceNum = parseInt(price);
+    if (!price.trim() || isNaN(priceNum) || priceNum <= 0) {
+      alert('유효한 가격을 입력하세요.');
+      return;
+    }
+
     try {
       await Apply(item, qty, price, link, reason);
       window.location.reload();
