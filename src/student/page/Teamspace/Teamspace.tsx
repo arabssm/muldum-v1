@@ -24,8 +24,8 @@ const handleInvite = () => {
         <>
             <_.Header>
                 <_.TitleBox>
-                    <_.Title>동아리 팀원들을 배치해요</_.Title>
-                    <_.Subtitle>각 동아리 별로 팀원들을 배치하고 관리해요</_.Subtitle>
+                    <_.Title>네트워크 팀 목록을 확인해요</_.Title>
+                    <_.Subtitle>각 동아리 별로 팀원들을 확인해요</_.Subtitle>
                 </_.TitleBox>
                 <_.Group onClick={() => setIsModalOpen(true)}>
                     <_.Img src={Plus} alt="팀원추가" />

@@ -31,7 +31,6 @@ export default function Team() {
 
   return (
     <_.Container>
-      <_.Title>네트워크 팀 목록</_.Title>
       <_.FilterContainer>
         {classFilters.map((filter) => (
           <_.FilterButton

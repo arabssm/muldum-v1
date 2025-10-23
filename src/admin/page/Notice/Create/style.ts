@@ -47,7 +47,7 @@ export const Picture = styled.div`
     color: white;
     align-items: center;
     justify-content: center;
-    margin-bottom: 6%;
+    margin-bottom: 2rem;
 `;
 
 export const EnrollButton = styled.button`
@@ -62,6 +62,7 @@ export const EnrollButton = styled.button`
     color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
+    margin-top: 2rem;
     font-family: 'Paperlogy';
 `;
 
