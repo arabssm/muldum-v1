@@ -144,7 +144,7 @@ export const Logo = styled.img`
   min-width: 4rem;
   min-height: 4rem;
   flex-shrink: 0;
-  object-fit: fill;
+  object-fit: contain;
   border-radius: 0.5rem;
 
   &.editable {
