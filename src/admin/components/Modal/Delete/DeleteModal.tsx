@@ -7,7 +7,8 @@ export default function DeleteModal({ onCancel, onConfirm, name }: Props) {
     <_.Container>
       <_.Modal>
         <_.TextArea>
-          <_.Title>{name}을(를) 정말 삭제하시겠습니까?</_.Title>
+          <_.Title>{name}</_.Title>
+          <_.SubTitle>을(를) 정말 삭제하시겠습니까?</_.SubTitle>
           <_.SubTitle>삭제한 내용은 되돌릴 수 없습니다.</_.SubTitle>
         </_.TextArea>
         <_.ButtonGroup>
