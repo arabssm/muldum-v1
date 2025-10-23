@@ -38,10 +38,6 @@ export default function Notice() {
     n.title && n.title.toLowerCase().includes(search.toLowerCase())
   );
 
-
-  const startIdx = (page - 1) * 10;
-  const paginated = filtered.slice(startIdx, startIdx + 10);
-
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setPage(newPage);

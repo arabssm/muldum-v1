@@ -23,14 +23,19 @@ export default function Loading() {
 }
 
 const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 12%;
-  height: 100vh;
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
+  background-color: white;
+  z-index: 9999;
 `;
 
 const Dot = styled.span`
