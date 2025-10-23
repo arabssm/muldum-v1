@@ -68,7 +68,7 @@ export default function SliderComponent() {
     };
 
     const truncateTitle = (title: string) => {
-        return title.length > 15 ? title.substring(0, 15) + '...' : title;
+        return title.length > 20 ? title.substring(0, 20) + '...' : title;
     };
 
     if (loading) {
