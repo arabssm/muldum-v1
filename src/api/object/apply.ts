@@ -119,10 +119,9 @@ export async function finalapply() {
     }
   }
 
-  // 전체 승인 대기 물품 조회 (팀 ID 없이)
   export async function tchitemAll() {
     try {
-      const res = await axiosInstance.get(`/tch/items/not-approved`);
+      const res = await axiosInstance.get(`/tch/items`);
       if (res.status !== 200) {
         return res.status;
       }

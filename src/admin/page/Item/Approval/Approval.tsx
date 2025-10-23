@@ -8,7 +8,6 @@ import { submititem, nosubmititem } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
-import { ContentContainer } from "./style";
 const toValidIds = (ids: unknown[]): number[] =>
   Array.from(
     new Set(
