@@ -126,7 +126,7 @@ export const LogoArea = styled.div`
   min-width: 7rem;
   min-height: 7rem;
   flex-shrink: 0;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,7 +144,7 @@ export const Logo = styled.img`
   min-width: 4rem;
   min-height: 4rem;
   flex-shrink: 0;
-  object-fit: cover;
+  object-fit: fill;
   border-radius: 0.5rem;
 
   &.editable {
