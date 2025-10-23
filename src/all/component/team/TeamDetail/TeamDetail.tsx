@@ -43,7 +43,7 @@ export default function TeamDetail() {
     <>
       <_.Content>
         <_.Banner
-          style={{ backgroundImage: `url(${team.config?.backgroundImageUrl ?? "/images/default-banner.png"})` }}
+          style={{ backgroundImage: `url(${team.config?.backgroundImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/default_banner.svg"})` }}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => e.preventDefault()}
         />
@@ -60,7 +60,7 @@ export default function TeamDetail() {
 
         <_.LogoArea>
           <_.Logo
-            src={team.config?.iconImageUrl ?? "/images/club-logo.png"}
+            src={team.config?.iconImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/default_logo.svg"}
             alt={`${team.teamName} 로고`}
           />
         </_.LogoArea>
