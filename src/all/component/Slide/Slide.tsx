@@ -59,10 +59,7 @@ export default function SliderComponent() {
             return `D-${diffDays}`;
         } else if (diffDays === 0) {
             return 'D-Day';
-        } else if (diffDays < 0) {
-            return '마감';
-        }
-        else {
+        }else {
             return ' ';
         }
     };
