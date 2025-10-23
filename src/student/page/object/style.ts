@@ -12,6 +12,7 @@ export const Container = styled.div`
     overflow: hidden;
     width: 100%;
     margin-top: 0.2rem;
+    padding-bottom: 4rem;
     box-sizing: border-box;
 `;
 
@@ -250,6 +251,12 @@ export const Footer = styled.div`
     border-top: 1px solid #eee;
     font-size: 0.875rem;
     color: #909090;
+    position: fixed;
+    bottom: 0;
+    left: 15rem;
+    right: 0;
+    background: #fff;
+    z-index: 10;
 `;
 
 export const FooterLink = styled.a`
