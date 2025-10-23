@@ -3,18 +3,20 @@ import * as _ from './style';
 import Box from '@_component/object/box';
 import type { Request } from '@_component/object/types';
 import { getApplyall } from '@_api/object/apply';
+import { useUserStore } from '../../../atom/User';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function All() {
   const [requests, setRequests] = useState<Request[]>([]);
-  const handleReasonChange = (id: string, newReason: string) => {
-    setRequests(prev =>
-      prev.map(req =>
-        req.id === id ? { ...req, reason: newReason } : req
-      )
-    );
-  };
+  const {user} = useUserStore();
+  const nav = useNavigate();
 
   useEffect(() => {
+    if (!user.teamId){
+      alert("teamid가 있어야 접근이 가능합니다.");
+      nav("/")
+    }
     getApplyall()
       .then((data) => {
         setRequests(data);

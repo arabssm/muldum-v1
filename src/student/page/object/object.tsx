@@ -5,6 +5,8 @@ import type { Request } from '../../component/object/types';
 import Apply from '../../../api/object/apply';
 import { getApply, getMoney, finalapply } from '../../../api/object/apply';
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../../atom/User';
+
 
 export default function Object() {
   const nav = useNavigate();
@@ -15,6 +17,7 @@ export default function Object() {
   const [reason, setReason] = useState('');
   const [usedmoney, setUsedMoney] = useState<number>(0);
   const [requests, setRequests] = useState<Request[]>([]);
+  const {user} = useUserStore();
 
   const handleAdd = async () => {
     if (!item.trim() || reason.trim().length < 10) {
@@ -39,6 +42,10 @@ export default function Object() {
   }
 
   useEffect(() => {
+    if(!user.teamId){
+      alert("teamid가 있어야 접근이 가능합니다");
+      nav("/")
+    }
     getMoney()
       .then((data1) => {
         setUsedMoney(data1.usedBudget);
