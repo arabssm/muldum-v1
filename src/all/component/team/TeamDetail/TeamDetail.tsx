@@ -39,6 +39,12 @@ export default function TeamDetail() {
     return html.replace(/<p>\s*<\/p>/g, "<p><br></p>");
   };
 
+  // 디버깅용 - 콘솔에서 확인하세요
+  console.log('Debug - user:', user);
+  console.log('Debug - user.teamId:', user?.teamId);
+  console.log('Debug - team.teamId:', team.teamId);
+  console.log('Debug - 조건 결과:', user && user.teamId === team.teamId);
+
   return (
     <>
       <_.Content>
@@ -47,7 +53,7 @@ export default function TeamDetail() {
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => e.preventDefault()}
         />
-        {user && user.teamId === team.teamId && (
+        {user && user.teamId !== null && Number(user.teamId) === Number(team.teamId) && (
           <_.ButtonGroup>
             <_.Btn onClick={() => navigate(`/club/edit/${team.teamId}`)}>수정하기</_.Btn>
           </_.ButtonGroup>

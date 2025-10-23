@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import * as _ from './style';
-import Notfound from '@_notfound/NotFound';
 import DeleteModal from '@_modal/Delete/DeleteModal';
 import Back from '@_assets/arrow.svg';
 import ConfirmDeleteModal from '@_modal/Notice/ConfirmDelete';
@@ -19,7 +18,7 @@ export default function Detail() {
   const { user } = useUserStore();
   useEffect(() => {
     if (!id) return;
-    getNoticeDetail(Number(id)) 
+    getNoticeDetail(Number(id))
       .then((data) => {
         setData(data);
       })
@@ -42,9 +41,18 @@ export default function Detail() {
     if (h > 12) h -= 12;
     if (h === 0) h = 12;
     date = `등록일 ${Y}-${M}-${D}. ${ampm} ${h}:${m}`;
-    } else {
-      date = '등록일 정보를 불러올 수 없습니다.';
-    }
+  } else {
+    date = '등록일 정보를 불러올 수 없습니다.';
+  }
+
+  let deadlineText = '';
+  if (doc1.deadlineDate) {
+    const deadline = new Date(doc1.deadlineDate);
+    const Y = deadline.getFullYear();
+    const M = String(deadline.getMonth() + 1).padStart(2, '0');
+    const D = String(deadline.getDate()).padStart(2, '0');
+    deadlineText = `마감일 ${Y}-${M}-${D}`;
+  }
 
   const handleDelete = () => {
     if (!id) return;
@@ -67,8 +75,9 @@ export default function Detail() {
           <_.AdditionLeft>
             <_.Addition>{date}</_.Addition>
             <_.Addition>작성자: 교사 {doc1.teacher || '알 수 없음'}</_.Addition>
+            {deadlineText && <_.Addition>{deadlineText}</_.Addition>}
           </_.AdditionLeft>
-          {user &&user.userType === "TEACHER" && (
+          {user && user.userType === "TEACHER" && (
             <_.ButtonGroup>
               <button onClick={() => setShowModal(true)}>삭제하기</button>
               <button onClick={() => navigate(`/notice/edit/${doc1.id}`)}>수정하기</button>
@@ -93,7 +102,7 @@ export default function Detail() {
           {doc1?.content ? makeDocument(doc1.content) : '내용을 불러올 수 없습니다.'}
         </_.Content>
       </_.Wrapper>
-      
+
       {showModal && (
         <DeleteModal
           onCancel={() => setShowModal(false)}

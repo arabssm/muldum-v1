@@ -76,7 +76,7 @@ export default function NoticeEdit() {
       return prev.filter((_, i) => i !== idx);
     });
     const input = document.getElementById('image-upload') as HTMLInputElement;
-     if (input) input.value = '';
+    if (input) input.value = '';
   };
 
   useEffect(() => {
@@ -84,40 +84,40 @@ export default function NoticeEdit() {
   }, [localBlobUrls]);
 
   const handleSubmit = async () => {
-  if (isSubmitting || !notice || !id) return;
-  setIsSubmitting(true);
+    if (isSubmitting || !notice || !id) return;
+    setIsSubmitting(true);
 
-  try {
-    const allUrls: string[] = [...serverUrls];
-    if (localFiles.length > 0) {
-      const uploadedUrls: string[] = [];
-      for (const file of localFiles) {
-        const { url } = await saveFile(file);
-        uploadedUrls.push(url);
+    try {
+      const allUrls: string[] = [...serverUrls];
+      if (localFiles.length > 0) {
+        const uploadedUrls: string[] = [];
+        for (const file of localFiles) {
+          const { url } = await saveFile(file);
+          uploadedUrls.push(url);
+        }
+        allUrls.map(url => ({ url }));
       }
-      allUrls.map(url => ({ url }));
+
+      const patchData: CreateNoticeBase = {
+        title: notice.title,
+        content: notice.content,
+        deadlineDate: notice.deadlineDate,
+        files: []
+      };
+
+
+      if (allUrls.length > 0) {
+        patchData.files = allUrls.map(url => ({ url }));
+      }
+
+      await updateNotice(Number(id), patchData);
+      setShowModal(true);
+    } catch (err) {
+      alert('공지 수정 실패');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const patchData: CreateNoticeBase = {
-      title: notice.title,
-      content: notice.content,
-      deadlineDate: notice.deadlineDate,
-      files: []
-    };
-
-
-    if (allUrls.length > 0) {
-      patchData.files = allUrls.map(url => ({ url }));
-    }
-
-    await updateNotice(Number(id), patchData);
-    setShowModal(true);
-  } catch (err) {
-    alert('공지 수정 실패');
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
 
 
@@ -129,6 +129,13 @@ export default function NoticeEdit() {
         <_.PageTitle>공지사항 수정</_.PageTitle>
         <_.BoxGroup>
           <_.TextInput name="title" value={notice.title} onChange={handleChange} placeholder="공지 제목" />
+          <_.TextInput
+            name="deadlineDate"
+            type="date"
+            value={notice.deadlineDate}
+            onChange={handleChange}
+            placeholder="마감일"
+          />
 
           <_.TagBox>
             <_.TagButton onClick={() => insertTag('제목1')}>h1</_.TagButton>
