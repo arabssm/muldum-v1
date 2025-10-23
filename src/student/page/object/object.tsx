@@ -5,6 +5,7 @@ import type { Request } from '../../component/object/types';
 import Apply from '../../../api/object/apply';
 import { getApply, getMoney, finalapply } from '../../../api/object/apply';
 import { useNavigate } from 'react-router-dom';
+import Get from '@_api/object/sss';
 
 export default function Object() {
   const nav = useNavigate();
@@ -32,8 +33,25 @@ export default function Object() {
       await Apply(item, qty, price, link, reason);
       window.location.reload();
     } catch (err) {
-      console.log(err.response);
       alert(err.response.data.message);
+    }
+  };
+
+  const handleGetLink = async () => {
+    if (!link.trim()) {
+      alert('링크를 입력해 주세요.');
+      return;
+    }
+
+    try {
+      const data = await Get(link);
+      console.log('링크 정보:', data);
+      // 필요에 따라 받아온 데이터로 폼 필드를 자동 채우기
+      if (data.name) setItem(data.name);
+      if (data.price) setPrice(data.price.toString());
+    } catch (err) {
+      console.error('링크 정보를 가져오는데 실패했습니다:', err);
+      alert('링크 정보를 가져오는데 실패했습니다.');
     }
   };
 
@@ -113,6 +131,7 @@ export default function Object() {
                 value={link}
                 onChange={e => setLink(e.target.value)}
               />
+              <_.AddButton onClick={handleGetLink}>가져오기</_.AddButton>
             </_.FormRow>
 
             <_.FormRow>
