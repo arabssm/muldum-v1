@@ -56,7 +56,7 @@ const topDataByPeriod = {
             idx: 3,
             level: "최우수상",
             name: "Ploy",
-            explanation: "교내 세탁기 및 건조기를 편리하게 사용할 수 있는 서비스",
+            explanation: "건조기를 편리하게 사용할 수 있는 서비스",
         },
     ],
 };

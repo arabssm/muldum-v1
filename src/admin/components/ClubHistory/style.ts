@@ -7,16 +7,15 @@ export const Container = styled.div`
 export const Wrapper =  styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 15rem;
     gap: 2rem;
-    margin-bottom: 3%;
+    margin-bottom: 2%;
     width: 100%;
 `;
 
 export const TopBox = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 2rem 2rem 3rem;
     width: 100%;
     background-color: #FAFAFA;
     border-radius: 0.3rem;

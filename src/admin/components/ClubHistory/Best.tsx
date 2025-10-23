@@ -7,10 +7,6 @@ export default function Best({ period }: BestProps) {
     const topData = topDataByPeriod[period] || [];
     const bottomData = bottomDataByPeriod[period] || [];
 
-    const handleAlert = () => {
-        alert('현재 작성된 내용이 없습니다.');
-    };
-
     return (
         <>
             <_.Wrapper>
