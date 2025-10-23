@@ -142,7 +142,6 @@ export default function NoticeEdit() {
             <_.TagButton onClick={() => insertTag('제목2')}>h2</_.TagButton>
             <_.TagButton onClick={() => insertTag('제목3')}>h3</_.TagButton>
             <_.TagButton onClick={() => insertTag('제목4')}>h4</_.TagButton>
-            <_.TagButton onClick={() => insertTag('강조')}>B</_.TagButton>
           </_.TagBox>
 
           <_.Textarea

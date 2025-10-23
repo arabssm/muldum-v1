@@ -19,10 +19,6 @@ export default function makeDocument(text: string = ''): ReactElement | null {
       component: content => <h4>{content}</h4>,
     },
     {
-      pattern: /<강조>\n?([\s\S]*?)\n?<\/강조>/,
-      component: content => <strong>{content}</strong>,
-    },
-    {
       pattern: /<이미지\s+src="(.+?)"\s*\/?>/,
       component: (url) =>
         typeof url === 'string' ? (

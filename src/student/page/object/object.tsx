@@ -104,7 +104,7 @@ export default function Object() {
               />
               <_.PriceQtyWrapper>
                 <_.Group>
-                  <_.Label>가격</_.Label>
+                  <_.Label>판매가</_.Label>
                   <_.SmallInput
                     placeholder="가격을 입력해 주세요"
                     value={price}

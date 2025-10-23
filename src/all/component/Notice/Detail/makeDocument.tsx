@@ -19,10 +19,6 @@ const tagPatterns: { pattern: RegExp; component: (content: ReactNode) => ReactNo
     pattern: /<제목4>\n?([\s\S]*?)\n?<\/제목4>/,
     component: content => <h4>{content}</h4>,
   },
-  {
-    pattern: /<강조>\n?([\s\S]*?)\n?<\/강조>/,
-    component: content => <strong>{content}</strong>,
-  },
 ];
 
 function parseText(input: string): ReactNode {
