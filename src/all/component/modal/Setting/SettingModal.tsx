@@ -1,6 +1,7 @@
 import * as _ from './style';
 import { logout } from '@_api/login/login';
 import { getCookie, removeCookie } from '../../../../utils/cookie';
+import { useUserStore } from '../../../../atom/User';
 
 interface SettingModalProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface SettingModalProps {
 }
 
 export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
+  const { clearUser } = useUserStore();
+  
   if (!isOpen) return null;
 
   const handleConfirm = async () => {
@@ -23,7 +26,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     if (success) {
       removeCookie('refresh_token');
       removeCookie('access_token');
-      localStorage.removeItem('user-store');
+      clearUser();
       window.location.href = '/';
     } else {
       alert('로그아웃 실패');

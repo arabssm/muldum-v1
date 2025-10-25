@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { IconMenu } from './IconMenu';
 import * as _ from './style';
 
 import { useLoginModalStore } from '../../../atom/Modal';
 import { useUserStore } from '../../../atom/User';
+import { GetUser } from '../../../api/user/data';
 import DefaultProfile from '@_assets/profile.svg';
 
 import SettingModal from '../modal/Setting/SettingModal';
@@ -13,12 +15,25 @@ export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { setIsOpen } = useLoginModalStore();
-  const { user } = useUserStore();
-  const hydrated = useUserStore((s) => s.hydrated);
+  const { user, isLoading } = useUserStore();
 
   const { isOpen, open, close } = useSettingModalStore();
 
-  if (!hydrated) return null;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) {
+        try {
+          await GetUser();
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
+  if (isLoading) return null;
 
 
   return (

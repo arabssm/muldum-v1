@@ -3,12 +3,27 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as _ from "./style";
 import { fetchTeamDetail, deleteTeam, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
 import { useUserStore } from '../../../../atom/User';
+import { GetUser } from '../../../../api/user/data';
 
 export default function TeamDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [team, setTeam] = useState<TeamDetailType | null>(null);
-  const { user } = useUserStore();
+  const { user, isLoading } = useUserStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user) {
+        try {
+          await GetUser();
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   useEffect(() => {
     if (!id) return;
@@ -17,7 +32,7 @@ export default function TeamDetail() {
       .catch((err) => console.error(err));
   }, [id]);
 
-  if (!team) {
+  if (!team || isLoading) {
     return <div>로딩중...</div>;
   }
 

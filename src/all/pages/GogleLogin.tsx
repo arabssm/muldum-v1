@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { css, keyframes } from '@emotion/react'
 import googleLogin from '../../api/login/login'
 import { useUserStore } from '../../atom/User'
+import { GetUser } from '../../api/user/data'
 import Main from '@_main/Main';
 
 const setCookie = (name: string, value: string, days: number = 7): void => {
@@ -44,7 +45,6 @@ const spinnerStyle = css`
 export default function GoogleLogin() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
-  const setUser = useUserStore((state) => state.setUser)
   const [loading, setLoading] = useState(true)
   const hasRequestedRef = useRef(false)
 
@@ -54,17 +54,12 @@ export default function GoogleLogin() {
     if (code && !hasRequestedRef.current) {
       hasRequestedRef.current = true
       googleLogin(code)
-        .then((data) => {
+        .then(async (data) => {
           if (data) {
             setCookie('access_token', data.accessToken, 7)
             setCookie('refresh_token', data.refreshToken, 30)
-            setUser({
-              userId: data.userId,
-              name: data.name,
-              role: data.role,
-              userType: data.userType,
-              teamId: data.teamId,
-            })
+            // 로그인 후 최신 사용자 정보를 API로 가져오기
+            await GetUser()
           }
           navigate('/', { replace: true })
         })
@@ -75,7 +70,7 @@ export default function GoogleLogin() {
       setLoading(false)
       navigate('/')
     }
-  }, [params, navigate, setUser])
+  }, [params, navigate])
 
   return (
     <>

@@ -26,18 +26,55 @@ const extractTeamId = (profile: string | object | null | undefined): number | nu
   return null;
 };
 
+let isUserFetching = false;
+
 export const GetUser = async () => {
-  const setUser = useUserStore.getState().setUser; 
+  const { setUser, setLoading, user } = useUserStore.getState();
+  
+  // 이미 사용자 정보가 있거나 현재 가져오는 중이면 기존 사용자 정보 반환
+  if (user && !isUserFetching) {
+    return user;
+  }
+  
+  if (isUserFetching) {
+    // 이미 요청 중이면 잠시 기다린 후 다시 확인
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return useUserStore.getState().user;
+  }
+  
+  try {
+    isUserFetching = true;
+    setLoading(true);
+    const { data } = await axiosInstance.get("/user/me");
 
-  const { data } = await axiosInstance.get("/user/me");
+    const userData = {
+      userId: data.userId ?? data.id,
+      name: data.name,
+      role: data.role ?? data.user_type,
+      userType: data.userType ?? data.user_type,
+      teamId: extractTeamId(data.profile),
+    };
 
-  const user = {
-    userId: data.userId ?? data.id,
-    name: data.name,
-    role: data.role ?? data.user_type,
-    userType: data.userType ?? data.user_type,
-    teamId: extractTeamId(data.profile),
+    setUser(userData);
+    return userData;
+  } catch (error) {
+    console.error('Failed to fetch user data:', error);
+    throw error;
+  } finally {
+    setLoading(false);
+    isUserFetching = false;
+  }
+};
+
+// 사용자 정보를 가져오는 훅
+export const useUser = () => {
+  const { user, isLoading } = useUserStore();
+  
+  const fetchUser = async () => {
+    if (!user) {
+      await GetUser();
+    }
   };
 
-  setUser(user);
+  return { user, isLoading, fetchUser };
 };

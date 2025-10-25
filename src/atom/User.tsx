@@ -1,6 +1,4 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-
 
 interface User {
   userId: number
@@ -12,25 +10,16 @@ interface User {
 
 interface UserState {
   user: User | null
-  hydrated: boolean
+  isLoading: boolean
   setUser: (user: User) => void
   clearUser: () => void
+  setLoading: (loading: boolean) => void
 }
 
-export const useUserStore = create<UserState>()(
-  persist(
-    (set) => ({
-      user: null,
-      hydrated: false,
-      setUser: (u) => set({ user: u }),
-      clearUser: () => set({ user: null }),
-    }),
-    {
-      name: 'user-store',
-      storage: createJSONStorage(() => localStorage),
-      onRehydrateStorage: () => (state) => {
-        state?.hydrated !== undefined && (state.hydrated = true)
-      },
-    }
-  )
-)
+export const useUserStore = create<UserState>()((set) => ({
+  user: null,
+  isLoading: false,
+  setUser: (u) => set({ user: u }),
+  clearUser: () => set({ user: null }),
+  setLoading: (loading) => set({ isLoading: loading }),
+}))

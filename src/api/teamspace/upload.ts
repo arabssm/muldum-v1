@@ -1,24 +1,37 @@
 import axiosInstance from "../../lib/axiosInatance";
+import { useUserStore } from "../../atom/User";
 
 export interface UploadResponse {
   url: string;
   path: string;
 }
 
-export const uploadTeamIconImage = async (url :string) => {
-  const userStore = localStorage.getItem('user-store');
-  const team_id = userStore ? JSON.parse(userStore).state.user.teamId : null;
-  if(team_id){
-    const res=axiosInstance.patch(`/std/teamspace/network/team/${team_id}/icon`,{"url":url})
-    alert((await res).data)
+export const uploadTeamIconImage = async (url: string) => {
+  try {
+    const { user } = useUserStore.getState();
+    const team_id = user?.teamId;
+    
+    if (team_id) {
+      const res = await axiosInstance.patch(`/std/teamspace/network/team/${team_id}/icon`, {"url": url});
+      alert(res.data);
+    }
+  } catch (error) {
+    console.error("Failed to upload team icon:", error);
+    throw error;
   }
 };
 
-export const uploadTeamBannerImage = async (url :string) => {
-  const userStore = localStorage.getItem('user-store');
-  const team_id = userStore ? JSON.parse(userStore).state.user.teamId : null;
-  if(team_id){
-    const res=axiosInstance.patch(`/std/teamspace/network/team/${team_id}/banner`,{"url":url})
-    alert((await res).data)
+export const uploadTeamBannerImage = async (url: string) => {
+  try {
+    const { user } = useUserStore.getState();
+    const team_id = user?.teamId;
+    
+    if (team_id) {
+      const res = await axiosInstance.patch(`/std/teamspace/network/team/${team_id}/banner`, {"url": url});
+      alert(res.data);
+    }
+  } catch (error) {
+    console.error("Failed to upload team banner:", error);
+    throw error;
   }
 };

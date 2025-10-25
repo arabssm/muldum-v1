@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as _ from "./style";
 import { fetchTeamDetail, TeamDetail as TeamDetailType } from "@_api/teamspace/detail";
 import { useUserStore } from "../../../../src/atom/User";
+import { GetUser } from "../../../api/user/data";
 import NotionEditor from "../../component/notice/noticeEdit";
 import TeacherInvite from "../../../api/teamspace/save";
 import { uploadTeamIconImage, uploadTeamBannerImage } from "../../../api/teamspace/upload";
@@ -13,9 +14,24 @@ export default function TeamDetail() {
   const { id } = useParams();
   const [team, setTeam] = useState<TeamDetailType | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const { user } = useUserStore();
+  const { user, isLoading } = useUserStore();
   const bannerInputRef = useRef<HTMLInputElement>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) {
+        try {
+          await GetUser();
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
   useEffect(() => {
     if (user && user.teamId !== Number(id)) {
       alert("자신의 팀 스페이스만 수정가능합니다.");
@@ -28,7 +44,7 @@ export default function TeamDetail() {
       .catch((err) => console.error(err));
   }, [id, user, navigate]);
 
-  if (!team) return <div>로딩중...</div>;
+  if (!team || isLoading) return <div>로딩중...</div>;
 
   const canEdit = user && user.teamId === team.teamId;
 

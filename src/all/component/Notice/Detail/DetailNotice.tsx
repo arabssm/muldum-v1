@@ -7,6 +7,7 @@
   import { getNoticeDetail, deleteNotice } from '../../../../api/notice/notice';
   import { useEffect, useState } from 'react';
   import { useUserStore } from '../../../../atom/User';
+  import { GetUser } from '../../../../api/user/data';
   import Loading from '@_all/component/loading/loading';
 
   export default function Detail() {
@@ -15,7 +16,22 @@
     const [doc1, setData] = useState<any>();
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const { user } = useUserStore();
+    const { user, isLoading: userLoading } = useUserStore();
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+        if (!user) {
+          try {
+            await GetUser();
+          } catch (error) {
+            console.error('Failed to fetch user data:', error);
+          }
+        }
+      };
+
+      fetchUserData();
+    }, [user]);
+
     useEffect(() => {
       if (!id) return;
       getNoticeDetail(Number(id))
@@ -27,7 +43,7 @@
         });
     }, [id]);
 
-    if (!doc1) return <Loading />;
+    if (!doc1 || userLoading) return <Loading />;
 
     let date = '';
     if (doc1.updatedAt) {

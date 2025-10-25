@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as _ from "./style";
 import "@_styles";
 import Team from "@_components/Teamspace/Team";
@@ -6,12 +6,27 @@ import Plus from "@_assets/team/ggsite.svg";
 import Add from "@_assets/add.svg";
 import Invite, { StudentTeamIdInvite } from "../../../api/teamspace/invite";
 import { useUserStore } from "../../../atom/User";
+import { GetUser } from "../../../api/user/data";
 
 export default function Teamspace() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState<'invite' | 'student'>('invite');
     const [newUrl, setNewUrl] = useState("");
-    const { user } = useUserStore();
+    const { user, isLoading } = useUserStore();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!user) {
+                try {
+                    await GetUser();
+                } catch (error) {
+                    console.error('Failed to fetch user data:', error);
+                }
+            }
+        };
+
+        fetchUserData();
+    }, [user]);
 
     const openModal = (type: 'invite' | 'student') => {
         setModalType(type);
@@ -42,7 +57,7 @@ export default function Teamspace() {
                     <_.Title>네트워크 팀 목록을 확인해요</_.Title>
                     <_.Subtitle>각 동아리 별로 팀원들을 확인해요</_.Subtitle>
                 </_.TitleBox>
-                {user && user.userType === "TEACHER" && (
+                {!isLoading && user && user.userType === "TEACHER" && (
                     <_.BtnGroup>
                         <_.Group onClick={() => openModal('invite')}>
                             <_.Img src={Plus} alt="링크추가" />

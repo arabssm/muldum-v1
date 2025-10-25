@@ -8,6 +8,7 @@ import Box from './Box';
 import Pagination from './Pagination';
 import { getNotice } from '@_api/notice/notice';
 import { useUserStore } from '../../../atom/User';
+import { GetUser } from '../../../api/user/data';
 import Loading from '../loading/loading';
 
 
@@ -18,7 +19,22 @@ export default function Notice() {
   const [posts, setPosts] = useState([]);
   const [totalPages, setTotalpages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useUserStore();
+  const { user, isLoading: userLoading } = useUserStore();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) {
+        try {
+          await GetUser();
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
   useEffect(() => {
     setIsLoading(true);
     getNotice(page)
@@ -69,7 +85,7 @@ export default function Notice() {
             />
           )}
         </_.Wrapper>
-        {isLoading ? (
+        {isLoading || userLoading ? (
           <Loading />
         ) : filtered.length > 0 ? (
           filtered.map(notice => (

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLoginModalStore } from './atom/Modal';
 import { useLoadingStore } from './atom/Loading';
+import { useUserStore } from './atom/User';
+import { GetUser } from './api/user/data';
+import { getCookie } from './utils/cookie';
 import LoginModal from './all/component/modal/login/login';
 import Loading from './all/component/loading/loading';
 import ScreenSizeWarning from './all/component/ScreenSizeWarning/ScreenSizeWarning';
@@ -32,6 +35,7 @@ const ContentScrollContainer = styled.div`
 export default function App() {
   const { isOpen } = useLoginModalStore();
   const { isLoading } = useLoadingStore();
+  const { user, isLoading: userLoading } = useUserStore();
   const [isDesktopSize, setIsDesktopSize] = useState(true);
 
   useEffect(() => {
@@ -48,7 +52,22 @@ export default function App() {
     };
   }, []);
 
-  if (isLoading) return <Loading />;
+  useEffect(() => {
+    const initializeUser = async () => {
+      const accessToken = getCookie('access_token');
+      if (accessToken && !user) {
+        try {
+          await GetUser();
+        } catch (error) {
+          console.error('Failed to initialize user:', error);
+        }
+      }
+    };
+
+    initializeUser();
+  }, [user]);
+
+  if (isLoading || userLoading) return <Loading />;
   if (!isDesktopSize) {
     return <ScreenSizeWarning />;
   }
