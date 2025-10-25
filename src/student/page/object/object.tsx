@@ -46,7 +46,8 @@ export default function Object() {
     try {
       const data = await Get(link);
       if (data.name) setItem(data.name);
-      if (data.price) setPrice(data.price.toString());
+      if (data.price) setPrice(data.regularPrice.toString());
+      alert("가격이 정가와 동일한지 확인해주세요.")
     } catch (err) {
       console.error('링크 정보를 가져오는데 실패했습니다:', err);
       alert('링크 정보를 가져오는데 실패했습니다.');

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import NavBar from "@_navbar/sidebar";
 
 export default function Loading() {
     const [dots, setDots] = useState(3);
