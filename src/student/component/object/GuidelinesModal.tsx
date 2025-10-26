@@ -63,6 +63,9 @@ export default function GuidelinesModal({ isOpen, onClose }: GuidelinesModalProp
           <_.GuidelineText>
             그 후 팀원들과의 상의를 통해 <_.Highlight>신청하기</_.Highlight>를 눌러주시면 됩니다.
           </_.GuidelineText>
+          <_.GuidelineText>
+            추가하기를 누르면 수정할 수 없습니다
+          </_.GuidelineText>
           <_.WarningText>
             ⚠️ 추가하기를 누르기 전에 신청하기 버튼을 누르면 작성한 데이터가 날라갈수있으니 유의해주시길 바랍니다.
           </_.WarningText>
