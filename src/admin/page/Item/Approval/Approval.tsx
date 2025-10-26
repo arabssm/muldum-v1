@@ -93,7 +93,7 @@ const Approval = () => {
   const closeModal = (isApprove: boolean) => {
     if (isApprove) setShowApproveModal(false);
     else setShowRejectModal(false);
-    navigate("/project-choice");
+    navigate("/project-approval");
   };
 
   const handleDownload = async () => {

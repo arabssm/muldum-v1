@@ -257,7 +257,8 @@ export const Footer = styled.div`
     padding: 1rem .5rem 1rem 1rem;   
     flex-shrink: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 70rem;
     border-top: 1px solid #eee;
     font-size: 0.875rem;
     color: #909090;
