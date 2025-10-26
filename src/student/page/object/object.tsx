@@ -37,20 +37,32 @@ export default function Object() {
     }
   };
 
-  const handleGetLink = async () => {
-    if (!link.trim()) {
-      alert('링크를 입력해 주세요.');
+  const handleGetLink = async (linkValue: string) => {
+    if (!linkValue.trim()) {
       return;
     }
 
     try {
-      const data = await Get(link);
+      const data = await Get(linkValue);
       if (data.name) setItem(data.name);
       if (data.price) setPrice(data.regularPrice.toString());
       alert("가격이 정가와 동일한지 확인해주세요.")
     } catch (err) {
       console.error('링크 정보를 가져오는데 실패했습니다:', err);
       alert('링크 정보를 가져오는데 실패했습니다.');
+    }
+  };
+
+  const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLink = e.target.value;
+    setLink(newLink);
+  };
+
+
+
+  const handleLinkBlur = () => {
+    if (link.trim()) {
+      handleGetLink(link);
     }
   };
 
@@ -97,6 +109,16 @@ export default function Object() {
               <_.AddButton onClick={handleAdd}>추가하기</_.AddButton>
             </_.FormSectionHeader>
             <_.FormRow>
+              <_.Label2>물품 링크</_.Label2>
+              <_.FullWidthInput
+                placeholder="구입할 물품의 링크를 입력해 주세요"
+                value={link}
+                onChange={handleLinkChange}
+                onBlur={handleLinkBlur}
+              />
+            </_.FormRow>
+
+            <_.FormRow>
               <_.Label>구입물품</_.Label>
               <_.Input
                 placeholder="구입할 물품을 입력해 주세요"
@@ -105,7 +127,7 @@ export default function Object() {
               />
               <_.PriceQtyWrapper>
                 <_.Group>
-                  <_.Label>판매가</_.Label>
+                  <_.Label>정가</_.Label>
                   <_.SmallInput
                     placeholder="가격을 입력해 주세요"
                     value={price}
@@ -121,16 +143,6 @@ export default function Object() {
                   </_.QtyWrapper>
                 </_.Group>
               </_.PriceQtyWrapper>
-            </_.FormRow>
-
-            <_.FormRow>
-              <_.Label2>물품 링크</_.Label2>
-              <_.FullWidthInput
-                placeholder="구입할 물품의 링크를 입력해 주세요"
-                value={link}
-                onChange={e => setLink(e.target.value)}
-              />
-              <_.AddButton onClick={handleGetLink}>가져오기</_.AddButton>
             </_.FormRow>
 
             <_.FormRow>
