@@ -47,6 +47,15 @@ const Approval = () => {
     setSelectAll(false);
   }, [filter, selectedPossibleClub, selectedImpossibleClub]);
 
+  // 처음 렌더링될 때 전체 선택
+  useEffect(() => {
+    if (allItemIds.length > 0) {
+      const safeIds = toValidIds(allItemIds);
+      setSelectedItems(safeIds);
+      setSelectAll(true);
+    }
+  }, [allItemIds]);
+
   const toggleSelectAll = () => {
     if (selectAll) {
       setSelectedItems([]);
@@ -192,7 +201,7 @@ const Approval = () => {
 
   return (
     <>
-      <_.Title>전공동아리 물품 승인</_.Title>
+      <_.Title>네트워크 물품 승인</_.Title>
       <_.Subtitle>학생들이 신청한 물품들을 확인해요</_.Subtitle>
       <_.ButtonArea>
         <_.ApprovalButton onClick={() => setFilter("승인하기")} active={filter === "승인하기"}>

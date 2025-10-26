@@ -37,7 +37,7 @@ const handleInvite = () => {
                 <_.ModalOverlay onClick={() => setIsModalOpen(false)}>
                     <_.ModalContent onClick={(e) => e.stopPropagation()}>
                         <_.ModalHeader>
-                            <_.ModalTitle>전공동아리 팀원 추가</_.ModalTitle>
+                            <_.ModalTitle>네트워크 팀원 추가</_.ModalTitle>
                             <_.ModalSubtitle>모달 외의 영역을 누르면 나가져요</_.ModalSubtitle>
                         </_.ModalHeader>
                         <_.InviteRow>
