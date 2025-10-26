@@ -89,26 +89,21 @@ export default function NoticeEdit() {
 
     try {
       const allUrls: string[] = [...serverUrls];
+
+      // 새로 업로드할 파일들 처리
       if (localFiles.length > 0) {
-        const uploadedUrls: string[] = [];
         for (const file of localFiles) {
-          const { url } = await saveFile(file);
-          uploadedUrls.push(url);
+          const url = await saveFile(file);
+          allUrls.push(url);
         }
-        allUrls.map(url => ({ url }));
       }
 
       const patchData: CreateNoticeBase = {
         title: notice.title,
         content: notice.content,
         deadlineDate: notice.deadlineDate,
-        files: []
+        files: allUrls.map(url => ({ url }))
       };
-
-
-      if (allUrls.length > 0) {
-        patchData.files = allUrls.map(url => ({ url }));
-      }
 
       await updateNotice(Number(id), patchData);
       setShowModal(true);
