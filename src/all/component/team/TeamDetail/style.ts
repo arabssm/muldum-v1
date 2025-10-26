@@ -166,7 +166,7 @@ export const Btn = styled.button`
 export const ButtonGroup = styled.div`
     display: flex;
     margin-left: 20%;
-
+    margin-top: 2%;
     button {
         background: none;
         border: none;
