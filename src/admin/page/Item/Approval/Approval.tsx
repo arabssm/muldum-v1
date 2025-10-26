@@ -26,8 +26,8 @@ const Approval = () => {
   const [reasons, setReasons] = useState<{ [id: number]: string }>({});
   const [clubs, setClubs] = useState<{ id: number; name: string; hasNewItems: boolean }[]>([]);
 
-  const [selectedPossibleClub, setSelectedPossibleClub] = useState<string | null>(null);
-  const [selectedImpossibleClub, setSelectedImpossibleClub] = useState<string | null>(null);
+  const [selectedPossibleClub, setSelectedPossibleClub] = useState<string | null>("전체");
+  const [selectedImpossibleClub, setSelectedImpossibleClub] = useState<string | null>("전체");
   const [selectAll, setSelectAll] = useState(false);
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
@@ -47,14 +47,7 @@ const Approval = () => {
     setSelectAll(false);
   }, [filter, selectedPossibleClub, selectedImpossibleClub]);
 
-  // 처음 렌더링될 때 전체 선택
-  useEffect(() => {
-    if (allItemIds.length > 0) {
-      const safeIds = toValidIds(allItemIds);
-      setSelectedItems(safeIds);
-      setSelectAll(true);
-    }
-  }, [allItemIds]);
+
 
   const toggleSelectAll = () => {
     if (selectAll) {
