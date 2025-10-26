@@ -8,7 +8,7 @@ export default function ClubSelector({ clubs, selectedClub, setSelectedClub }: C
 
     return (
         <_.ClubArea>
-            {/* 전체 탭 추가 */}
+
             <_.ClubWrapper>
                 <_.ClubName
                     onClick={() => handleSelect("전체")}

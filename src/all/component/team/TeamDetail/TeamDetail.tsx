@@ -17,7 +17,6 @@ export default function TeamDetail() {
         try {
           await GetUser();
         } catch (error) {
-          console.error('Failed to fetch user data:', error);
         }
       }
     };
@@ -29,7 +28,7 @@ export default function TeamDetail() {
     if (!id) return;
     fetchTeamDetail(Number(id))
       .then((data) => setTeam(data))
-      .catch((err) => console.error(err));
+      .catch((err) => {});
   }, [id]);
 
   if (!team || isLoading) {
@@ -43,7 +42,6 @@ export default function TeamDetail() {
         alert("팀이 삭제되었습니다.");
         navigate("/team-space");
       } catch (error) {
-        console.error("팀 삭제 실패:", error);
         alert("팀 삭제에 실패했습니다.");
       }
     }
@@ -69,7 +67,7 @@ export default function TeamDetail() {
         )}
         {user && user.userType === "TEACHER" && (
           <_.ButtonGroup>
-            <_.DeleteBtn onClick={() => handleDeleteTeam(team.teamId)}>삭제하기</_.DeleteBtn>
+            <_.Btn onClick={() => handleDeleteTeam(team.teamId)}>삭제하기</_.Btn>
           </_.ButtonGroup>
         )}
 

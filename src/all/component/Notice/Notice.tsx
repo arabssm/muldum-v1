@@ -27,7 +27,6 @@ export default function Notice() {
         try {
           await GetUser();
         } catch (error) {
-          console.error('Failed to fetch user data:', error);
         }
       }
     };
@@ -43,7 +42,6 @@ export default function Notice() {
         setTotalpages(data.totalPages);
       })
       .catch((err) => {
-        console.error("게시물을 불러오는 데 실패했습니다.", err);
       })
       .finally(() => {
         setIsLoading(false);

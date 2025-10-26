@@ -25,7 +25,6 @@ export default function NavBar() {
         try {
           await GetUser();
         } catch (error) {
-          console.error('Failed to fetch user data:', error);
         }
       }
     };

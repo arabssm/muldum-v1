@@ -24,7 +24,6 @@
           try {
             await GetUser();
           } catch (error) {
-            console.error('Failed to fetch user data:', error);
           }
         }
       };
@@ -39,7 +38,6 @@
           setData(data);
         })
         .catch((err) => {
-          console.error('게시물을 불러오는 데 실패했습니다.', err);
         });
     }, [id]);
 
@@ -78,7 +76,6 @@
           setShowConfirmModal(true);
         })
         .catch((err) => {
-          console.error('게시물을 삭제하는 데 실패했습니다.', err);
         });
     };
 

@@ -51,7 +51,6 @@ export default function ApprovalList({
           setAllItemIds(normalized.map((item) => item.id));
         })
         .catch((err) => {
-          console.error('전체 API 실패', err);
         });
     } else if (id !== undefined) {
       const apiCall = isApproved ? tchitem111 : tchitem;
@@ -71,7 +70,6 @@ export default function ApprovalList({
           setAllItemIds(normalized.map((item) => item.id));
         })
         .catch((err) => {
-          console.error('API 실패', err);
         });
     }
   }, [id, setAllItemIds, isApproved, isAllClubs]);

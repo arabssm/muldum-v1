@@ -3,9 +3,10 @@ import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { css, keyframes } from '@emotion/react'
 import googleLogin from '../../api/login/login'
-import { useUserStore } from '../../atom/User'
 import { GetUser } from '../../api/user/data'
 import Main from '@_main/Main';
+
+let isLoginProcessing = false;
 
 const setCookie = (name: string, value: string, days: number = 7): void => {
   const expires = new Date();
@@ -50,25 +51,34 @@ export default function GoogleLogin() {
 
   useEffect(() => {
     const code = params.get('code')
+    const loginProcessed = sessionStorage.getItem('loginProcessed')
 
-    if (code && !hasRequestedRef.current) {
+    if (code && !hasRequestedRef.current && !isLoginProcessing && !loginProcessed) {
       hasRequestedRef.current = true
+      isLoginProcessing = true
+      sessionStorage.setItem('loginProcessed', 'true')
+
       googleLogin(code)
         .then(async (data) => {
           if (data) {
             setCookie('access_token', data.accessToken, 7)
             setCookie('refresh_token', data.refreshToken, 30)
-            // 로그인 후 최신 사용자 정보를 API로 가져오기
             await GetUser()
           }
           navigate('/', { replace: true })
         })
         .catch(() => navigate('/', { replace: true }))
-        .finally(() => setLoading(false))
+        .finally(() => {
+          setLoading(false)
+          isLoginProcessing = false
+          sessionStorage.removeItem('loginProcessed')
+        })
 
     } else if (!code) {
       setLoading(false)
       navigate('/')
+    } else if (loginProcessed) {
+      navigate('/', { replace: true })
     }
   }, [params, navigate])
 

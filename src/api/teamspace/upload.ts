@@ -16,7 +16,6 @@ export const uploadTeamIconImage = async (url: string) => {
       alert(res.data);
     }
   } catch (error) {
-    console.error("Failed to upload team icon:", error);
     throw error;
   }
 };
@@ -31,7 +30,6 @@ export const uploadTeamBannerImage = async (url: string) => {
       alert(res.data);
     }
   } catch (error) {
-    console.error("Failed to upload team banner:", error);
     throw error;
   }
 };

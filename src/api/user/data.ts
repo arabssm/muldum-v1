@@ -10,7 +10,7 @@ const extractTeamId = (profile: string | object | null | undefined): number | nu
 
     try {
       const jsonish = profile
-        .replace(/([a-zA-Z_]+)\s*=/g, '"$1":') 
+        .replace(/([a-zA-Z_]+)\s*=/g, '"$1":')
         .replace(/'/g, '"');
       const obj = JSON.parse(jsonish);
       return obj.team_id ? Number(obj.team_id) : null;
@@ -27,6 +27,9 @@ const extractTeamId = (profile: string | object | null | undefined): number | nu
 };
 
 let isUserFetching = false;
+let retryCount = 0;
+let lastRetryTime = 0;
+let retryTimeoutId: NodeJS.Timeout | null = null;
 
 const getCookie = (name: string): string | null => {
   const value = `; ${document.cookie}`;
@@ -35,31 +38,40 @@ const getCookie = (name: string): string | null => {
   return null;
 };
 
-export const GetUser = async () => {
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const GetUser = async (forceRetry: boolean = false) => {
   const { setUser, setLoading, user } = useUserStore.getState();
-  
-  // 액세스 토큰이 없으면 사용자 정보를 가져오지 않음
+
   const accessToken = getCookie('access_token');
   if (!accessToken) {
-    console.log('No access token found, skipping user data fetch');
     setLoading(false);
     return null;
   }
-  
-  // 이미 사용자 정보가 있거나 현재 가져오는 중이면 기존 사용자 정보 반환
-  if (user && !isUserFetching) {
+
+  if (user && !isUserFetching && !forceRetry) {
     return user;
   }
-  
+
   if (isUserFetching) {
-    // 이미 요청 중이면 잠시 기다린 후 다시 확인
     await new Promise(resolve => setTimeout(resolve, 100));
     return useUserStore.getState().user;
   }
-  
+
+  const now = Date.now();
+
+  if (!forceRetry && retryCount >= 3 && now - lastRetryTime < 30000) {
+    return null;
+  }
+
+  if (retryCount >= 3 && now - lastRetryTime >= 30000) {
+    retryCount = 0;
+  }
+
   try {
     isUserFetching = true;
     setLoading(true);
+
     const { data } = await axiosInstance.get("/user/me");
 
     const userData = {
@@ -71,9 +83,27 @@ export const GetUser = async () => {
     };
 
     setUser(userData);
+    retryCount = 0;
+    lastRetryTime = 0;
+
+    if (retryTimeoutId) {
+      clearTimeout(retryTimeoutId);
+      retryTimeoutId = null;
+    }
+
     return userData;
   } catch (error) {
-    console.error('Failed to fetch user data:', error);
+    retryCount++;
+    lastRetryTime = now;
+
+    if (retryCount >= 3 && !retryTimeoutId) {
+      retryTimeoutId = setTimeout(() => {
+        retryCount = 0;
+        lastRetryTime = 0;
+        retryTimeoutId = null;
+      }, 30000);
+    }
+
     throw error;
   } finally {
     setLoading(false);
@@ -81,15 +111,50 @@ export const GetUser = async () => {
   }
 };
 
-// 사용자 정보를 가져오는 훅
+export const getUserRetryStatus = () => {
+  const now = Date.now();
+  const isInCooldown = retryCount >= 3 && now - lastRetryTime < 30000;
+  const remainingCooldown = isInCooldown ? Math.ceil((30000 - (now - lastRetryTime)) / 1000) : 0;
+
+  return {
+    retryCount,
+    isInCooldown,
+    remainingCooldown,
+    canRetry: !isInCooldown
+  };
+};
+
+export const resetUserRetry = () => {
+  retryCount = 0;
+  lastRetryTime = 0;
+  if (retryTimeoutId) {
+    clearTimeout(retryTimeoutId);
+    retryTimeoutId = null;
+  }
+};
+
 export const useUser = () => {
   const { user, isLoading } = useUserStore();
-  
-  const fetchUser = async () => {
-    if (!user) {
-      await GetUser();
+
+  const fetchUser = async (forceRetry: boolean = false) => {
+    if (!user || forceRetry) {
+      try {
+        await GetUser(forceRetry);
+      } catch (error) {
+        const status = getUserRetryStatus();
+        if (status.isInCooldown) {
+          return null;
+        }
+        throw error;
+      }
     }
   };
 
-  return { user, isLoading, fetchUser };
+  return {
+    user,
+    isLoading,
+    fetchUser,
+    retryStatus: getUserRetryStatus(),
+    resetRetry: resetUserRetry
+  };
 };

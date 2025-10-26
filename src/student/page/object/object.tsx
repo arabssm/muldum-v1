@@ -48,7 +48,6 @@ export default function Object() {
       if (data.price) setPrice(data.regularPrice.toString());
       alert("가격이 정가와 동일한지 확인해주세요.")
     } catch (err) {
-      console.error('링크 정보를 가져오는데 실패했습니다:', err);
       alert('링크 정보를 가져오는데 실패했습니다.');
     }
   };
@@ -85,7 +84,6 @@ export default function Object() {
         setRequests(data2);
       })
       .catch((err) => {
-        console.error(err);
       });
   }, []);
 

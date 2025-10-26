@@ -26,7 +26,6 @@ export const getClubs = async () => {
         teams = [res.data];
       }
     } else {
-      console.error(res.data);
       return [];
     }
 
@@ -37,7 +36,6 @@ export const getClubs = async () => {
       hasNewItems: team.hasNewItems || false
     }));
   } catch (error) {
-    console.error('Failed to fetch teams:', error);
     return [];
   }
 };

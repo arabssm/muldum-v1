@@ -21,7 +21,6 @@ export const uploadImage = async (file: File): Promise<ImageUploadResponse> => {
     );
     return res.data;
   } catch (err) {
-    console.error("Image upload error:", err);
     throw err;
   }
 };

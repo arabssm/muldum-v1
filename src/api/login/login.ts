@@ -30,7 +30,6 @@ export async function logout(refreshToken: string) {
     const res = await axiosInstance.post('/ara/auth/logout', { refreshToken });
     return res.status === 200;
   } catch (err) {
-    console.error('로그아웃 실패', err);
     return false;
   }
 }

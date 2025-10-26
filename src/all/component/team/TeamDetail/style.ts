@@ -172,7 +172,7 @@ export const ButtonGroup = styled.div`
         border: none;
         color: #909090;
         cursor: pointer;
-        font-size: 0.8rem;
+        font-size: 1rem;
         font-family: 'Paperlogy';
 
         &:hover {

@@ -163,13 +163,12 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
     try {
       // TipTap 에디터에서 직접 커서 위치 가져오기
       const { view } = editor;
-      const { state } = view;
-      const { selection } = state;
+      const { selection } = view.state;
 
       // 커서 위치를 DOM 좌표로 변환
       const coords = view.coordsAtPos(selection.from);
 
-      console.log('TipTap coords:', coords);
+
 
       // 메뉴 위치 계산
       const menuWidth = 320;
@@ -194,23 +193,18 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
       // y 위치: 커서 바로 아래에 표시
       let y = coords.bottom + 6;
 
-      // 화면 아래쪽을 넘으면 위로 표시
       if (y + menuHeight > viewportHeight - padding) {
         y = coords.top - menuHeight - 6;
       }
 
-      console.log('Menu position:', { x, y });
 
       setSlashPos({ x, y });
       setSlashQuery("");
       setSelectedIndex(0);
       setSlashOpen(true);
 
-      console.log('Slash menu opened');
     } catch (error) {
-      console.error('Error opening slash menu:', error);
 
-      // 폴백: 에디터 요소 기준으로 위치 계산
       const editorElement = document.querySelector('.notion-editor');
       if (editorElement) {
         const rect = editorElement.getBoundingClientRect();
@@ -421,7 +415,6 @@ export default function NotionEditor({ value = "", onChange, readOnly }: Props) 
             const uploadedUrl = await saveFile(file);
             editor.chain().focus().setImage({ src: uploadedUrl }).run();
           } catch (error) {
-            console.error('이미지 업로드 실패:', error);
             alert('이미지 업로드에 실패했습니다.');
           } finally {
             setIsUploading(false);
@@ -528,15 +521,7 @@ const MenuItem = styled.button<{ $selected?: boolean }>`
   }
 `;
 
-const ItemIcon = styled.span`
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-  font-size: 16px;
-`;
+
 
 const ItemLabel = styled.span`
   color: #374151;

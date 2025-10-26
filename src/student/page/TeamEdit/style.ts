@@ -79,7 +79,7 @@ export const Section = styled.div`
   padding: 1rem 0;
   overflow-x: auto;
 
-  /* NotionEditor 내부 p 태그 스타일 */
+
   .notion-editor p {
     margin: 0 0 1em 0 !important;
     min-height: 1.2em !important;
@@ -104,7 +104,7 @@ export const Section = styled.div`
     margin-bottom: 0 !important;
   }
 
-  /* 전체 에디터 영역 스타일 */
+
   .ProseMirror p {
     margin: 0 0 1em 0 !important;
     min-height: 1.2em !important;
@@ -248,7 +248,7 @@ export const ButtonGroup = styled.div`
         border: none;
         color: #909090;
         cursor: pointer;
-        font-size: 0.8rem;
+        font-size: 1rem;
         font-family: 'Paperlogy';
 
         &:hover {

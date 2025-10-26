@@ -17,7 +17,6 @@ export default function AuthConfirm({ roles }: { roles: string[] }) {
           await GetUser();
         }
       } catch (error) {
-        console.error('Failed to get user:', error);
         setChecked(true);
         setAllowed(false);
         return;

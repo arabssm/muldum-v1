@@ -15,7 +15,6 @@ export default async function TeacherInvite(content: string) {
     });
     return res.data;
   } catch (err) {
-    console.error("TeacherInvite error:", err);
     throw err;
   }
 }

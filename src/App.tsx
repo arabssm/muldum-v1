@@ -59,7 +59,6 @@ export default function App() {
         try {
           await GetUser();
         } catch (error) {
-          console.error('Failed to initialize user:', error);
         }
       }
     };

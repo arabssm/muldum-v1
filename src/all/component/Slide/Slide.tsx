@@ -29,7 +29,6 @@ export default function SliderComponent() {
                     setNotices([]);
                 }
             } catch (error) {
-                console.error('공지사항을 불러오는데 실패했습니다:', error);
                 setNotices([]);
             } finally {
                 setLoading(false);

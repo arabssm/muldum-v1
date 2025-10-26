@@ -20,7 +20,6 @@ export default function Teamspace() {
                 try {
                     await GetUser();
                 } catch (error) {
-                    console.error('Failed to fetch user data:', error);
                 }
             }
         };
@@ -44,7 +43,6 @@ export default function Teamspace() {
             setIsModalOpen(false);
             alert("링크가 추가되었습니다!");
         } catch (err) {
-            console.error(err);
             alert("추가에 실패했습니다.");
         }
     };

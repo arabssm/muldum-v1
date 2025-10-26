@@ -24,7 +24,6 @@ export default function TeamDetail() {
         try {
           await GetUser();
         } catch (error) {
-          console.error('Failed to fetch user data:', error);
         }
       }
     };
@@ -41,7 +40,7 @@ export default function TeamDetail() {
     if (!id) return;
     fetchTeamDetail(Number(id))
       .then((data) => setTeam(data))
-      .catch((err) => console.error(err));
+      .catch(() => { });
   }, [id, user, navigate]);
 
   if (!team || isLoading) return <div>로딩중...</div>;
@@ -63,7 +62,6 @@ export default function TeamDetail() {
       alert("저장되었습니다.");
       navigate(`/club/${team.teamId}`);
     } catch (error) {
-      console.error("저장 실패:", error);
       alert("저장에 실패했습니다.");
     }
   };
@@ -87,7 +85,6 @@ export default function TeamDetail() {
       );
 
     } catch (error) {
-      console.error("배너 업로드 실패:", error);
       alert("배너 업로드에 실패했습니다.");
     } finally {
       setIsUploading(false);
@@ -115,7 +112,6 @@ export default function TeamDetail() {
 
 
     } catch (error) {
-      console.error("로고 업로드 실패:", error);
       alert("로고 업로드에 실패했습니다.");
     } finally {
       setIsUploading(false);
