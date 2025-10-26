@@ -145,6 +145,11 @@ export const SmallInput = styled.input`
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-family: 'Paperlogy';
+  
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
 `;
 
 export const PriceQtyWrapper = styled.div`
@@ -207,6 +212,11 @@ export const TextArea = styled.textarea`
     font-size: 0.875rem;
     resize: vertical;
     font-family: 'Paperlogy';
+    
+    &:focus {
+        outline: none;
+        border-color: #FF9B62;
+    }
 `;
 
 export const ListSection = styled.div`
