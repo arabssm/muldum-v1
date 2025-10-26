@@ -28,8 +28,23 @@ const extractTeamId = (profile: string | object | null | undefined): number | nu
 
 let isUserFetching = false;
 
+const getCookie = (name: string): string | null => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  return null;
+};
+
 export const GetUser = async () => {
   const { setUser, setLoading, user } = useUserStore.getState();
+  
+  // 액세스 토큰이 없으면 사용자 정보를 가져오지 않음
+  const accessToken = getCookie('access_token');
+  if (!accessToken) {
+    console.log('No access token found, skipping user data fetch');
+    setLoading(false);
+    return null;
+  }
   
   // 이미 사용자 정보가 있거나 현재 가져오는 중이면 기존 사용자 정보 반환
   if (user && !isUserFetching) {
