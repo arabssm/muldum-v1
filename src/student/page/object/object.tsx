@@ -75,6 +75,10 @@ export default function Object() {
       });
   }
 
+  const handleShowGuidelines = () => {
+    setShowGuidelinesModal(true);
+  };
+
   useEffect(() => {
     // Check if guidelines modal should be shown
     const hideGuidelines = localStorage.getItem('hideObjectGuidelines');
@@ -177,7 +181,7 @@ export default function Object() {
           </_.ListSection>
         </_.Main>
         <_.Footer>
-          <_.FooterLink>물품 신청 가이드 보기 &gt;</_.FooterLink>
+          <_.FooterLink onClick={handleShowGuidelines}>물품 신청 가이드 보기 &gt;</_.FooterLink>
           <_.FooterLink onClick={() => nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
         </_.Footer>
       </_.Container>
