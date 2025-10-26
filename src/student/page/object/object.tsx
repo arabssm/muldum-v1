@@ -80,7 +80,6 @@ export default function Object() {
   };
 
   useEffect(() => {
-    // Check if guidelines modal should be shown
     const hideGuidelines = localStorage.getItem('hideObjectGuidelines');
     if (!hideGuidelines) {
       setShowGuidelinesModal(true);
@@ -109,8 +108,8 @@ export default function Object() {
         <_.Main>
           <_.Header>
             <_.Titles>
-              <h1>전공동아리 물품신청</h1>
-              <h3>전공동아리에 사용할 물품을 신청해요</h3>
+              <h1>네트워크 물품신청</h1>
+              <h3>네크워크에 사용할 물품을 신청해요</h3>
             </_.Titles>
             <_.BudgetBox>
               <span>사용한 예산</span>
