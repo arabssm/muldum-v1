@@ -177,3 +177,25 @@ export const ItemStatus = styled.div<{ status: string }>`
         }
     }};
 `;
+
+export const DeleteButton = styled.button`
+    flex: 0 0 60px;
+    margin-left: 12px;
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+        background-color: #c82333;
+    }
+    
+    &:active {
+        background-color: #bd2130;
+    }
+`;

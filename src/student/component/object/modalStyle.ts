@@ -134,7 +134,8 @@ export const Footer = styled.div`
   padding: 16px 24px;
   border-top: 1px solid #eee;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 12px;
 `;
 
 export const ConfirmButton = styled.button`
@@ -149,5 +150,20 @@ export const ConfirmButton = styled.button`
   
   &:hover {
     background: #e8854e;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'Paperlogy';
+  
+  &:hover {
+    background: #c82333;
   }
 `;

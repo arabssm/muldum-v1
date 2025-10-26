@@ -31,6 +31,16 @@ export default function All() {
                     request={{ ...r, }}
                     index={index}
                     hideReason={true}
+                    onDelete={() => {
+                      // 삭제 후 목록 새로고침
+                      getApplyall()
+                        .then((data) => {
+                          setRequests(data);
+                        })
+                        .catch(() => {
+                          // 에러 처리는 조용히
+                        });
+                    }}
                   />
                 ))
             }

@@ -3,7 +3,7 @@ import type { Props, Request } from "./types";
 import * as _ from "./style";
 import ItemDetailModal from "./ItemDetailModal";
 
-export default function Box({ request, index, hideReason = false }: { request: Request; index: number; hideReason?: boolean }) {
+export default function Box({ request, index, hideReason = false, onDelete }: { request: Request; index: number; hideReason?: boolean; onDelete?: () => void }) {
   const [state, setState] = useState<string>("");
   const [detailModalOpen, setDetailModalOpen] = useState(false);
 
@@ -51,6 +51,7 @@ export default function Box({ request, index, hideReason = false }: { request: R
           item={request}
           onClose={closeDetailModal}
           hideReason={hideReason}
+          onDelete={onDelete}
         />
       )}
     </>

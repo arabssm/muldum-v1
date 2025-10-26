@@ -174,7 +174,21 @@ export default function Object() {
             </_.ListSectionHeader>
             <_.ListWrapper>
               {Array.isArray(requests) && requests.map((r, index) => (
-                <Box key={r.id} request={r} index={index} />
+                <Box 
+                  key={r.id} 
+                  request={r} 
+                  index={index} 
+                  onDelete={() => {
+                    // 삭제 후 목록 새로고침
+                    getApply()
+                      .then((data) => {
+                        setRequests(data);
+                      })
+                      .catch(() => {
+                        // 에러 처리는 조용히
+                      });
+                  }}
+                />
               ))}
             </_.ListWrapper>
           </_.ListSection>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import * as _ from './modalStyle';
+import { deleteTemporaryItem } from '../../../api/object/delete';
 
 interface ItemDetailModalProps {
   item: {
@@ -13,9 +14,10 @@ interface ItemDetailModalProps {
   };
   onClose: () => void;
   hideReason?: boolean;
+  onDelete?: () => void;
 }
 
-export default function ItemDetailModal({ item, onClose, hideReason = false }: ItemDetailModalProps) {
+export default function ItemDetailModal({ item, onClose, hideReason = false, onDelete }: ItemDetailModalProps) {
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -47,6 +49,19 @@ export default function ItemDetailModal({ item, onClose, hideReason = false }: I
   const truncateText = (text: string, maxLength: number = 50) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + '...';
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      try {
+        await deleteTemporaryItem(Number(item.id));
+        onDelete?.();
+        onClose();
+        alert("삭제되었습니다.");
+      } catch (error) {
+        alert("삭제에 실패했습니다.");
+      }
+    }
   };
 
   return (
@@ -100,6 +115,9 @@ export default function ItemDetailModal({ item, onClose, hideReason = false }: I
         </_.Content>
         
         <_.Footer>
+          {item.status === "INTEMP" && onDelete && (
+            <_.DeleteButton onClick={handleDelete}>삭제</_.DeleteButton>
+          )}
           <_.ConfirmButton onClick={onClose}>확인</_.ConfirmButton>
         </_.Footer>
       </_.Modal>
