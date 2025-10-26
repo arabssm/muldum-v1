@@ -6,6 +6,7 @@ import Apply from '../../../api/object/apply';
 import { getApply, getMoney, finalapply } from '../../../api/object/apply';
 import { useNavigate } from 'react-router-dom';
 import Get from '@_api/object/sss';
+import GuidelinesModal from '../../component/object/GuidelinesModal';
 
 export default function Object() {
   const nav = useNavigate();
@@ -16,6 +17,7 @@ export default function Object() {
   const [reason, setReason] = useState('');
   const [usedmoney, setUsedMoney] = useState<number>(0);
   const [requests, setRequests] = useState<Request[]>([]);
+  const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
 
   const handleAdd = async () => {
     if (!item.trim() || reason.trim().length < 10) {
@@ -74,6 +76,12 @@ export default function Object() {
   }
 
   useEffect(() => {
+    // Check if guidelines modal should be shown
+    const hideGuidelines = localStorage.getItem('hideObjectGuidelines');
+    if (!hideGuidelines) {
+      setShowGuidelinesModal(true);
+    }
+
     getMoney()
       .then((data1) => {
         setUsedMoney(data1.usedBudget);
@@ -89,6 +97,10 @@ export default function Object() {
 
   return (
     <>
+      <GuidelinesModal
+        isOpen={showGuidelinesModal}
+        onClose={() => setShowGuidelinesModal(false)}
+      />
       <_.Container>
         <_.Main>
           <_.Header>
