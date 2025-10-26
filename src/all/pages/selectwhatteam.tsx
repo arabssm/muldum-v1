@@ -5,8 +5,8 @@ import '@_styles';
 export default function Selectwhatteam(){
     return (
         <>
-            <_.Title>물품 승인 프로젝트 선택</_.Title>
-            <_.Subtitle>물품을 승인할 프로젝트를 선택해주세요</_.Subtitle>
+            <_.Title>확인 할 프로젝트를 선택하세요</_.Title>
+            <_.Subtitle>어떤 팀이 있는지 조회하세요</_.Subtitle>
             <Menu />
         </>
     )
