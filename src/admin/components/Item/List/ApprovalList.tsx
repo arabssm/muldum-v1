@@ -15,7 +15,14 @@ export default function ApprovalList({
   setReasons,
   isApproved = false,
   isAllClubs = false,
-}: Props & { setAllItemIds: (ids: number[]) => void; reasons: any; setReasons: any; isAllClubs?: boolean }) {
+  clubs = [],
+}: Props & { 
+  setAllItemIds: (ids: number[]) => void; 
+  reasons: any; 
+  setReasons: any; 
+  isAllClubs?: boolean;
+  clubs?: { id: number; name: string; hasNewItems: boolean }[];
+}) {
   const [data, setData] = useState<any[]>([]);
 
   const handleReasonChange = (id: number, value: string) => {
@@ -85,7 +92,13 @@ export default function ApprovalList({
   };
 
   const handleDetailClick = (item: any) => {
-    setSelectedItem(item);
+    // 팀 정보 추가
+    const teamInfo = clubs.find(club => club.id === item.team_id);
+    const itemWithTeam = {
+      ...item,
+      teamName: teamInfo?.name || '알 수 없는 팀'
+    };
+    setSelectedItem(itemWithTeam);
     setDetailModalOpen(true);
   };
 

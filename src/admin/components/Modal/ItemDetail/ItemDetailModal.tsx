@@ -10,6 +10,7 @@ interface ItemDetailModalProps {
     productLink?: string;
     reason: string;
     status?: string;
+    teamName?: string;
   };
   onClose: () => void;
 }
@@ -44,6 +45,13 @@ export default function ItemDetailModal({ item, onClose }: ItemDetailModalProps)
         </_.Header>
         
         <_.Content>
+          {item.teamName && (
+            <_.InfoRow>
+              <_.Label>지원팀</_.Label>
+              <_.Value>{item.teamName}</_.Value>
+            </_.InfoRow>
+          )}
+          
           <_.InfoRow>
             <_.Label>물품명</_.Label>
             <_.Value>{item.productName}</_.Value>

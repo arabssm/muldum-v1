@@ -104,6 +104,14 @@ export const GetUser = async (forceRetry: boolean = false) => {
       }, 30000);
     }
 
+    // 사용자 정보 가져오기 실패 시 쿠키 삭제
+    const deleteCookie = (name: string): void => {
+      document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+    };
+    
+    deleteCookie('access_token');
+    deleteCookie('refresh_token');
+
     throw error;
   } finally {
     setLoading(false);

@@ -73,6 +73,12 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const original = error.config as AxiosRequestConfig & { _retry?: boolean };
 
+    if (original.url?.includes('/user/me')) {
+      deleteCookie('access_token');
+      deleteCookie('refresh_token');
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
 

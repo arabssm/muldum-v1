@@ -154,6 +154,7 @@ const Approval = () => {
                 reasons={reasons}
                 setReasons={setReasons}
                 isAllClubs={isAllClubs}
+                clubs={clubs}
               />
             ) : (
               <_.Null>물품승인을 할 동아리를 선택해주세요</_.Null>
@@ -182,6 +183,7 @@ const Approval = () => {
                 setReasons={setReasons}
                 isApproved={true}
                 isAllClubs={isAllClubs}
+                clubs={clubs}
               />
             ) : (
               <_.Null>승인된 물품을 조회할 동아리를 선택해주세요</_.Null>
