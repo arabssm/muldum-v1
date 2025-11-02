@@ -9,6 +9,7 @@ import Loading from './all/component/loading/loading';
 import ScreenSizeWarning from './all/component/ScreenSizeWarning/ScreenSizeWarning';
 import AppRoutes from "./AppRoutes";
 import NavBar from "@_navbar/sidebar";
+import Footer from './all/component/Footer/Footer';
 import styled from "@emotion/styled";
 
 const MainContainer = styled.main`
@@ -22,14 +23,25 @@ const MainContainer = styled.main`
 const ContentContainer = styled.div`
     flex: 1;
     overflow-y: auto;
-    padding: 0 2rem;
+`;
+
+const ContentWrapper = styled.div`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 `;
 
 const ContentScrollContainer = styled.div`
+    flex: 1;
+    padding: 0 2rem;
+`;
+
+const ContentInner = styled.div`
     max-width: 1200px;
     min-width: 688px;
     margin: 4rem auto;
     box-sizing: border-box;
+    min-height: calc(100vh - 8rem);
 `;
 
 export default function App() {
@@ -74,9 +86,14 @@ export default function App() {
     <MainContainer>
       <NavBar />
       <ContentContainer>
-        <ContentScrollContainer>
-          <AppRoutes />
-        </ContentScrollContainer>
+        <ContentWrapper>
+          <ContentScrollContainer>
+            <ContentInner>
+              <AppRoutes />
+            </ContentInner>
+          </ContentScrollContainer>
+          <Footer />
+        </ContentWrapper>
       </ContentContainer>
       {isOpen && <LoginModal />}
     </MainContainer>
