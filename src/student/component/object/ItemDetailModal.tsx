@@ -43,6 +43,10 @@ export default function ItemDetailModal({
     return () => window.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
+  useEffect(() => {
+    console.log("Footer 렌더링 - status:", item.status, "onDelete:", !!onDelete, "allowEdit:", allowEdit);
+  }, [item.status, onDelete, allowEdit]);
+
   const formattedPrice = item.price
     ? `${Number(item.price).toLocaleString()}원`
     : undefined;
@@ -64,13 +68,13 @@ export default function ItemDetailModal({
 
   const handleDelete = async () => {
     console.log("삭제 버튼 클릭됨, item.id:", item.id, "item.status:", item.status);
-    
+
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
         console.log("삭제 API 호출 시작");
         const result = await deleteItemRequest(Number(item.id));
         console.log("삭제 API 응답:", result);
-        
+
         alert("삭제되었습니다.");
         // 삭제 후 바로 페이지 새로고침
         window.location.reload();
@@ -142,7 +146,6 @@ export default function ItemDetailModal({
 
         <_.Footer>
           <div>
-            {console.log("Footer 렌더링 - status:", item.status, "onDelete:", !!onDelete, "allowEdit:", allowEdit)}
             {onDelete && (
               <_.DeleteButton onClick={handleDelete}>삭제 (테스트)</_.DeleteButton>
             )}
