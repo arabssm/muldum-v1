@@ -66,9 +66,12 @@ export default function ItemDetailModal({
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
         await deleteItemRequest(Number(item.id));
-        onDelete?.();
-        onClose();
         alert("삭제되었습니다.");
+        onClose();
+        // 모달이 닫힌 후 리스트 새로고침
+        setTimeout(() => {
+          onDelete?.();
+        }, 100);
       } catch (error: any) {
         alert(error.response?.data?.message || "삭제에 실패했습니다.");
       }

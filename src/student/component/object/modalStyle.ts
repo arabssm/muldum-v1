@@ -200,6 +200,9 @@ export const CancelButton = styled.button`
 `;
 
 export const FormRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 16px;
   
   &:last-child {
