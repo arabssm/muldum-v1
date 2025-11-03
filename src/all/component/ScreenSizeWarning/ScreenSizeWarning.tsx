@@ -1,10 +1,11 @@
 import * as _ from './style';
+import Muldum from '../../../../public/muldum.svg'
 
 export default function ScreenSizeWarning() {
     return (
         <_.Container>
             <_.Content>
-                <_.Icon>💻</_.Icon>
+                <_.Icon src={Muldum} />
                 <_.Title>화면 크기 알림</_.Title>
                 <_.Message>
                     이 애플리케이션은 노트북 또는 데스크톱 환경에서 최적화되어 있습니다.

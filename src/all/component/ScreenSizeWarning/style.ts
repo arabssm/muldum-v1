@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,22 +20,9 @@ export const Content = styled.div`
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 `;
 
-export const Icon = styled.div`
+export const Icon = styled.img`
   font-size: 4rem;
   margin-bottom: 1.5rem;
-  animation: bounce 2s infinite;
-
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-10px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
-  }
 `;
 
 export const Title = styled.h1`
