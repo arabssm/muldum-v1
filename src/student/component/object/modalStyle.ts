@@ -162,8 +162,24 @@ export const DeleteButton = styled.button`
   font-size: 0.9rem;
   cursor: pointer;
   font-family: 'Paperlogy';
+  margin-right: 8px;
   
   &:hover {
     background: #c82333;
+  }
+`;
+
+export const EditButton = styled.button`
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'Paperlogy';
+  
+  &:hover {
+    background: #218838;
   }
 `;

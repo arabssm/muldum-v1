@@ -79,6 +79,15 @@ export default function Object() {
     setShowGuidelinesModal(true);
   };
 
+  // Handle edit - populate form with item data
+  const handleEdit = (formData: any) => {
+    setItem(formData.product_name);
+    setPrice(formData.price);
+    setLink(formData.productLink);
+    setQty(formData.quantity);
+    setReason(formData.reason);
+  };
+
   useEffect(() => {
     const hideGuidelines = localStorage.getItem('hideObjectGuidelines');
     if (!hideGuidelines) {
@@ -188,6 +197,7 @@ export default function Object() {
                         // 에러 처리는 조용히
                       });
                   }}
+                  onEdit={handleEdit}
                 />
               ))}
             </_.ListWrapper>
