@@ -67,11 +67,8 @@ export default function ItemDetailModal({
       try {
         await deleteItemRequest(Number(item.id));
         alert("삭제되었습니다.");
-        onClose();
-        // 모달이 닫힌 후 리스트 새로고침
-        setTimeout(() => {
-          onDelete?.();
-        }, 100);
+        // 삭제 후 바로 페이지 새로고침
+        window.location.reload();
       } catch (error: any) {
         alert(error.response?.data?.message || "삭제에 실패했습니다.");
       }
@@ -83,7 +80,8 @@ export default function ItemDetailModal({
   };
 
   const handleEditUpdate = () => {
-    onDelete?.(); // Refresh the list
+    // 수정 후 페이지 새로고침
+    window.location.reload();
   };
 
   return (

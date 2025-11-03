@@ -42,11 +42,6 @@ export default function Box({
     setDetailModalOpen(false);
   };
 
-  const handleDelete = () => {
-    onDelete?.();
-    closeDetailModal();
-  };
-
   return (
     <>
       <_.ItemRow onClick={handleDetailClick}>
@@ -66,7 +61,7 @@ export default function Box({
           item={request}
           onClose={closeDetailModal}
           hideReason={hideReason}
-          onDelete={handleDelete}
+          onDelete={onDelete}
           allowEdit={request.status === "INTEMP"}
         />
       )}
