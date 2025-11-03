@@ -9,7 +9,7 @@ interface EditModalProps {
     product_name: string;
     quantity: number;
     price?: string;
-    productLink?: string;
+    product_link?: string;
     reason: string;
   };
   onClose: () => void;
@@ -21,7 +21,7 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
     product_name: item.product_name,
     quantity: item.quantity,
     price: item.price || '',
-    productLink: item.productLink || '',
+    product_link: item.product_link || '',
     reason: item.reason
   });
 
@@ -59,8 +59,8 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
   };
 
   const handleLinkBlur = () => {
-    if (formData.productLink.trim()) {
-      handleGetLink(formData.productLink);
+    if (formData.product_link.trim()) {
+      handleGetLink(formData.product_link);
     }
   };
 
@@ -81,7 +81,7 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
         product_name: formData.product_name,
         quantity: formData.quantity,
         price: formData.price,
-        productLink: formData.productLink,
+        productLink: formData.product_link,
         reason: formData.reason
       });
       
@@ -106,8 +106,8 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
             <_.Label>물품 링크</_.Label>
             <_.Input
               placeholder="구입할 물품의 링크를 입력해 주세요"
-              value={formData.productLink}
-              onChange={(e) => setFormData(prev => ({ ...prev, productLink: e.target.value }))}
+              value={formData.product_link}
+              onChange={(e) => setFormData(prev => ({ ...prev, product_link: e.target.value }))}
               onBlur={handleLinkBlur}
             />
           </_.FormRow>
