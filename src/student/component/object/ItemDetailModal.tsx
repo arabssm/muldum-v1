@@ -63,13 +63,19 @@ export default function ItemDetailModal({
   };
 
   const handleDelete = async () => {
+    console.log("삭제 버튼 클릭됨, item.id:", item.id, "item.status:", item.status);
+    
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
-        await deleteItemRequest(Number(item.id));
+        console.log("삭제 API 호출 시작");
+        const result = await deleteItemRequest(Number(item.id));
+        console.log("삭제 API 응답:", result);
+        
         alert("삭제되었습니다.");
         // 삭제 후 바로 페이지 새로고침
         window.location.reload();
       } catch (error: any) {
+        console.error("삭제 실패:", error);
         alert(error.response?.data?.message || "삭제에 실패했습니다.");
       }
     }
@@ -136,8 +142,9 @@ export default function ItemDetailModal({
 
         <_.Footer>
           <div>
-            {item.status === "INTEMP" && onDelete && (
-              <_.DeleteButton onClick={handleDelete}>삭제</_.DeleteButton>
+            {console.log("Footer 렌더링 - status:", item.status, "onDelete:", !!onDelete, "allowEdit:", allowEdit)}
+            {onDelete && (
+              <_.DeleteButton onClick={handleDelete}>삭제 (테스트)</_.DeleteButton>
             )}
             {item.status === "INTEMP" && allowEdit && (
               <_.EditButton onClick={handleEditClick}>수정</_.EditButton>
