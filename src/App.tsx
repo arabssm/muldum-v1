@@ -13,35 +13,41 @@ import Footer from './all/component/Footer/Footer';
 import styled from "@emotion/styled";
 
 const MainContainer = styled.main`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    box-sizing: border-box;
 `
 
 const ContentContainer = styled.div`
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
 `;
 
 const ContentWrapper = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
 `;
 
 const ContentScrollContainer = styled.div`
-    flex: 1;
-    padding: 0 2rem;
+    padding: 4rem 2rem;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
 `;
 
 const ContentInner = styled.div`
-    max-width: 1200px;
-    min-width: 688px;
-    margin: 4rem auto;
+    max-width: min(1200px, 100%);
+    width: 100%;
+    margin: 0 auto;
     box-sizing: border-box;
-    min-height: calc(100vh - 8rem);
 `;
 
 export default function App() {
