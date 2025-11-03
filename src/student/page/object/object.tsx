@@ -79,6 +79,26 @@ export default function Object() {
     setShowGuidelinesModal(true);
   };
 
+  // Refresh item list after updates or deletes
+  const refreshItemList = () => {
+    getApply()
+      .then((data) => {
+        setRequests(data);
+      })
+      .catch(() => {
+        // 에러 처리는 조용히
+      });
+  };
+
+  // Handle edit - populate form with item data
+  const handleEdit = (formData: any) => {
+    setItem(formData.product_name);
+    setPrice(formData.price);
+    setLink(formData.productLink);
+    setQty(formData.quantity);
+    setReason(formData.reason);
+  };
+
   useEffect(() => {
     const hideGuidelines = localStorage.getItem('hideObjectGuidelines');
     if (!hideGuidelines) {
@@ -178,16 +198,9 @@ export default function Object() {
                   key={r.id} 
                   request={r} 
                   index={index} 
-                  onDelete={() => {
-                    // 삭제 후 목록 새로고침
-                    getApply()
-                      .then((data) => {
-                        setRequests(data);
-                      })
-                      .catch(() => {
-                        // 에러 처리는 조용히
-                      });
-                  }}
+                  onDelete={refreshItemList}
+                  onUpdate={refreshItemList}
+                  onEdit={handleEdit}
                 />
               ))}
             </_.ListWrapper>

@@ -1,9 +1,23 @@
 import { useState, useEffect } from "react";
-import type { Props, Request } from "./types";
+import type { Request } from "./types";
 import * as _ from "./style";
 import ItemDetailModal from "./ItemDetailModal";
 
-export default function Box({ request, index, hideReason = false, onDelete }: { request: Request; index: number; hideReason?: boolean; onDelete?: () => void }) {
+export default function Box({ 
+  request, 
+  index, 
+  hideReason = false, 
+  onDelete, 
+  onUpdate,
+  onEdit
+}: { 
+  request: Request; 
+  index: number; 
+  hideReason?: boolean; 
+  onDelete?: () => void;
+  onUpdate?: () => void;
+  onEdit?: (formData: any) => void;
+}) {
   const [state, setState] = useState<string>("");
   const [detailModalOpen, setDetailModalOpen] = useState(false);
 
@@ -52,6 +66,9 @@ export default function Box({ request, index, hideReason = false, onDelete }: { 
           onClose={closeDetailModal}
           hideReason={hideReason}
           onDelete={onDelete}
+          onUpdate={onUpdate}
+          onEdit={onEdit}
+          allowEdit={request.status === "INTEMP"}
         />
       )}
     </>

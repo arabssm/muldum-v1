@@ -167,3 +167,151 @@ export const DeleteButton = styled.button`
     background: #c82333;
   }
 `;
+
+export const EditButton = styled.button`
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'Paperlogy';
+  
+  &:hover {
+    background: #218838;
+  }
+`;
+
+export const CancelButton = styled.button`
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'Paperlogy';
+  
+  &:hover {
+    background: #5a6268;
+  }
+`;
+
+export const SaveButton = styled.button`
+  background: #FF9B62;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'Paperlogy';
+  
+  &:hover {
+    background: #e8854e;
+  }
+  
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+export const FormInput = styled.input`
+  flex: 1;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-family: 'Paperlogy';
+  
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
+`;
+
+export const FormTextArea = styled.textarea`
+  flex: 1;
+  height: 4rem;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  resize: vertical;
+  font-family: 'Paperlogy';
+  
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
+`;
+
+export const QtyWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 120px;
+`;
+
+export const QtyButton = styled.button`
+  width: 2rem;
+  height: 2rem;
+  background: #f0f0f0;
+  border: none;
+  font-size: 1.125rem;
+  cursor: pointer;
+  
+  &:hover {
+    background: #e0e0e0;
+  }
+`;
+
+export const QtyDisplay = styled.div`
+  flex: 1;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+`;
+
+export const ErrorText = styled.div`
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+`;
+
+export const FormRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const FormGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const LoadingSpinner = styled.div`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #FF9B62;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
