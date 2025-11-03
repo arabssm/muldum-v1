@@ -233,7 +233,7 @@ export const TextArea = styled.textarea`
   font-size: 0.9rem;
   font-family: 'Paperlogy';
   min-height: 80px;
-  resize: vertical;
+  resize: none;
   
   &:focus {
     outline: none;

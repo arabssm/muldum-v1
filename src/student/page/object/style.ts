@@ -210,7 +210,7 @@ export const TextArea = styled.textarea`
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     font-size: 0.875rem;
-    resize: vertical;
+    resize: none;
     font-family: 'Paperlogy';
     
     &:focus {

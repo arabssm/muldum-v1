@@ -95,7 +95,7 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
 
   return (
     <_.Backdrop onClick={handleBackdropClick}>
-      <_.Modal style={{ width: '500px', maxHeight: '80vh', overflow: 'auto' }}>
+      <_.Modal style={{ width: '90%', maxWidth: '700px', maxHeight: '80vh', overflow: 'auto' }}>
         <_.Header>
           <_.Title>물품 신청 수정</_.Title>
           <_.CloseButton onClick={onClose}>×</_.CloseButton>
