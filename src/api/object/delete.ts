@@ -9,3 +9,14 @@ export const deleteTemporaryItem = async (itemId: number) => {
     throw error;
   }
 };
+
+// Delete item request according to API specification
+export const deleteItemRequest = async (itemId: number) => {
+  try {
+    const response = await axiosInstance.delete(`std/items/${itemId}`);
+    return response.data;
+  } catch (error) {
+    console.error("물품 신청 삭제 실패:", error);
+    throw error;
+  }
+};

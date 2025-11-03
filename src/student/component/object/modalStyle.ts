@@ -183,3 +183,93 @@ export const EditButton = styled.button`
     background: #218838;
   }
 `;
+
+export const CancelButton = styled.button`
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'Paperlogy';
+  
+  &:hover {
+    background: #5a6268;
+  }
+`;
+
+export const FormRow = styled.div`
+  margin-bottom: 16px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: 'Paperlogy';
+  
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
+  
+  &::placeholder {
+    color: #999;
+  }
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: 'Paperlogy';
+  min-height: 80px;
+  resize: vertical;
+  
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
+  
+  &::placeholder {
+    color: #999;
+  }
+`;
+
+export const QtyWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const QtyButton = styled.button`
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  
+  &:hover {
+    background: #f8f9fa;
+  }
+`;
+
+export const Qty = styled.span`
+  min-width: 30px;
+  text-align: center;
+  font-weight: 500;
+`;

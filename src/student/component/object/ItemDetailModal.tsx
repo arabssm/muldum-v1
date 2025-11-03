@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as _ from './modalStyle';
-import { deleteTemporaryItem } from '../../../api/object/delete';
+import { deleteItemRequest } from '../../../api/object/delete';
+import EditModal from './EditModal';
 
 interface ItemDetailModalProps {
   item: {
@@ -27,6 +28,8 @@ export default function ItemDetailModal({
   onEdit,
   allowEdit = false
 }: ItemDetailModalProps) {
+  const [showEditModal, setShowEditModal] = useState(false);
+
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -63,43 +66,22 @@ export default function ItemDetailModal({
   const handleDelete = async () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
-        await deleteTemporaryItem(Number(item.id));
+        await deleteItemRequest(Number(item.id));
         onDelete?.();
         onClose();
         alert("삭제되었습니다.");
-      } catch (error) {
-        alert("삭제에 실패했습니다.");
+      } catch (error: any) {
+        alert(error.response?.data?.message || "삭제에 실패했습니다.");
       }
     }
   };
 
-  // Handle edit button click - populate form and delete original item
-  const handleEditClick = async () => {
-    if (window.confirm("수정하시겠습니까? 기존 신청이 삭제되고 입력 폼에 데이터가 채워집니다.")) {
-      try {
-        // Delete the original item first
-        await deleteTemporaryItem(Number(item.id));
+  const handleEditClick = () => {
+    setShowEditModal(true);
+  };
 
-        // Populate the form with item data
-        if (onEdit) {
-          onEdit({
-            product_name: item.product_name,
-            quantity: item.quantity,
-            price: item.price || '',
-            productLink: item.productLink || '',
-            reason: item.reason,
-          });
-        }
-
-        // Close modal and refresh list
-        onDelete?.();
-        onClose();
-        alert('기존 신청이 삭제되었습니다. 입력 폼에서 수정해주세요.');
-
-      } catch (error: any) {
-        alert('수정 준비에 실패했습니다.');
-      }
-    }
+  const handleEditUpdate = () => {
+    onDelete?.(); // Refresh the list
   };
 
   return (
@@ -157,18 +139,21 @@ export default function ItemDetailModal({
             {item.status === "INTEMP" && onDelete && (
               <_.DeleteButton onClick={handleDelete}>삭제</_.DeleteButton>
             )}
-            {item.status === "INTEMP" && allowEdit && onEdit && (
-              <_.ConfirmButton
-                onClick={handleEditClick}
-                style={{ background: '#28a745', marginRight: '8px' }}
-              >
-                수정
-              </_.ConfirmButton>
+            {item.status === "INTEMP" && allowEdit && (
+              <_.EditButton onClick={handleEditClick}>수정</_.EditButton>
             )}
           </div>
           <_.ConfirmButton onClick={onClose}>확인</_.ConfirmButton>
         </_.Footer>
       </_.Modal>
+
+      {showEditModal && (
+        <EditModal
+          item={item}
+          onClose={() => setShowEditModal(false)}
+          onUpdate={handleEditUpdate}
+        />
+      )}
     </_.Backdrop>
   );
 }
