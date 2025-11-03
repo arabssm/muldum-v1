@@ -8,6 +8,7 @@ import { submititem, nosubmititem, Getxlsx } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
+import GuidelinesModal from "../../../../student/component/object/GuidelinesModal";
 
 
 const toValidIds = (ids: unknown[]): number[] =>
@@ -31,6 +32,7 @@ const Approval = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -142,6 +144,9 @@ const Approval = () => {
               <_.Addons onClick={toggleSelectAll}>
                 {selectAll ? "전체해제" : "전체선택"}
               </_.Addons>
+              <_.Addons onClick={() => setShowGuidelinesModal(true)}>
+                물품 신청 안내
+              </_.Addons>
             </_.AddonsArea>
 
             {selectedClubName ? (
@@ -222,6 +227,10 @@ const Approval = () => {
       </_.ContentContainer>
       {showApproveModal && <ApprovalModal onClose={() => closeModal(true)} />}
       {showRejectModal && <RejectModal onClose={() => closeModal(false)} />}
+      <GuidelinesModal
+        isOpen={showGuidelinesModal}
+        onClose={() => setShowGuidelinesModal(false)}
+      />
     </>
   );
 };
