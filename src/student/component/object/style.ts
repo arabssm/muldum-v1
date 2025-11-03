@@ -120,8 +120,9 @@ export const ReasonTextarea = styled.textarea`
 
 export const ItemRow = styled.div`
     display: flex;
+    widthL 100%;
     align-items: center;
-    padding: 16px 20px;
+    padding: 1rem 1.25rem;
     border: 1px solid #e9ecef;
     border-radius: 8px;
     margin-bottom: 8px;
@@ -129,11 +130,9 @@ export const ItemRow = styled.div`
     transition: all 0.2s ease;
     background-color: #fff;
     min-width: 0;
-    width: 96.7%;
     box-sizing: border-box;
     
     &:hover {
-        background-color: #f8f9fa;
         border-color: #FF9B62;
         box-shadow: 0 2px 4px rgba(255, 155, 98, 0.1);
     }
