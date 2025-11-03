@@ -16,7 +16,7 @@ interface ItemDetailModalProps {
   onClose: () => void;
   hideReason?: boolean;
   onDelete?: () => void;
-  onEdit?: (formData: any) => void;
+
   allowEdit?: boolean;
 }
 
@@ -25,7 +25,6 @@ export default function ItemDetailModal({
   onClose,
   hideReason = false,
   onDelete,
-  onEdit,
   allowEdit = false
 }: ItemDetailModalProps) {
   const [showEditModal, setShowEditModal] = useState(false);

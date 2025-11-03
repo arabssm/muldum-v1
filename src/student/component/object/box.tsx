@@ -7,14 +7,12 @@ export default function Box({
   request, 
   index, 
   hideReason = false, 
-  onDelete, 
-  onEdit
+  onDelete
 }: { 
   request: Request; 
   index: number; 
   hideReason?: boolean; 
   onDelete?: () => void;
-  onEdit?: (formData: any) => void;
 }) {
   const [state, setState] = useState<string>("");
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -64,7 +62,6 @@ export default function Box({
           onClose={closeDetailModal}
           hideReason={hideReason}
           onDelete={onDelete}
-          onEdit={onEdit}
           allowEdit={request.status === "INTEMP"}
         />
       )}

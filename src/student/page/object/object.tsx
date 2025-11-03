@@ -33,9 +33,20 @@ export default function Object() {
 
     try {
       await Apply(item, qty, price, link, reason);
-      window.location.reload();
-    } catch (err) {
-      alert(err.response.data.message);
+
+      // Clear form
+      setItem('');
+      setPrice('');
+      setLink('');
+      setQty(1);
+      setReason('');
+
+      // Refresh the list
+      await refreshRequests();
+
+      alert('물품이 추가되었습니다.');
+    } catch (err: any) {
+      alert(err.response?.data?.message || '물품 추가에 실패했습니다.');
     }
   };
 
@@ -67,16 +78,32 @@ export default function Object() {
     }
   };
 
-  const finalApply = () => {
-    finalapply()
-      .then(() => {
-        alert('신청이 완료되었습니다.');
-        window.location.reload();
-      });
+  const finalApply = async () => {
+    try {
+      await finalapply();
+      alert('신청이 완료되었습니다.');
+      await refreshRequests();
+    } catch (err: any) {
+      alert(err.response?.data?.message || '신청에 실패했습니다.');
+    }
   }
 
   const handleShowGuidelines = () => {
     setShowGuidelinesModal(true);
+  };
+
+  // Function to refresh the requests list and budget
+  const refreshRequests = async () => {
+    try {
+      const data = await getApply();
+      setRequests(data);
+
+      // Also refresh budget information
+      const budgetData = await getMoney();
+      setUsedMoney(budgetData.usedBudget);
+    } catch (err) {
+      // Silent error handling
+    }
   };
 
 
@@ -96,7 +123,8 @@ export default function Object() {
       .then((data2) => {
         setRequests(data2);
       })
-      .catch((err) => {
+      .catch(() => {
+        // Silent error handling
       });
   }, []);
 
@@ -180,17 +208,8 @@ export default function Object() {
                   key={r.id}
                   request={r}
                   index={index}
-                  onDelete={() => {
-                    // 삭제 후 목록 새로고침
-                    getApply()
-                      .then((data) => {
-                        setRequests(data);
-                      })
-                      .catch(() => {
-                        // 에러 처리는 조용히
-                      });
-                  }}
-                  onEdit={undefined}
+                  onDelete={refreshRequests}
+
                 />
               ))}
             </_.ListWrapper>
