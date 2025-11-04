@@ -55,11 +55,25 @@ export const ClubArea = styled.div`
     border: none;
     gap: 1.3rem;
     margin-bottom: 2.5%;
+    overflow-x: auto;
+    white-space: nowrap;
+    
+    /* 스크롤바 숨기기 - Webkit 브라우저 */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* 스크롤바 숨기기 - Firefox */
+    scrollbar-width: none;
+    
+    /* 스크롤바 숨기기 - IE/Edge */
+    -ms-overflow-style: none;
 `;
 
 export const ClubWrapper = styled.div`
     position: relative;
     display: inline-block;
+    flex-shrink: 0;
 `;
 
 export const ClubName = styled.div<{ selected?: boolean }>`
@@ -68,6 +82,10 @@ export const ClubName = styled.div<{ selected?: boolean }>`
     background-color: ${({ selected }) => (selected ? '#FFF5EF' : 'white')};
     border-radius: 4px;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 `;
 
 export const NewBadge = styled.div`

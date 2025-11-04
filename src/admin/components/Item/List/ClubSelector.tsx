@@ -17,7 +17,7 @@ export default function ClubSelector({ clubs, selectedClub, setSelectedClub }: C
                     전체
                 </_.ClubName>
             </_.ClubWrapper>
-            
+
             {clubs.map((club, i) => (
                 <_.ClubWrapper key={i}>
                     <_.ClubName

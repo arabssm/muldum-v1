@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import * as _ from './style';
-import NavBar from '@_all/component/sibebar/sidebar';
 import type { Props } from './types';
 import { tchitem, tchitem111, tchitemAll, tchitemAllApproved } from '../../../../api/object/apply';
 import DetailItem from '@_components/Modal/Delete/DeleteModal';
@@ -58,6 +57,7 @@ export default function ApprovalList({
           setAllItemIds(normalized.map((item) => item.id));
         })
         .catch((err) => {
+          alert(err);
         });
     } else if (id !== undefined) {
       const apiCall = isApproved ? tchitem111 : tchitem;
@@ -92,7 +92,6 @@ export default function ApprovalList({
   };
 
   const handleDetailClick = (item: any) => {
-    // 팀 정보 추가
     const teamInfo = clubs.find(club => club.id === item.team_id);
     const itemWithTeam = {
       ...item,
