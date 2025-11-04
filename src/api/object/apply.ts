@@ -143,6 +143,18 @@ export async function finalapply() {
     }
   }
 
+  export async function tchitemAllRejected() {
+    try {
+      const res = await axiosInstance.get(``);
+      if (res.status !== 200) {
+        return res.status;
+      }
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   export async function Getxlsx() {
     try{
       const res=await axiosInstance.get('/tch/items/xlsx', {

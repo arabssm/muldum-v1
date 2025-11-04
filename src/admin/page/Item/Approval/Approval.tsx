@@ -21,7 +21,7 @@ const toValidIds = (ids: unknown[]): number[] =>
   );
 
 const Approval = () => {
-  const [filter, setFilter] = useState<"승인하기" | "승인된 물품 조회">("승인하기");
+  const [filter, setFilter] = useState<"승인하기" | "승인된 물품 조회" | "거절된 물품 조회">("승인하기");
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [allItemIds, setAllItemIds] = useState<number[]>([]);
   const [reasons, setReasons] = useState<{ [id: number]: string }>({});
@@ -115,6 +115,27 @@ const Approval = () => {
   };
   const renderContent = () => {
     const isPossible = filter === "승인하기";
+    const isApproved = filter === "승인된 물품 조회";
+    const isRejected = filter === "거절된 물품 조회";
+    
+    if (isRejected) {
+      // 거절된 물품은 전체 조회만 가능
+      return (
+        <ApprovalList
+          id={null}
+          selectAll={selectAll}
+          selectedItems={selectedItems}
+          setSelectedItems={setSelectedItems}
+          setAllItemIds={setAllItemIds}
+          reasons={reasons}
+          setReasons={setReasons}
+          isRejected={true}
+          isAllClubs={true}
+          clubs={clubs}
+        />
+      );
+    }
+    
     const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
     const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
     const isAllClubs = selectedClubName === "전체";
@@ -203,6 +224,9 @@ const Approval = () => {
         </_.ApprovalButton>
         <_.ApprovalButton onClick={() => setFilter("승인된 물품 조회")} active={filter === "승인된 물품 조회"}>
           승인된 물품 조회
+        </_.ApprovalButton>
+        <_.ApprovalButton onClick={() => setFilter("거절된 물품 조회")} active={filter === "거절된 물품 조회"}>
+          거절된 물품 조회
         </_.ApprovalButton>
       </_.ButtonArea>
 

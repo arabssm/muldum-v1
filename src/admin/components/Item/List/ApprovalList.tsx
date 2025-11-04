@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as _ from './style';
 import type { Props } from './types';
-import { tchitem, tchitem111, tchitemAll, tchitemAllApproved } from '../../../../api/object/apply';
+import { tchitem, tchitem111, tchitemAll, tchitemAllApproved, tchitemAllRejected } from '../../../../api/object/apply';
 import DetailItem from '@_components/Modal/Delete/DeleteModal';
 import ItemDetailModal from '../../Modal/ItemDetail/ItemDetailModal';
 
@@ -13,12 +13,15 @@ export default function ApprovalList({
   reasons,
   setReasons,
   isApproved = false,
+  isRejected = false,
   isAllClubs = false,
   clubs = [],
 }: Props & {
   setAllItemIds: (ids: number[]) => void;
   reasons: any;
   setReasons: any;
+  isApproved?: boolean;
+  isRejected?: boolean;
   isAllClubs?: boolean;
   clubs?: { id: number; name: string; hasNewItems: boolean }[];
 }) {
@@ -29,7 +32,7 @@ export default function ApprovalList({
   };
 
   const handleSelect = (id: number) => {
-    if (isApproved) return;
+    if (isApproved || isRejected) return;
 
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((i) => i !== id));
@@ -39,7 +42,26 @@ export default function ApprovalList({
   };
 
   useEffect(() => {
-    if (isAllClubs) {
+    if (isRejected) {
+      // 거절된 물품은 전체 조회만 가능
+      tchitemAllRejected()
+        .then((res) => {
+          const normalized = (res ?? []).map((raw: any, idx: number) => {
+            const numId = Number(raw.item_id ?? idx);
+            return {
+              ...raw,
+              id: numId,
+              productName: raw.product_name ?? '이름 없음',
+            };
+          });
+
+          setData(normalized);
+          setAllItemIds(normalized.map((item) => item.id));
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    } else if (isAllClubs) {
       const apiCall = isApproved ? tchitemAllApproved : tchitemAll;
 
       apiCall()
@@ -79,7 +101,7 @@ export default function ApprovalList({
         .catch((err) => {
         });
     }
-  }, [id, setAllItemIds, isApproved, isAllClubs]);
+  }, [id, setAllItemIds, isApproved, isRejected, isAllClubs]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');
@@ -118,7 +140,7 @@ export default function ApprovalList({
           <_.ItemRow
             key={item.id ?? `row-${index}`}
             onClick={() => handleSelect(item.id)}
-            style={{ cursor: isApproved ? 'default' : 'pointer' }}
+            style={{ cursor: (isApproved || isRejected) ? 'default' : 'pointer' }}
           >
             <_.ItemIndex selected={selectedItems.includes(item.id)}>
               {String(index + 1).padStart(2, '0')}
@@ -135,16 +157,16 @@ export default function ApprovalList({
               {item.productLink && item.productLink.includes('devicemart') && '(디바이스마켓)'}
               {item.productLink && item.productLink.includes('11st') && '(11번가)'}
             </_.ItemName>
-            {!isApproved && (
+            {!isApproved && !isRejected && (
               <_.ItemInput
                 placeholder="거절시, 이 부분에다가 거절사유를 입력해주세요"
                 value={reasons[item.id] || ''}
                 onChange={(e) => handleReasonChange(item.id, e.target.value)}
               />
             )}
-            {isApproved && (
+            {(isApproved || isRejected) && (
               <_.ItemText onClick={() => handleDetailClick(item)}>
-                {item.reason}
+                {item.reason || (isRejected ? item.reject_reason : '')}
               </_.ItemText>
             )}
           </_.ItemRow>
