@@ -57,16 +57,10 @@ export const ClubArea = styled.div`
     margin-bottom: 2.5%;
     overflow-x: auto;
     white-space: nowrap;
-    
-    /* 스크롤바 숨기기 - Webkit 브라우저 */
     &::-webkit-scrollbar {
         display: none;
     }
-    
-    /* 스크롤바 숨기기 - Firefox */
     scrollbar-width: none;
-    
-    /* 스크롤바 숨기기 - IE/Edge */
     -ms-overflow-style: none;
 `;
 
@@ -74,6 +68,8 @@ export const ClubWrapper = styled.div`
     position: relative;
     display: inline-block;
     flex-shrink: 0;
+    padding: 4px 4px 0 0;
+    margin: 4px 0 0 0;
 `;
 
 export const ClubName = styled.div<{ selected?: boolean }>`
@@ -90,8 +86,8 @@ export const ClubName = styled.div<{ selected?: boolean }>`
 
 export const NewBadge = styled.div`
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -10px;
+    right: -4px;
     background-color: #FF4444;
     color: white;
     font-size: 0.7rem;
@@ -100,7 +96,7 @@ export const NewBadge = styled.div`
     border-radius: 8px;
     transform: rotate(15deg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 50;
+    z-index: 100000213213123213213213123210;
 `;
 
 export const DetailArea = styled.div`
