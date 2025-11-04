@@ -101,18 +101,12 @@ const Approval = () => {
   const handleDownload = async () => {
     try {
       const blob = await Getxlsx();
-
-      // 다운로드 링크 생성
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = `승인된물품목록_${new Date().toISOString().split('T')[0]}.xlsx`;
-
-      // 다운로드 실행
       document.body.appendChild(link);
       link.click();
-
-      // 정리
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (err) {

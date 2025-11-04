@@ -84,7 +84,7 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
         productLink: formData.product_link,
         reason: formData.reason
       });
-      
+
       alert('수정이 완료되었습니다.');
       onUpdate();
       onClose();

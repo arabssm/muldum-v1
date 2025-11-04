@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Main from "@_main/Main";
 import Notice from "@_notice/Notice";
 import DetailNotice from "@_notice/Detail/DetailNotice";

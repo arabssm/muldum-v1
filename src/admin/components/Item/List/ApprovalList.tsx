@@ -16,10 +16,10 @@ export default function ApprovalList({
   isApproved = false,
   isAllClubs = false,
   clubs = [],
-}: Props & { 
-  setAllItemIds: (ids: number[]) => void; 
-  reasons: any; 
-  setReasons: any; 
+}: Props & {
+  setAllItemIds: (ids: number[]) => void;
+  reasons: any;
+  setReasons: any;
   isAllClubs?: boolean;
   clubs?: { id: number; name: string; hasNewItems: boolean }[];
 }) {
@@ -124,15 +124,17 @@ export default function ApprovalList({
             <_.ItemIndex selected={selectedItems.includes(item.id)}>
               {String(index + 1).padStart(2, '0')}
             </_.ItemIndex>
-            <_.ItemName 
-              href={item.productLink} 
+            <_.ItemName
+              href={item.productLink}
               target="_blank"
               onClick={(e) => {
                 e.preventDefault();
                 handleDetailClick(item);
               }}
             >
-              {item.productName}
+              {item.productName}&nbsp;
+              {item.productLink && item.productLink.includes('devicemart') && '(디바이스마켓)'}
+              {item.productLink && item.productLink.includes('11st') && '(11번가)'}
             </_.ItemName>
             {!isApproved && (
               <_.ItemInput
