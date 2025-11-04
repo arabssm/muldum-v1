@@ -100,7 +100,7 @@ export const NewBadge = styled.div`
     border-radius: 8px;
     transform: rotate(15deg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 50;
 `;
 
 export const DetailArea = styled.div`
