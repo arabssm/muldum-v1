@@ -20,6 +20,11 @@ export default function Object() {
   const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
 
   const handleAdd = async () => {
+    if (!item.trim() && !price.trim() && !link.trim() && !reason.trim()) {
+      alert('입력된 내용이 없습니다. 물품을 추가하세요.');
+      return;
+    }
+
     if (!item.trim() || reason.trim().length < 10) {
       alert('물품명과 사유(10자 이상)를 입력하세요.');
       return;
@@ -33,17 +38,12 @@ export default function Object() {
 
     try {
       await Apply(item, qty, price, link, reason);
-
-      // Clear form
       setItem('');
       setPrice('');
       setLink('');
       setQty(1);
       setReason('');
-
-      // Refresh the list
       await refreshRequests();
-
       alert('물품이 추가되었습니다.');
     } catch (err: any) {
       alert(err.response?.data?.message || '물품 추가에 실패했습니다.');
@@ -51,15 +51,12 @@ export default function Object() {
   };
 
   const handleGetLink = async (linkValue: string) => {
-    if (!linkValue.trim()) {
-      return;
-    }
-
+    if (!linkValue.trim()) return;
     try {
       const data = await Get(linkValue);
       if (data.name) setItem(data.name);
       if (data.price) setPrice(data.regularPrice.toString());
-      alert("가격이 정가와 동일한지 확인해주세요.")
+      alert('가격이 정가와 동일한지 확인해주세요.');
     } catch (err) {
       alert('링크 정보를 가져오는데 실패했습니다.');
     }
@@ -70,8 +67,6 @@ export default function Object() {
     setLink(newLink);
   };
 
-
-
   const handleLinkBlur = () => {
     if (link.trim()) {
       handleGetLink(link);
@@ -79,6 +74,11 @@ export default function Object() {
   };
 
   const finalApply = async () => {
+    if (requests.length === 0) {
+      alert('신청할 물품이 없습니다. 먼저 물품을 추가해주세요.');
+      return;
+    }
+
     try {
       await finalapply();
       alert('신청이 완료되었습니다.');
@@ -86,27 +86,20 @@ export default function Object() {
     } catch (err: any) {
       alert(err.response?.data?.message || '신청에 실패했습니다.');
     }
-  }
+  };
 
   const handleShowGuidelines = () => {
     setShowGuidelinesModal(true);
   };
 
-  // Function to refresh the requests list and budget
   const refreshRequests = async () => {
     try {
       const data = await getApply();
       setRequests(data);
-
-      // Also refresh budget information
       const budgetData = await getMoney();
       setUsedMoney(budgetData.usedBudget);
-    } catch (err) {
-      // Silent error handling
-    }
+    } catch (err) { }
   };
-
-
 
   useEffect(() => {
     const hideGuidelines = localStorage.getItem('hideObjectGuidelines');
@@ -114,18 +107,15 @@ export default function Object() {
       setShowGuidelinesModal(true);
     }
 
-    getMoney()
-      .then((data1) => {
-        setUsedMoney(data1.usedBudget);
-      });
+    getMoney().then((data1) => {
+      setUsedMoney(data1.usedBudget);
+    });
 
     getApply()
       .then((data2) => {
         setRequests(data2);
       })
-      .catch(() => {
-        // Silent error handling
-      });
+      .catch(() => { });
   }, []);
 
   return (
@@ -166,7 +156,7 @@ export default function Object() {
               <_.Input
                 placeholder="구입할 물품을 입력해 주세요"
                 value={item}
-                onChange={e => setItem(e.target.value)}
+                onChange={(e) => setItem(e.target.value)}
               />
               <_.PriceQtyWrapper>
                 <_.Group>
@@ -174,15 +164,17 @@ export default function Object() {
                   <_.SmallInput
                     placeholder="가격을 입력해 주세요"
                     value={price}
-                    onChange={e => setPrice(e.target.value)}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </_.Group>
                 <_.Group>
                   <_.Label>수량</_.Label>
                   <_.QtyWrapper>
-                    <_.QtyButton onClick={() => setQty(q => Math.max(1, q - 1))}>–</_.QtyButton>
+                    <_.QtyButton onClick={() => setQty((q) => Math.max(1, q - 1))}>
+                      –
+                    </_.QtyButton>
                     <_.Qty>{qty}</_.Qty>
-                    <_.QtyButton onClick={() => setQty(q => q + 1)}>+</_.QtyButton>
+                    <_.QtyButton onClick={() => setQty((q) => q + 1)}>+</_.QtyButton>
                   </_.QtyWrapper>
                 </_.Group>
               </_.PriceQtyWrapper>
@@ -193,31 +185,32 @@ export default function Object() {
               <_.TextArea
                 placeholder="신청 사유를 10자 이상 입력해 주세요"
                 value={reason}
-                onChange={e => setReason(e.target.value)}
+                onChange={(e) => setReason(e.target.value)}
               />
             </_.FormRow>
           </_.FormSection>
+
           <_.ListSection>
             <_.ListSectionHeader>
               <_.SectionTitle>우리 팀이 신청한 물건 확인하기</_.SectionTitle>
               <_.ApplyButton onClick={() => finalApply()}>신청하기</_.ApplyButton>
             </_.ListSectionHeader>
             <_.ListWrapper>
-              {Array.isArray(requests) && requests.map((r, index) => (
-                <Box
-                  key={r.id}
-                  request={r}
-                  index={index}
-                  onDelete={refreshRequests}
-
-                />
-              ))}
+              {Array.isArray(requests) &&
+                requests.map((r, index) => (
+                  <Box key={r.id} request={r} index={index} onDelete={refreshRequests} />
+                ))}
             </_.ListWrapper>
           </_.ListSection>
         </_.Main>
+
         <_.Footer>
-          <_.FooterLink onClick={handleShowGuidelines}>물품 신청 가이드 보기 &gt;</_.FooterLink>
-          <_.FooterLink onClick={() => nav("/object/all")}>신청 물품 내역 조회 ›</_.FooterLink>
+          <_.FooterLink onClick={handleShowGuidelines}>
+            물품 신청 가이드 보기 &gt;
+          </_.FooterLink>
+          <_.FooterLink onClick={() => nav('/object/all')}>
+            신청 물품 내역 조회 ›
+          </_.FooterLink>
         </_.Footer>
       </_.Container>
     </>
