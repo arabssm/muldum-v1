@@ -119,7 +119,6 @@ const Approval = () => {
     const isRejected = filter === "거절된 물품 조회";
     
     if (isRejected) {
-      // 거절된 물품은 전체 조회만 가능
       return (
         <ApprovalList
           id={null}

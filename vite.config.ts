@@ -43,6 +43,21 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
+        '/ara': {
+          target: env.VITE_API_URL || 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: (path) => `/api${path}`
+        },
+        '/tch': {
+          target: env.VITE_API_URL || 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: (path) => `/api${path}`
+        },
+        '/std': {
+          target: env.VITE_API_URL || 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: (path) => `/api${path}`
+        }
       }
     }
   }

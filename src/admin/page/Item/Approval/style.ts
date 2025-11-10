@@ -49,19 +49,62 @@ export const ApprovalButton = styled.button<{ active?: boolean }>`
     font-family: 'Paperlogy';
 `;
 
+export const ClubScrollContainer = styled.div`
+    position: relative;
+    width: 100%;
+    margin-bottom: 2.5%;
+`;
+
 export const ClubArea = styled.div`
     display: flex;
     width: 100%;
     border: none;
     gap: 1.3rem;
-    margin-bottom: 2.5%;
     overflow-x: auto;
     white-space: nowrap;
+    scroll-behavior: smooth;
     &::-webkit-scrollbar {
         display: none;
     }
     scrollbar-width: none;
     -ms-overflow-style: none;
+`;
+
+export const ScrollButton = styled.button<{ direction: 'left' | 'right' }>`
+    position: absolute;
+    top: 50%;
+    ${({ direction }) => direction === 'left' ? 'left: 0;' : 'right: 0;'}
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid #E0E0E0;
+    background-color: white;
+    color: #666;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #FF9B62;
+        color: white;
+        border-color: #FF9B62;
+    }
+
+    &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        &:hover {
+            background-color: white;
+            color: #666;
+            border-color: #E0E0E0;
+        }
+    }
 `;
 
 export const ClubWrapper = styled.div`

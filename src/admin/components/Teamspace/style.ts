@@ -7,6 +7,11 @@ export const Container = styled.div`
     flex-direction: column;
 `;
 
+export const ScrollContainer = styled.div`
+    position: relative;
+    width: 100%;
+`;
+
 export const Box = styled.div`
     display: flex;
     flex-direction: column;

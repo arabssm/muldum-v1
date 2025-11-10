@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
-// 프록시 사용 여부를 환경변수로 제어
 const USE_PROXY = import.meta.env.VITE_USE_PROXY === 'true';
-const API_BASE_URL = USE_PROXY ? '/api' : import.meta.env.VITE_API_URL;
+const API_BASE_URL = USE_PROXY ? '' : import.meta.env.VITE_API_URL;
 
 const getCookie = (name: string): string | null => {
   const value = `; ${document.cookie}`;
