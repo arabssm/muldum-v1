@@ -53,6 +53,7 @@ export const ClubScrollContainer = styled.div`
     position: relative;
     width: 100%;
     margin-bottom: 2.5%;
+    padding: 0 3rem;
 `;
 
 export const ClubArea = styled.div`
@@ -73,37 +74,37 @@ export const ClubArea = styled.div`
 export const ScrollButton = styled.button<{ direction: 'left' | 'right' }>`
     position: absolute;
     top: 50%;
-    ${({ direction }) => direction === 'left' ? 'left: 0;' : 'right: 0;'}
+    ${({ direction }) => direction === 'left' ? 'left: -0.5rem;' : 'right: -0.5rem;'}
     transform: translateY(-50%);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    border: 1px solid #E0E0E0;
+    border: 2px solid #FF9B62;
     background-color: white;
-    color: #666;
-    font-size: 1.2rem;
+    color: #FF9B62;
+    font-size: 1.5rem;
+    font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(255, 155, 98, 0.3);
     transition: all 0.2s ease;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: #FF9B62;
         color: white;
-        border-color: #FF9B62;
+        box-shadow: 0 4px 16px rgba(255, 155, 98, 0.5);
+        transform: translateY(-50%) scale(1.1);
     }
 
     &:disabled {
-        opacity: 0.3;
+        opacity: 0.2;
         cursor: not-allowed;
-        &:hover {
-            background-color: white;
-            color: #666;
-            border-color: #E0E0E0;
-        }
+        border-color: #E0E0E0;
+        color: #E0E0E0;
+        box-shadow: none;
     }
 `;
 
