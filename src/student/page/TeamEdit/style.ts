@@ -73,6 +73,28 @@ export const ClubName = styled.h1`
   margin: 0;
 `;
 
+export const ClubNameInput = styled.input`
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 0.5rem 0;
+  width: 100%;
+  background: transparent;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: #41f4bb;
+  }
+
+  &:hover {
+    border-bottom-color: #b0b0b0;
+  }
+`;
+
 
 
 export const Section = styled.div`

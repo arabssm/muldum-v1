@@ -51,14 +51,23 @@ export default function TeamDetail() {
     setTeam((prev) => (prev ? { ...prev, content: html } : prev));
   };
 
+  const handleTeamNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTeam((prev) => (prev ? { ...prev, teamName: e.target.value } : prev));
+  };
+
   const handleSubmit = async () => {
+    if (!team?.teamName?.trim()) {
+      alert("팀 이름을 입력해주세요.");
+      return;
+    }
+
     if (!team?.content) {
       alert("내용을 입력해주세요.");
       return;
     }
 
     try {
-      await TeacherInvite(team.content);
+      await TeacherInvite(team.teamName, team.content);
       alert("저장되었습니다.");
       navigate(`/club/${team.teamId}`);
     } catch (error) {
@@ -180,7 +189,15 @@ export default function TeamDetail() {
 
         <_.ContentArea>
           <_.Header>
-            <_.ClubName>{team.teamName}</_.ClubName>
+            {canEdit ? (
+              <_.ClubNameInput
+                value={team.teamName}
+                onChange={handleTeamNameChange}
+                placeholder="팀 이름을 입력하세요"
+              />
+            ) : (
+              <_.ClubName>{team.teamName}</_.ClubName>
+            )}
           </_.Header>
           <_.Section>
             <NotionEditor
