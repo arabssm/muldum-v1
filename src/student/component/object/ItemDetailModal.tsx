@@ -12,6 +12,9 @@ interface ItemDetailModalProps {
     productLink?: string;
     reason: string;
     status?: string;
+    deliveryPrice?: string;
+    deliveryTime?: string;
+    rejectReason?: string;
   };
   onClose: () => void;
   hideReason?: boolean;
@@ -119,10 +122,31 @@ export default function ItemDetailModal({
             </_.InfoRow>
           )}
 
+          {item.deliveryPrice && (
+            <_.InfoRow>
+              <_.Label>배송비</_.Label>
+              <_.Value>{Number(item.deliveryPrice).toLocaleString()}원</_.Value>
+            </_.InfoRow>
+          )}
+
+          {item.deliveryTime && (
+            <_.InfoRow>
+              <_.Label>배송 예정일</_.Label>
+              <_.Value>{item.deliveryTime.split('T')[0]}</_.Value>
+            </_.InfoRow>
+          )}
+
           {!hideReason && (
             <_.InfoRow>
               <_.Label>신청 사유</_.Label>
               <_.ReasonValue>{item.reason}</_.ReasonValue>
+            </_.InfoRow>
+          )}
+
+          {item.status === "REJECTED" && item.rejectReason && (
+            <_.InfoRow>
+              <_.Label>반려 사유</_.Label>
+              <_.RejectReasonValue>{item.rejectReason}</_.RejectReasonValue>
             </_.InfoRow>
           )}
 

@@ -4,7 +4,7 @@ import * as _ from "./style";
 import "@_styles";
 import ApprovalList from "@_components/Item/List/ApprovalList";
 import { getClubs } from "./ClubList";
-import { submititem, nosubmititem, Getxlsx } from "@_api/object/apply";
+import { submititem, nosubmititem, Getxlsx, openNthApplication } from "@_api/object/apply";
 import ClubSelector from "@_components/Item/List/ClubSelector";
 import RejectModal from "@_modal/Approval/Rejectmodal";
 import ApprovalModal from "@_modal/Approval/ApprovalModal";
@@ -33,6 +33,8 @@ const Approval = () => {
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
+  const [showNthModal, setShowNthModal] = useState(false);
+  const [nthValue, setNthValue] = useState('');
 
   const navigate = useNavigate();
 
@@ -113,11 +115,38 @@ const Approval = () => {
       alert("다운로드 중 오류가 발생했습니다.");
     }
   };
+
+  const handleOpenNth = async () => {
+    const nth = parseInt(nthValue);
+    if (!nth || nth < 1) {
+      alert('유효한 차수를 입력해주세요.');
+      return;
+    }
+    try {
+      await openNthApplication(nth);
+      alert(`${nth}차 물품 신청 기간이 열렸습니다.`);
+      setShowNthModal(false);
+      setNthValue('');
+    } catch (err) {
+      alert('신청 기간 열기에 실패했습니다.');
+    }
+  };
+
+  const isPossible = filter === "승인하기";
+  const isApproved = filter === "승인된 물품 조회";
+  const isRejected = filter === "거절된 물품 조회";
+  const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
+  const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
+  const isAllClubs = selectedClubName === "전체";
+  
+  const selectedClubId = useMemo(() => {
+    if (isAllClubs) return null;
+    const found = clubs.find((c) => c.name === selectedClubName);
+    const id = found?.id;
+    return Number.isFinite(id as number) ? (id as number) : null;
+  }, [selectedClubName, clubs, isAllClubs]);
+
   const renderContent = () => {
-    const isPossible = filter === "승인하기";
-    const isApproved = filter === "승인된 물품 조회";
-    const isRejected = filter === "거절된 물품 조회";
-    
     if (isRejected) {
       return (
         <ApprovalList
@@ -134,16 +163,6 @@ const Approval = () => {
         />
       );
     }
-    
-    const selectedClubName = isPossible ? selectedPossibleClub : selectedImpossibleClub;
-    const setSelectedClub = isPossible ? setSelectedPossibleClub : setSelectedImpossibleClub;
-    const isAllClubs = selectedClubName === "전체";
-    const selectedClubId = useMemo(() => {
-      if (isAllClubs) return null;
-      const found = clubs.find((c) => c.name === selectedClubName);
-      const id = found?.id;
-      return Number.isFinite(id as number) ? (id as number) : null;
-    }, [selectedClubName, clubs, isAllClubs]);
 
     return (
       <>
@@ -160,6 +179,9 @@ const Approval = () => {
               </_.Addons>
               <_.Addons onClick={() => setShowGuidelinesModal(true)}>
                 물품 신청 안내
+              </_.Addons>
+              <_.Addons onClick={() => setShowNthModal(true)}>
+                n차 신청 열기
               </_.Addons>
             </_.AddonsArea>
 
@@ -248,6 +270,24 @@ const Approval = () => {
         isOpen={showGuidelinesModal} 
         onClose={() => setShowGuidelinesModal(false)} 
       />
+      {showNthModal && (
+        <_.ModalOverlay onClick={() => setShowNthModal(false)}>
+          <_.ModalContent onClick={(e) => e.stopPropagation()}>
+            <_.ModalTitle>n차 물품 신청 기간 열기</_.ModalTitle>
+            <_.ModalSubtitle>차수를 입력하면 학생들이 해당 차수로 신청할 수 있습니다</_.ModalSubtitle>
+            <_.NthInputWrapper>
+              <_.NthInput
+                type="number"
+                min="1"
+                placeholder="차수 입력 (예: 1, 2, 3...)"
+                value={nthValue}
+                onChange={(e) => setNthValue(e.target.value)}
+              />
+              <_.NthButton onClick={handleOpenNth}>열기</_.NthButton>
+            </_.NthInputWrapper>
+          </_.ModalContent>
+        </_.ModalOverlay>
+      )}
     </>
   );
 };

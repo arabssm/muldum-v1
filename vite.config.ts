@@ -12,6 +12,7 @@ const ReactCompilerConfig = {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const useProxy = env.VITE_USE_PROXY === 'true';
 
   return {
     plugins: [react({
@@ -41,24 +42,14 @@ export default defineConfig(({ mode }) => {
         '@_util': path.resolve(__dirname, 'src/student/util'),
       }
     },
-    server: {
+    server: useProxy ? {
       proxy: {
-        '/ara': {
-          target: env.VITE_API_URL || 'http://localhost:8080',
+        '/api': {
+          target: 'http://localhost:8080',
           changeOrigin: true,
-          rewrite: (path) => `/api${path}`
-        },
-        '/tch': {
-          target: env.VITE_API_URL || 'http://localhost:8080',
-          changeOrigin: true,
-          rewrite: (path) => `/api${path}`
-        },
-        '/std': {
-          target: env.VITE_API_URL || 'http://localhost:8080',
-          changeOrigin: true,
-          rewrite: (path) => `/api${path}`
+          secure: false,
         }
       }
-    }
+    } : undefined
   }
 });

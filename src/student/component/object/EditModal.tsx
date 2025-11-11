@@ -11,6 +11,8 @@ interface EditModalProps {
     price?: string;
     product_link?: string;
     reason: string;
+    deliveryPrice?: string;
+    deliveryTime?: string;
   };
   onClose: () => void;
   onUpdate: () => void;
@@ -22,7 +24,9 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
     quantity: item.quantity,
     price: item.price || '',
     product_link: item.product_link || '',
-    reason: item.reason
+    reason: item.reason,
+    deliveryPrice: item.deliveryPrice || '',
+    deliveryTime: item.deliveryTime ? item.deliveryTime.split('T')[0] : ''
   });
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -82,7 +86,9 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
         quantity: formData.quantity,
         price: formData.price,
         productLink: formData.product_link,
-        reason: formData.reason
+        reason: formData.reason,
+        deliveryPrice: formData.deliveryPrice,
+        deliveryTime: formData.deliveryTime
       });
 
       alert('수정이 완료되었습니다.');
@@ -149,6 +155,25 @@ export default function EditModal({ item, onClose, onUpdate }: EditModalProps) {
               placeholder="신청 사유를 10자 이상 입력해 주세요"
               value={formData.reason}
               onChange={(e) => setFormData(prev => ({ ...prev, reason: e.target.value }))}
+            />
+          </_.FormRow>
+
+          <_.FormRow>
+            <_.Label>배송비</_.Label>
+            <_.Input
+              placeholder="배송비를 입력해 주세요 (선택)"
+              value={formData.deliveryPrice}
+              onChange={(e) => setFormData(prev => ({ ...prev, deliveryPrice: e.target.value }))}
+            />
+          </_.FormRow>
+
+          <_.FormRow>
+            <_.Label>배송 예정일</_.Label>
+            <_.Input
+              type="date"
+              placeholder="배송 예정일 (선택)"
+              value={formData.deliveryTime}
+              onChange={(e) => setFormData(prev => ({ ...prev, deliveryTime: e.target.value }))}
             />
           </_.FormRow>
         </_.Content>

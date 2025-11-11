@@ -82,3 +82,12 @@ export const ItemText = styled.div`
   }
 `;
 
+export const EmptyMessage = styled.div`
+  width: 100%;
+  padding: 3rem 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #909090;
+  background-color: #FAFAFA;
+  border-radius: 0.25rem;
+`;

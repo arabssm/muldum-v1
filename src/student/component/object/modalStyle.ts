@@ -276,3 +276,17 @@ export const Qty = styled.span`
   text-align: center;
   font-weight: 500;
 `;
+
+export const RejectReasonValue = styled.div`
+  flex: 1;
+  color: #dc3545;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  background-color: #fff5f5;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-left: 3px solid #dc3545;
+`;

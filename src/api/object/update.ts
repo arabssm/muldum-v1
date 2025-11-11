@@ -6,6 +6,8 @@ export interface UpdateItemRequestDto {
   price?: string;
   productLink?: string;
   reason?: string;
+  deliveryPrice?: string;
+  deliveryTime?: string;
 }
 
 // Update item request according to API specification

@@ -6,6 +6,9 @@ export interface Request {
     reason: string;
     price?: string;
     productLink?: string;
+    deliveryPrice?: string;
+    deliveryTime?: string;
+    rejectReason?: string;
 }
 
 export interface Props {

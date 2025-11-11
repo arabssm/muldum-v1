@@ -267,3 +267,70 @@ export const reabtn = styled.div<{ selected: boolean }>`
         background-color: #ff9b62;
     }
 `;
+export const ModalOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+`;
+
+export const ModalContent = styled.div`
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    min-width: 400px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+`;
+
+export const ModalTitle = styled.h2`
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1D1D1D;
+    margin-bottom: 0.5rem;
+`;
+
+export const ModalSubtitle = styled.p`
+    font-size: 1rem;
+    color: #707070;
+    margin-bottom: 1.5rem;
+`;
+
+export const NthInputWrapper = styled.div`
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+`;
+
+export const NthInput = styled.input`
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    outline: none;
+
+    &:focus {
+        border-color: #FF9B62;
+    }
+`;
+
+export const NthButton = styled.button`
+    padding: 0.8rem 1.5rem;
+    background-color: #FF9B62;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Paperlogy';
+
+    &:hover {
+        background-color: #EB712B;
+    }
+`;

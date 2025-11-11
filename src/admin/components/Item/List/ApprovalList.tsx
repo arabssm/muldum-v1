@@ -59,7 +59,9 @@ export default function ApprovalList({
           setAllItemIds(normalized.map((item) => item.id));
         })
         .catch((err) => {
-          alert(err);
+          console.error('거절된 물품 조회 실패:', err);
+          setData([]);
+          setAllItemIds([]);
         });
     } else if (isAllClubs) {
       const apiCall = isApproved ? tchitemAllApproved : tchitemAll;
@@ -136,6 +138,11 @@ export default function ApprovalList({
   return (
     <>
       <_.ListWrapper>
+        {data.length === 0 && (
+          <_.EmptyMessage>
+            {isRejected ? '거절된 물품이 없습니다.' : '물품이 없습니다.'}
+          </_.EmptyMessage>
+        )}
         {data.map((item, index) => (
           <_.ItemRow
             key={item.id ?? `row-${index}`}

@@ -1,13 +1,23 @@
 import axiosInstance from "../../lib/axiosInatance";
 
-export default async function Apply(name1: string, number: number, price: string, link: string, reason: string) {
+export default async function Apply(
+  name1: string, 
+  number: number, 
+  price: string, 
+  link: string, 
+  reason: string,
+  deliveryPrice?: string,
+  deliveryTime?: string
+) {
   try {
     const res = await axiosInstance.post(`/std/items/temp`, {
       "product_name": name1,
       "quantity": number,
       "price": price,
       "productLink": link,
-      "reason": reason
+      "reason": reason,
+      "deliveryPrice": deliveryPrice,
+      "deliveryTime": deliveryTime
     });
 
     if (res.status !== 200) {
@@ -145,7 +155,7 @@ export async function tchitemAllApproved() {
 
 export async function tchitemAllRejected() {
   try {
-    const res = await axiosInstance.get(``);
+    const res = await axiosInstance.get(`/tch/items/rejected`);
     if (res.status !== 200) {
       return res.status;
     }
@@ -160,6 +170,18 @@ export async function Getxlsx() {
     const res = await axiosInstance.get('/tch/items/xlsx', {
       responseType: 'blob'
     });
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function openNthApplication(nth: number) {
+  try {
+    const res = await axiosInstance.post(`/tch/items/open?nth=${nth}`);
     if (res.status !== 200) {
       return res.status;
     }

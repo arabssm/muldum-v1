@@ -15,6 +15,8 @@ export default function Object() {
   const [link, setLink] = useState('');
   const [qty, setQty] = useState(1);
   const [reason, setReason] = useState('');
+  const [deliveryPrice, setDeliveryPrice] = useState('');
+  const [deliveryTime, setDeliveryTime] = useState('');
   const [usedmoney, setUsedMoney] = useState<number>(0);
   const [requests, setRequests] = useState<Request[]>([]);
   const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
@@ -37,12 +39,14 @@ export default function Object() {
     }
 
     try {
-      await Apply(item, qty, price, link, reason);
+      await Apply(item, qty, price, link, reason, deliveryPrice, deliveryTime);
       setItem('');
       setPrice('');
       setLink('');
       setQty(1);
       setReason('');
+      setDeliveryPrice('');
+      setDeliveryTime('');
       await refreshRequests();
       alert('물품이 추가되었습니다.');
     } catch (err: any) {
@@ -187,6 +191,24 @@ export default function Object() {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
               />
+            </_.FormRow>
+
+            <_.FormRow>
+              <_.Label>배송비</_.Label>
+              <_.Input
+                placeholder="배송비를 입력해 주세요 (선택)"
+                value={deliveryPrice}
+                onChange={(e) => setDeliveryPrice(e.target.value)}
+              />
+              <_.Group>
+                <_.Label>배송 예정일</_.Label>
+                <_.Input
+                  type="date"
+                  placeholder="배송 예정일 (선택)"
+                  value={deliveryTime}
+                  onChange={(e) => setDeliveryTime(e.target.value)}
+                />
+              </_.Group>
             </_.FormRow>
           </_.FormSection>
 
