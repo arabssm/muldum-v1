@@ -6,6 +6,7 @@ export const Container = styled.div`
   min-height: 100vh;
   margin: -3rem 0rem;
   position: fixed;
+  z-index: 5;
 `;
 
 export const Content = styled.div`

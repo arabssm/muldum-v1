@@ -6,6 +6,7 @@ const FooterContainer = styled.footer`
   border-top: 1px solid #D1D1D1;
   background-color: white;
   margin-top: auto;
+  z-index: 0;
 `;
 
 const FooterContent = styled.div`
