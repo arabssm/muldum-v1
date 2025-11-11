@@ -1,7 +1,7 @@
 import axiosInstance from "../../lib/axiosInatance";
 import { useUserStore } from "../../atom/User";
 
-export default async function TeacherInvite(teamName: string, content: string) {
+export default async function TeacherInvite(name: string, content: string) {
   try {
     const { user } = useUserStore.getState();
     const team_id = user?.teamId;
@@ -11,7 +11,7 @@ export default async function TeacherInvite(teamName: string, content: string) {
     }
 
     const res = await axiosInstance.patch(`/std/teamspace/network/team/${team_id}`, {
-      teamName,
+      name,
       content
     });
     return res.data;
