@@ -30,7 +30,6 @@ const ContentContainer = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -41,7 +40,7 @@ const ContentScrollContainer = styled.div`
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    flex: 1;
+    min-height: 100vh;
 `;
 
 const ContentInner = styled.div`
