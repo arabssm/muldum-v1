@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useLoginModalStore } from './atom/Modal';
 import { useLoadingStore } from './atom/Loading';
 import { useUserStore } from './atom/User';
@@ -40,7 +41,7 @@ const ContentScrollContainer = styled.div`
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    min-height: 100vh;
+    flex: 1;
 `;
 
 const ContentInner = styled.div`
@@ -51,10 +52,13 @@ const ContentInner = styled.div`
 `;
 
 export default function App() {
+  const location = useLocation();
   const { isOpen } = useLoginModalStore();
   const { isLoading } = useLoadingStore();
   const { user, isLoading: userLoading } = useUserStore();
   const [isDesktopSize, setIsDesktopSize] = useState(true);
+  
+  const shouldShowFooter = !location.pathname.startsWith('/club/');
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -98,7 +102,7 @@ export default function App() {
               <AppRoutes />
             </ContentInner>
           </ContentScrollContainer>
-          <Footer />
+          {shouldShowFooter && <Footer />}
         </ContentWrapper>
       </ContentContainer>
       {isOpen && <LoginModal />}

@@ -53,7 +53,6 @@ export const ClubScrollContainer = styled.div`
     position: relative;
     width: 100%;
     margin-bottom: 2.5%;
-    padding: 0 3rem;
 `;
 
 export const ClubArea = styled.div`
@@ -64,17 +63,27 @@ export const ClubArea = styled.div`
     overflow-x: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
+    padding: 0 3rem;
+    box-sizing: border-box;
     &::-webkit-scrollbar {
         display: none;
     }
     scrollbar-width: none;
     -ms-overflow-style: none;
+
+    @media (max-width: 768px) {
+        padding: 0 2.5rem;
+    }
+
+    @media (max-width: 480px) {
+        padding: 0 2rem;
+    }
 `;
 
 export const ScrollButton = styled.button<{ direction: 'left' | 'right' }>`
     position: absolute;
     top: 50%;
-    ${({ direction }) => direction === 'left' ? 'left: -0.5rem;' : 'right: -0.5rem;'}
+    ${({ direction }) => direction === 'left' ? 'left: 0;' : 'right: 0;'}
     transform: translateY(-50%);
     width: 2.5rem;
     height: 2.5rem;
@@ -105,6 +114,18 @@ export const ScrollButton = styled.button<{ direction: 'left' | 'right' }>`
         border-color: #E0E0E0;
         color: #E0E0E0;
         box-shadow: none;
+    }
+
+    @media (max-width: 768px) {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 480px) {
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 1rem;
     }
 `;
 
