@@ -3,7 +3,7 @@ import * as _ from './style';
 import Box from '../../component/object/box';
 import type { Request } from '../../component/object/types';
 import Apply from '../../../api/object/apply';
-import { getApply, getMoney, finalapply } from '../../../api/object/apply';
+import { getApply, getMoney, finalapply, getOpenStatus } from '../../../api/object/apply';
 import { useNavigate } from 'react-router-dom';
 import Get from '@_api/object/sss';
 import GuidelinesModal from '../../component/object/GuidelinesModal';
@@ -20,6 +20,7 @@ export default function Object() {
   const [usedmoney, setUsedMoney] = useState<number>(0);
   const [requests, setRequests] = useState<Request[]>([]);
   const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
+  const [guidelines, setGuidelines] = useState<any>(null);
 
   const handleAdd = async () => {
     if (!item.trim() && !price.trim() && !link.trim() && !reason.trim()) {
@@ -36,6 +37,30 @@ export default function Object() {
     if (!price.trim() || isNaN(priceNum) || priceNum <= 0) {
       alert('유효한 가격을 입력하세요.');
       return;
+    }
+
+    // 가이드라인 검증
+    if (guidelines && guidelines.guide && guidelines.guide.length > 0) {
+      const guide = guidelines.guide[0];
+      
+      // 최소 금액 검증
+      if (guide.minPrice && priceNum < guide.minPrice) {
+        alert(`물품 가격은 최소 ${guide.minPrice.toLocaleString()}원 이상이어야 합니다.`);
+        return;
+      }
+
+      // 배송비 필수 검증 (shipping이 true면 배송비가 0이어야 함)
+      if (guide.shipping) {
+        const deliveryPriceNum = parseInt(deliveryPrice);
+        if (!deliveryPrice.trim() || isNaN(deliveryPriceNum)) {
+          alert('배송비를 입력해주세요. (무료배송인 경우 0을 입력)');
+          return;
+        }
+        if (deliveryPriceNum !== 0) {
+          alert('배송비가 포함된 물품만 신청 가능합니다. 무료배송 물품을 선택해주세요.');
+          return;
+        }
+      }
     }
 
     try {
@@ -110,6 +135,15 @@ export default function Object() {
     if (!hideGuidelines) {
       setShowGuidelinesModal(true);
     }
+
+    // 가이드라인 로드
+    getOpenStatus()
+      .then((data) => {
+        setGuidelines(data);
+      })
+      .catch(() => {
+        console.error('가이드라인 로드 실패');
+      });
 
     getMoney().then((data1) => {
       setUsedMoney(data1.usedBudget);

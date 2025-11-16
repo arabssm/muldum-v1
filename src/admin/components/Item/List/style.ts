@@ -46,23 +46,22 @@ export const ItemName = styled.a`
 `;
 
 export const ItemInput = styled.input`
-  width: 40%;
-  padding: 1% 2%;
-  border: none;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
   font-size: 1rem;
   color: #323232;
   font-family: 'Paperlogy';
 
   &::placeholder {
-    outline: none;
     color: #909090;
   }
 
   &:focus {
-        outline: none;
-        border: none;
-        box-shadow: none;
-    }
+    outline: none;
+    border-color: #FF9B62;
+  }
 `;
 
 export const ItemText = styled.div`
@@ -90,4 +89,28 @@ export const EmptyMessage = styled.div`
   color: #909090;
   background-color: #FAFAFA;
   border-radius: 0.25rem;
+`;
+
+export const ReasonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 40%;
+  padding: 0 2%;
+`;
+
+export const TemplateSelect = styled.select`
+  padding: 0.5rem;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #323232;
+  font-family: 'Paperlogy';
+  background-color: white;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #FF9B62;
+  }
 `;

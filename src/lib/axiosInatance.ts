@@ -59,7 +59,7 @@ const processQueue = (token: string | null, error: any) => {
 };
 
 const refreshAccessToken = async (): Promise<string> => {
-  const { data } = await refreshClient.post('/ara/auth/refresh', {
+  const { data } = await refreshClient.post('/api/ara/auth/refresh', {
     refreshToken: getCookie('refresh_token'),
   });
 

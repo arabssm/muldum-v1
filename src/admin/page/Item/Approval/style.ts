@@ -326,6 +326,7 @@ export const NthInputWrapper = styled.div`
     display: flex;
     gap: 1rem;
     align-items: center;
+    margin-bottom: 1rem;
 `;
 
 export const NthInput = styled.input`
@@ -353,5 +354,72 @@ export const NthButton = styled.button`
 
     &:hover {
         background-color: #EB712B;
+    }
+`;
+
+export const InputLabel = styled.label`
+    display: block;
+    font-size: 0.9rem;
+    color: #1D1D1D;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+`;
+
+export const NthSelect = styled.select`
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    background-color: white;
+    color: #1D1D1D;
+    cursor: pointer;
+    font-family: 'Paperlogy';
+
+    &:focus {
+        outline: none;
+        border-color: #FF9B62;
+    }
+`;
+
+export const TemplateList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+`;
+
+export const TemplateItem = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    background-color: #F9F9F9;
+    border-radius: 4px;
+    gap: 1rem;
+`;
+
+export const TemplateText = styled.span`
+    flex: 1;
+    font-size: 0.95rem;
+    color: #1D1D1D;
+`;
+
+export const RemoveButton = styled.button`
+    padding: 0.4rem 0.8rem;
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: 'Paperlogy';
+
+    &:hover {
+        background-color: #FF5252;
     }
 `;

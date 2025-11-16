@@ -33,11 +33,13 @@ const AppRoutes: React.FC = () => (
       <Route path="/notice/edit/:id" element={<NoticeEdit />} />
       <Route path="/project-approval" element={<Approval />} />
     </Route>
-    <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
-      <Route path="/project-choice" element={<ProjectChoice />} />
+    <Route element={<AuthConfirm roles={['STUDENT', 'SUPERADMIN']} />}>
       <Route path="/object/all" element={<All />} />
       <Route path="/club/edit/:id" element={<TeamEdit />} />
       <Route path="/object/apply" element={<Object />} />
+    </Route>
+    <Route element={<AuthConfirm roles={['STUDENT', 'TEACHER', 'SUPERADMIN']} />}>
+      <Route path="/project-choice" element={<ProjectChoice />} />
     </Route>
     <Route path="*" element={<NotFound />} />
   </Routes>

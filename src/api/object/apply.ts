@@ -165,9 +165,10 @@ export async function tchitemAllRejected() {
   }
 }
 
-export async function Getxlsx() {
+export async function Getxlsx(nth?: number) {
   try {
-    const res = await axiosInstance.get('/tch/items/xlsx', {
+    const url = nth ? `/tch/items/xlsx?nth=${nth}` : '/tch/items/xlsx';
+    const res = await axiosInstance.get(url, {
       responseType: 'blob'
     });
     if (res.status !== 200) {
@@ -179,9 +180,173 @@ export async function Getxlsx() {
   }
 }
 
-export async function openNthApplication(nth: number) {
+export async function openNthApplication(nth: number, payload?: any) {
   try {
-    const res = await axiosInstance.post(`/tch/items/open?nth=${nth}`);
+    const res = await axiosInstance.post(`/tch/items/open?nth=${nth}`, payload);
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getRejectTemplates() {
+  try {
+    const res = await axiosInstance.get('/tch/items/reject-templates');
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function saveRejectTemplates(templates: string[]) {
+  try {
+    // 템플릿을 content 필드로 변환
+    const payload = templates.map(content => ({ content }));
+    const res = await axiosInstance.post('/tch/items/reject-templates', payload);
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function deleteRejectTemplate(templateId: number) {
+  try {
+    const res = await axiosInstance.delete(`/tch/items/reject-templates/${templateId}`);
+    if (res.status !== 204 && res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getOpenStatus() {
+  try {
+    const res = await axiosInstance.get('/std/items/open-status');
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getTchOpenStatus() {
+  try {
+    const res = await axiosInstance.get('/tch/items/open-status');
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getOpenHistory() {
+  try {
+    const res = await axiosInstance.get('/tch/items/open-history');
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getOpenCount() {
+  try {
+    const res = await axiosInstance.get('/tch/items/open-count');
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getOpenNths() {
+  try {
+    const res = await axiosInstance.get('/tch/items/open-nths');
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// nth별 필터링 함수들
+export async function tchitemAllByNth(nth?: number) {
+  try {
+    const url = nth ? `/tch/items?nth=${nth}` : '/tch/items';
+    const res = await axiosInstance.get(url);
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function tchitemAllApprovedByNth(nth?: number) {
+  try {
+    const url = nth ? `/tch/items/approved?nth=${nth}` : '/tch/items/approved';
+    const res = await axiosInstance.get(url);
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function tchitemAllRejectedByNth(nth?: number) {
+  try {
+    const url = nth ? `/tch/items/rejected?nth=${nth}` : '/tch/items/rejected';
+    const res = await axiosInstance.get(url);
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function tchitemByNth(teamid: string, nth?: number) {
+  try {
+    const url = nth ? `/tch/items/${teamid}/not-approved?nth=${nth}` : `/tch/items/${teamid}/not-approved`;
+    const res = await axiosInstance.get(url);
+    if (res.status !== 200) {
+      return res.status;
+    }
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function tchitemApprovedByNth(teamid: string, nth?: number) {
+  try {
+    const url = nth ? `/tch/items/${teamid}/approved?nth=${nth}` : `/tch/items/${teamid}/approved`;
+    const res = await axiosInstance.get(url);
     if (res.status !== 200) {
       return res.status;
     }

@@ -1,7 +1,19 @@
 import { useState, useEffect } from 'react';
 import * as _ from './style';
 import type { Props } from './types';
-import { tchitem, tchitem111, tchitemAll, tchitemAllApproved, tchitemAllRejected } from '../../../../api/object/apply';
+import { 
+  tchitem, 
+  tchitem111, 
+  tchitemAll, 
+  tchitemAllApproved, 
+  tchitemAllRejected, 
+  getRejectTemplates,
+  tchitemByNth,
+  tchitemApprovedByNth,
+  tchitemAllByNth,
+  tchitemAllApprovedByNth,
+  tchitemAllRejectedByNth
+} from '../../../../api/object/apply';
 import DetailItem from '@_components/Modal/Delete/DeleteModal';
 import ItemDetailModal from '../../Modal/ItemDetail/ItemDetailModal';
 
@@ -16,6 +28,7 @@ export default function ApprovalList({
   isRejected = false,
   isAllClubs = false,
   clubs = [],
+  nth,
 }: Props & {
   setAllItemIds: (ids: number[]) => void;
   reasons: any;
@@ -26,10 +39,42 @@ export default function ApprovalList({
   clubs?: { id: number; name: string; hasNewItems: boolean }[];
 }) {
   const [data, setData] = useState<any[]>([]);
+  const [templates, setTemplates] = useState<string[]>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState<{ [id: number]: string }>({});
 
   const handleReasonChange = (id: number, value: string) => {
     setReasons((prev: any) => ({ ...prev, [id]: value }));
   };
+
+  const handleTemplateSelect = (id: number, template: string) => {
+    setSelectedTemplate((prev) => ({ ...prev, [id]: template }));
+    if (template === '기타') {
+      setReasons((prev: any) => ({ ...prev, [id]: '' }));
+    } else {
+      setReasons((prev: any) => ({ ...prev, [id]: template }));
+    }
+  };
+
+  useEffect(() => {
+    if (!isApproved && !isRejected) {
+      getRejectTemplates()
+        .then((res) => {
+          if (Array.isArray(res)) {
+            // 배열 형태: [{id, content, createdAt}, ...]
+            const templateContents = res.map((t: any) => t.content);
+            setTemplates([...templateContents, '기타']);
+          } else if (res && res.templates) {
+            // 객체 형태: {templates: [...]}
+            setTemplates([...res.templates, '기타']);
+          } else {
+            setTemplates(['기타']);
+          }
+        })
+        .catch(() => {
+          setTemplates(['기타']);
+        });
+    }
+  }, [isApproved, isRejected]);
 
   const handleSelect = (id: number) => {
     if (isApproved || isRejected) return;
@@ -42,9 +87,11 @@ export default function ApprovalList({
   };
 
   useEffect(() => {
+    const nthParam = nth || undefined;
+
     if (isRejected) {
       // 거절된 물품은 전체 조회만 가능
-      tchitemAllRejected()
+      tchitemAllRejectedByNth(nthParam)
         .then((res) => {
           const normalized = (res ?? []).map((raw: any, idx: number) => {
             const numId = Number(raw.item_id ?? idx);
@@ -64,9 +111,9 @@ export default function ApprovalList({
           setAllItemIds([]);
         });
     } else if (isAllClubs) {
-      const apiCall = isApproved ? tchitemAllApproved : tchitemAll;
+      const apiCall = isApproved ? tchitemAllApprovedByNth : tchitemAllByNth;
 
-      apiCall()
+      apiCall(nthParam)
         .then((res) => {
           const normalized = (res ?? []).map((raw: any, idx: number) => {
             const numId = Number(raw.item_id ?? idx);
@@ -84,9 +131,9 @@ export default function ApprovalList({
           alert(err);
         });
     } else if (id !== undefined) {
-      const apiCall = isApproved ? tchitem111 : tchitem;
+      const apiCall = isApproved ? tchitemApprovedByNth : tchitemByNth;
 
-      apiCall(String(id))
+      apiCall(String(id), nthParam)
         .then((res) => {
           const normalized = (res ?? []).map((raw: any, idx: number) => {
             const numId = Number(raw.item_id ?? idx);
@@ -103,7 +150,7 @@ export default function ApprovalList({
         .catch((err) => {
         });
     }
-  }, [id, setAllItemIds, isApproved, isRejected, isAllClubs]);
+  }, [id, setAllItemIds, isApproved, isRejected, isAllClubs, nth]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedName, setSelectedName] = useState('');
@@ -165,11 +212,26 @@ export default function ApprovalList({
               {item.productLink && item.productLink.includes('11st') && '(11번가)'}
             </_.ItemName>
             {!isApproved && !isRejected && (
-              <_.ItemInput
-                placeholder="거절시, 이 부분에다가 거절사유를 입력해주세요"
-                value={reasons[item.id] || ''}
-                onChange={(e) => handleReasonChange(item.id, e.target.value)}
-              />
+              <_.ReasonContainer onClick={(e) => e.stopPropagation()}>
+                <_.TemplateSelect
+                  value={selectedTemplate[item.id] || ''}
+                  onChange={(e) => handleTemplateSelect(item.id, e.target.value)}
+                >
+                  <option value="">거절 사유 선택</option>
+                  {templates.map((template, idx) => (
+                    <option key={idx} value={template}>
+                      {template}
+                    </option>
+                  ))}
+                </_.TemplateSelect>
+                {selectedTemplate[item.id] === '기타' && (
+                  <_.ItemInput
+                    placeholder="거절 사유를 입력해주세요"
+                    value={reasons[item.id] || ''}
+                    onChange={(e) => handleReasonChange(item.id, e.target.value)}
+                  />
+                )}
+              </_.ReasonContainer>
             )}
             {(isApproved || isRejected) && (
               <_.ItemText onClick={() => handleDetailClick(item)}>
