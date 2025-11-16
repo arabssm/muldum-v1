@@ -206,8 +206,7 @@ export async function getRejectTemplates() {
 
 export async function saveRejectTemplates(templates: string[]) {
   try {
-    // 템플릿을 content 필드로 변환
-    const payload = templates.map(content => ({ content }));
+    const payload = { templates };
     const res = await axiosInstance.post('/tch/items/reject-templates', payload);
     if (res.status !== 200) {
       return res.status;
