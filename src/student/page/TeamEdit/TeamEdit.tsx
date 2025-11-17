@@ -147,7 +147,7 @@ export default function TeamDetail() {
       <_.Content>
         <_.Banner
           style={{
-            backgroundImage: `url(${team.config?.backgroundImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/default_banner.svg"})`,
+            backgroundImage: `url(${team.config?.backgroundImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%80%E1%85%A9%E1%86%BC%E1%84%8C%E1%85%B5+%E1%84%87%E1%85%A2%E1%84%80%E1%85%A7%E1%86%BC.svg"})`,
           }}
           onClick={handleBannerClick}
           className={canEdit ? "editable" : ""}
@@ -164,7 +164,7 @@ export default function TeamDetail() {
 
         <_.LogoArea>
           <_.Logo
-            src={team.config?.iconImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/default_logo.svg"}
+            src={team.config?.iconImageUrl ?? "https://muldumarabucket.s3.ap-northeast-2.amazonaws.com/defaulyicon.svg"}
             alt={`${team.teamName} 로고`}
             onClick={handleLogoClick}
             className={canEdit ? "editable" : ""}
